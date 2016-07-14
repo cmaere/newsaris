@@ -67,7 +67,7 @@
 											       <div class="list-group"> 
 												       <a href="#" class="media list-group-item"> 
 													       <span class="pull-left thumb-sm"> 
-														       <img src="images/avatar_default.jpg" alt="John said" class="img-circle"> </span> 
+														       <img src="{{asset('images/avatar_default.jpg')}}" alt="John said" class="img-circle"> </span> 
 														       <span class="media-body block m-b-none"> <br>  </span>
 													        </a> 
 														

@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use  \App\Http\Controllers\main;
+
 class policycontroller extends Controller
 {
 	var $main;
+	var $model;
 	
 	
 	
@@ -151,12 +153,21 @@ class policycontroller extends Controller
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
 	    	
 	    }
+<<<<<<< HEAD
 	    public function admissionform()
 	    {
 	    	$currentpage = "Admit student";
 			$parentpage ="Admision";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 	    	return view('admissionform', 
+=======
+	    public function users()
+	    {
+	    	$currentpage = "Users";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('users', 
+>>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
 					array('page' => 'home',
 						  'chasections' => $this->main->data,
 						  'chasubsections' => $this->main->menulist,
@@ -165,6 +176,7 @@ class policycontroller extends Controller
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
+<<<<<<< HEAD
 						  'parentpage' => $parentpage));
 	    }
 	    public function admissionform2()
@@ -208,6 +220,11 @@ class policycontroller extends Controller
 	    	} 
 	    }
 
+=======
+						  'parentpage' => $parentpage,
+					  	   'users' => $this->model->getusers()));
+	    }
+>>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
 
 
 	    

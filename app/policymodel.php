@@ -33,11 +33,21 @@ return $this->selectQuery($query);
 
     	return $this->selectQuery($query);
     }
+<<<<<<< HEAD
 
     public function insertIntoStudentTable($name, $gender, $cand_num)
     {
     	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";
 		return $this->selectQuery($query);
     }
+=======
+	public function getusers(){
+	    $users = DB::table('users')->paginate(15);
+		
+		return $users;
+
+	           
+	}
+>>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
 }
 
