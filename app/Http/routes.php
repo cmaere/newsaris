@@ -22,5 +22,7 @@ Route::get('/Policy/Programme', ['middleware' => 'auth', 'uses' =>'policycontrol
 Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'policycontroller@newfaculty'])->name('newfaculty');
 Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
+
+Route::get('/Policy/Users',['middleware' => 'auth', 'uses' => 'policycontroller@users']);
 Route::auth();
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'main@index');

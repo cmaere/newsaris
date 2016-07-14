@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use  \App\Http\Controllers\main;
+
 class policycontroller extends Controller
 {
 	var $main;
+	var $model;
 	
 	
 	
@@ -151,7 +153,23 @@ class policycontroller extends Controller
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
 	    	
 	    }
-
+	    public function users()
+	    {
+	    	$currentpage = "Users";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('users', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'parentpage' => $parentpage,
+					  	   'users' => $this->model->getusers()));
+	    }
 
 
 	    

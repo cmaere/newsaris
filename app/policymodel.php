@@ -33,5 +33,12 @@ return $this->selectQuery($query);
 
     	return $this->selectQuery($query);
     }
+	public function getusers(){
+	    $users = DB::table('users')->paginate(15);
+		
+		return $users;
+
+	           
+	}
 }
 
