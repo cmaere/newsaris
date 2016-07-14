@@ -25,7 +25,7 @@
 					
 					
 						@foreach($chasubsections[$x] as $chasubsection)
-						<li> <a href='{{$chasubsection->functionName}}'> {{$chasubsection->functionName}} </a></li>
+						<li> <a href='{{url('/')}}/{{$chasection->sectionname}}/{{$chasubsection->functionName}}'> {{$chasubsection->functionName}} </a></li>
 						@endforeach		
 					
 					<!-- END loop -->
