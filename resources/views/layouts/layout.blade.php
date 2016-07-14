@@ -37,7 +37,7 @@
 				     
 				     <div class="bg-success nav-user hidden-xs pos-rlt">
 					      <div class="nav-avatar pos-rlt">
-						       <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 								<img src="images/avatar_default.jpg" alt="" class=""> 
+						       <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 								<img src="{{asset('images/avatar_default.jpg')}}" alt="" class=""> 
 							       <span class="caret caret-white"></span> 
 						       </a>
 						        <ul class="dropdown-menu m-t-sm animated fadeInLeft">
@@ -67,7 +67,7 @@
 											       <div class="list-group"> 
 												       <a href="#" class="media list-group-item"> 
 													       <span class="pull-left thumb-sm"> 
-														       <img src="images/avatar_default.jpg" alt="John said" class="img-circle"> </span> 
+														       <img src="{{asset('images/avatar_default.jpg')}}" alt="John said" class="img-circle"> </span> 
 														       <span class="media-body block m-b-none"> <br>  </span>
 													        </a> 
 														

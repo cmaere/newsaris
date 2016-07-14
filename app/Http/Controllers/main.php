@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use Auth;
 class main extends Controller
 {
 	public $getsections;
@@ -16,8 +16,9 @@ class main extends Controller
 	public $data;
 	
 	 public function __construct() {
+		 $usersession = Auth::user();
 		 $this->regno = "kcn/admin/002";
-		 $this->loginname = "Charlie Maere";
+		 $this->loginname = $usersession->name;
  		//call model called menu section
          $this->category = new \App\section();
          $this->data = $this->category->getsections($this->regno);
