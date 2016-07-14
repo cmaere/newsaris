@@ -26,7 +26,7 @@
 		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href="{LINK}">
+				<a href={{route('newinstitution')}}>
 					<button class="btn btn-sm btn-white">Add New Institution</button>
 				</a> 
 			</div> 

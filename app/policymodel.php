@@ -29,7 +29,19 @@ class policymodel extends Model
 return $this->selectQuery($query);
 	}
     public function  getinstitution(){
-    	$query = "select campus,location,address,tel,Email from campus";
+    	$query = "select campus,location,address,tel,Email,CampusID from campus";
+
+    	return $this->selectQuery($query);
+    }
+
+    public function  addInstitution($campus,$location,$address,$tel,$email){
+    	$query = "INSERT INTO campus (Campus,Location,Address,Tel,Email) VALUES ('$campus','$location','$address','$tel','$email')";
+
+    	return $this->selectQuery($query);
+    }
+     public function  editcampus($id){
+     	
+    	$query = "select campus,location,address,tel,Email from campus where CampusID = '$id'";
 
     	return $this->selectQuery($query);
     }

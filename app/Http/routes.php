@@ -24,3 +24,8 @@ Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroll
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
 Route::auth();
 Route::get('/home', 'HomeController@index');
+
+Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution')->name("newinstitution"); 
+Route::get('Policy/Institution/editstitution', 'policycontroller@institution_edit')->name("institution_edit");
+Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");    
+ 
