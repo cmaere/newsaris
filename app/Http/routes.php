@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//Route::get('login', 'login@show');
+Route::get('/main',['middleware' => 'auth', 'uses' => 'main@index']);
+Route::get('/Policy/Institution',['middleware' => 'auth', 'uses' =>  'policycontroller@institution']);
+Route::get('/Policy/Faculty', ['middleware' => 'auth', 'uses' => 'policycontroller@faculty'])->name('faculty');
+Route::get('/Policy/Programme', ['middleware' => 'auth', 'uses' =>'policycontroller@programmes']);
+Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'policycontroller@newfaculty'])->name('newfaculty');
+Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
+Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
+Route::auth();
+Route::get('/home', 'HomeController@index');
