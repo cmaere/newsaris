@@ -33,5 +33,11 @@ return $this->selectQuery($query);
 
     	return $this->selectQuery($query);
     }
+
+    public function insertIntoStudentTable($name, $gender, $cand_num)
+    {
+    	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";
+		return $this->selectQuery($query);
+    }
 }
 

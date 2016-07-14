@@ -22,5 +22,8 @@ Route::get('/Policy/Programme', ['middleware' => 'auth', 'uses' =>'policycontrol
 Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'policycontroller@newfaculty'])->name('newfaculty');
 Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
+Route::get('Policy/AdmissionForm', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform']);
+Route::post('Policy/AdmissionForm/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
+Route::post('Policy/AdmissionForm', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
 Route::auth();
 Route::get('/home', 'HomeController@index');

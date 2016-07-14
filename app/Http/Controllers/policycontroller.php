@@ -151,6 +151,62 @@ class policycontroller extends Controller
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
 	    	
 	    }
+	    public function admissionform()
+	    {
+	    	$currentpage = "Admit student";
+			$parentpage ="Admision";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('admissionform', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'parentpage' => $parentpage));
+	    }
+	    public function admissionform2()
+	    {
+	    	$currentpage = "Admit student";
+			$parentpage ="Admision";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('admissionform2', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'parentpage' => $parentpage));
+	    }
+	    public function exportexcel(Request $request)
+	    {
+	    	if($request->hasFile('adm_file'))
+	    	{
+	    		$file = $request->file('adm_file');
+	    		$files = fopen($file, 'r');
+	    		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
+	    		{
+
+	    			$name = $fileop[0];
+	    			$gender = $fileop[1];
+	    			$cand_num = $fileop[2];
+	    			//echo 'name= '.$name.' gender = '.$gender.' '.$cand_num;
+	    			//$center_num = $fileop[4];
+
+	    			//$insertStudentInfo = new policymodel();
+	    			$insertStudentInfo = $this->model->insertIntoStudentTable($name, $gender, $cand_num);
+	    		}
+	    	}
+	    	else
+	    	{
+	    		echo 'Something is wrong';
+	    	} 
+	    }
 
 
 
