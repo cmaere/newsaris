@@ -24,3 +24,5 @@ Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroll
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
 Route::auth();
 Route::get('/home', 'HomeController@index');
+Route::get('Policy/ManageAcademicCalendar', ['middleware' => 'auth', 'uses' => 'policycontroller@manageacademiccalendar']);
+  

@@ -26,12 +26,17 @@ class policymodel extends Model
 	}
 	public function getdepartment(){
 		$query = "SELECT DeptName, DeptPhysAdd, DeptHead, DeptAddress, DeptTel, DeptEmail FROM `department`";
-return $this->selectQuery($query);
+        return $this->selectQuery($query);
 	}
     public function  getinstitution(){
     	$query = "select campus,location,address,tel,Email from campus";
 
     	return $this->selectQuery($query);
     }
+	
+	public function manageacademiccalendar(){
+		$query = "SELECT AYear, programmeCode,Semister_status,cohort FROM `academicyear` WHERE Status = 1" ;
+        return $this->selectQuery($query);
+	}
 }
 

@@ -152,7 +152,31 @@ class policycontroller extends Controller
 	    	
 	    }
 
-
+       public function manageacademiccalendar() {
+  		//page initalization
+		
+  		
+  		$data = $this->model->manageacademiccalendar();
+  		$currentpage = "Manage Academic Calendar";
+  		$parentpage ="Policy";
+  		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+		
+  		//call view
+  	    return view('manageacademiccalendar', 
+  					array('page' => 'home',
+  						  'chasections' => $this->main->data,
+  						  'chasubsections' => $this->main->menulist,
+  						  'x' => 0,
+  						  'loginname' => $this->main->loginname,
+  						  'welcomemessage' => $welcomemessage,
+  						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+  						  'department' => $data));
+  	
+		
+			
+  	    }  
 
 	    
    
