@@ -153,32 +153,7 @@ class policycontroller extends Controller
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
 	    	
 	    }
-<<<<<<< HEAD
-	    public function admissionform()
-	    {
-	    	$currentpage = "Admit student";
-			$parentpage ="Admision";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-	    	return view('admissionform', 
-=======
-	    public function users()
-	    {
-	    	$currentpage = "Users";
-			$parentpage ="Policy";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-	    	return view('users', 
->>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-<<<<<<< HEAD
-						  'parentpage' => $parentpage));
-	    }
+		
 	    public function admissionform2()
 	    {
 	    	$currentpage = "Admit student";
@@ -195,6 +170,50 @@ class policycontroller extends Controller
 						  'parentpage' => $parentpage,
 						  'parentpage' => $parentpage));
 	    }
+		
+	    public function users()
+	    {
+	    	$currentpage = "Users";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('users', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'parentpage' => $parentpage,
+					  	   'users' => $this->model->getusers()));
+	    }
+        public function manageacademiccalendar() {
+   		//page initalization
+		
+  		
+   		$data = $this->model->manageacademiccalendar();
+   		$currentpage = "Manage Academic Calendar";
+   		$parentpage ="Policy";
+   		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+		
+   		//call view
+   	    return view('manageacademiccalendar', 
+   					array('page' => 'home',
+   						  'chasections' => $this->main->data,
+   						  'chasubsections' => $this->main->menulist,
+   						  'x' => 0,
+   						  'loginname' => $this->main->loginname,
+   						  'welcomemessage' => $welcomemessage,
+   						  'currentpage' => $currentpage,
+ 						  'parentpage' => $parentpage,
+   						  'department' => $data));
+  	
+		
+			
+   	    } 
+		
 	    public function exportexcel(Request $request)
 	    {
 	    	if($request->hasFile('adm_file'))
@@ -210,33 +229,8 @@ class policycontroller extends Controller
 	    			//echo 'name= '.$name.' gender = '.$gender.' '.$cand_num;
 	    			//$center_num = $fileop[4];
 
-<<<<<<< HEAD
-       public function manageacademiccalendar() {
-  		//page initalization
-		
-  		
-  		$data = $this->model->manageacademiccalendar();
-  		$currentpage = "Manage Academic Calendar";
-  		$parentpage ="Policy";
-  		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-		
-		
-  		//call view
-  	    return view('manageacademiccalendar', 
-  					array('page' => 'home',
-  						  'chasections' => $this->main->data,
-  						  'chasubsections' => $this->main->menulist,
-  						  'x' => 0,
-  						  'loginname' => $this->main->loginname,
-  						  'welcomemessage' => $welcomemessage,
-  						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-  						  'department' => $data));
-  	
-		
-			
-  	    }  
-=======
+       
+
 	    			//$insertStudentInfo = new policymodel();
 	    			$insertStudentInfo = $this->model->insertIntoStudentTable($name, $gender, $cand_num);
 	    		}
@@ -246,72 +240,77 @@ class policycontroller extends Controller
 	    		echo 'Something is wrong';
 	    	} 
 	    }
-
-<<<<<<< HEAD
-	     public function addinstitution(Request $request) {
-	    	$campus=$request['campus'];
-	    	$location=$request['paddress'];
-	    	$address=$request['address'];
-	    	$tel=$request['tel'];
-	    	$email=$request['email'];
+		
+     public function addinstitution(Request $request) {
+    	$campus=$request['campus'];
+    	$location=$request['paddress'];
+    	$address=$request['address'];
+    	$tel=$request['tel'];
+    	$email=$request['email'];
 
 		//page initalization
-	    $model = new \App\policymodel();
-    	$post = $model->addInstitution($campus,$location,$address,$tel,$email);
-		
-	    }
-	    public function newinstitution() {
-	    	
-		$currentpage = "Add New Institution";
-		$parentpage ="Policy";
-		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-		
-	    return view('newinstitution', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'parentpage' => $parentpage,
+    	$model = new \App\policymodel();
+   		$post = $model->addInstitution($campus,$location,$address,$tel,$email);
+	
+    }
+    public function newinstitution() {
+    	
+	$currentpage = "Add New Institution";
+	$parentpage ="Policy";
+	$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	
+    return view('newinstitution', 
+				array('page' => 'home',
+					  'chasections' => $this->main->data,
+					  'chasubsections' => $this->main->menulist,
+					  'x' => 0,
+					  'loginname' => $this->main->loginname,
+					  'parentpage' => $parentpage,
 
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage ));
-			
-	    }
+					  'welcomemessage' => $welcomemessage,
+					  'currentpage' => $currentpage ));
+		
+    }
+    public function institution_edit(Request $request) {
+    $id=$request['CampusID'];
+	
+    $model = new \App\policymodel();
+	$data= $model->editcampus($id);
+		
 
+	$currentpage = "edir New Institution";
+	$parentpage ="Policy";
+	$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	
+    return view('institution_edit', 
+				array('page' => 'home',
+					  'chasections' => $this->main->data,
+					  'chasubsections' => $this->main->menulist,
+					  'x' => 0,
+					  'loginname' => $this->main->loginname,
+					  'institution', 'campusinfo' => $data,
+					  'welcomemessage' => $welcomemessage,
+					  'currentpage' => $currentpage ));
+		
+    }
+		 
+
+	    public function admissionform()
+	    {
+	    	$currentpage = "Admit student";
+			$parentpage ="Admision";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	//return view('admissionform', 
+		}		
+
+	   
+	    
+
+
+	     
   	    
-	    public function institution_edit(Request $request) {
-	    $id=$request['CampusID'];
-		
-	    $model = new \App\policymodel();
-    	$data= $model->editcampus($id);
-			
+	   
 
-		$currentpage = "edir New Institution";
-		$parentpage ="Policy";
-		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-		
-	    return view('institution_edit', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'institution', 'campusinfo' => $data,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage ));
-			
-	    }
-
-=======
-=======
-						  'parentpage' => $parentpage,
-					  	   'users' => $this->model->getusers()));
-	    }
->>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
->>>>>>> 16902b0f6d14f99cc9396b3b025675e3451a5fb0
-
->>>>>>> 10f7139761227139c5329ec0e9a81e1b80bd0f12
 
 	    
    

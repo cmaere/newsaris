@@ -45,21 +45,20 @@ class policymodel extends Model
 
     	return $this->selectQuery($query);
     }
-<<<<<<< HEAD
+
 	
 	public function manageacademiccalendar(){
 		$query = "SELECT AYear, programmeCode,Semister_status,cohort FROM `academicyear` WHERE Status = 1" ;
         return $this->selectQuery($query);
 	}
-=======
-<<<<<<< HEAD
+
 
     public function insertIntoStudentTable($name, $gender, $cand_num)
     {
     	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";
 		return $this->selectQuery($query);
     }
-=======
+
 	public function getusers(){
 	    $users = DB::table('users')->paginate(15);
 		
@@ -67,7 +66,6 @@ class policymodel extends Model
 
 	           
 	}
->>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
->>>>>>> 10f7139761227139c5329ec0e9a81e1b80bd0f12
+
 }
 
