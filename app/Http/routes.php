@@ -23,10 +23,10 @@ Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'pol
 Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
 Route::get('Admission/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform']);
-Route::post('Admission/EnrollStudent/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
-Route::post('Admission/EnrollStudent1', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
-Route::post('Admission/EnrollStudent2', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform3', 'as' => 'page2']);
-Route::post('Admission/Success', ['middleware' => 'auth', 'uses' => 'policycontroller@admitStudent', 'as' => 'submitAdmissionForm']);
+Route::post('Policy/EnrollStudent/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
+Route::post('Policy/EnrollStudent1', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
+Route::post('Policy/EnrollStudent2', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform3', 'as' => 'page2']);
+Route::post('Policy/Success', ['middleware' => 'auth', 'uses' => 'policycontroller@admitStudent', 'as' => 'submitAdmissionForm']);
 Route::get('/Policy/Users',['middleware' => 'auth', 'uses' => 'policycontroller@users']);
 Route::auth();
 Route::get('/home', 'main@index');
