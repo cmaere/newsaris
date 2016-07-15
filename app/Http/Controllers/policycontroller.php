@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use  \App\Http\Controllers\main;
-
 class policycontroller extends Controller
 {
 	var $main;
-	var $model;
 	
 	
 	
@@ -153,21 +151,12 @@ class policycontroller extends Controller
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
 	    	
 	    }
-<<<<<<< HEAD
 	    public function admissionform()
 	    {
 	    	$currentpage = "Admit student";
 			$parentpage ="Admision";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 	    	return view('admissionform', 
-=======
-	    public function users()
-	    {
-	    	$currentpage = "Users";
-			$parentpage ="Policy";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-	    	return view('users', 
->>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
 					array('page' => 'home',
 						  'chasections' => $this->main->data,
 						  'chasubsections' => $this->main->menulist,
@@ -175,13 +164,23 @@ class policycontroller extends Controller
 						  'loginname' => $this->main->loginname,
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-<<<<<<< HEAD
 						  'parentpage' => $parentpage));
 	    }
-	    public function admissionform2()
+	    public function admissionform2(Request $request)
 	    {
-	    	$currentpage = "Admit student";
+	    	session([
+	    			'yearOfStudy' => $request['yearofstudy'],
+	    			'admissionNumber' => $request['admissionnumber'],
+	    			'campus' => $request['campus'],
+	    			'regNumber' => $request['regno'],
+	    			'leveOfStudy' => $request['levelofstudy'],
+	    			'mannerOfEntry' => $request['mannerofentry'],
+	    			'sponsor' => $request['sponsor'],
+	    			'faculty' => $request['faculty'],
+	    			'graddate' => $request['graddate'],
+	    			'program' => $request['program']
+	    		]);
+	    	$currentpage = "Enroll student";
 			$parentpage ="Admision";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 	    	return view('admissionform2', 
@@ -193,8 +192,38 @@ class policycontroller extends Controller
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
-						  'parentpage' => $parentpage));
+						  'session' => session()->get('campus')));
 	    }
+
+	    public function admissionform3(Request $request)
+	    {
+	    	session([
+	    			'lastname' => $request['lname'],'middlename' => $request['mname'],
+	    			'firstname' => $request['fname'],'sex' => $request['sex'],
+	    			'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['hdistrict'],
+	    			'ta' => $request['ta'],'homeVillage' => $request['hvillage'],
+	    			'nationality' => $request['nationality'],'studentStatus' => $request['stustatus'],
+	    			'religion' => $request['religion'],'maritalStatus' => $request['marital'],
+	    			'disability' => $request['disability'],'physAddress' => $request['paddress'],
+	    			'phone' => $request['phone'],'email' => $request['email'],
+	    			'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
+	    		]);
+	    	$currentpage = "Enroll student";
+			$parentpage ="Admision";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('admissionform3', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'session' => session()->get('lastname')));
+
+	    }
+
 	    public function exportexcel(Request $request)
 	    {
 	    	if($request->hasFile('adm_file'))
@@ -220,11 +249,6 @@ class policycontroller extends Controller
 	    	} 
 	    }
 
-=======
-						  'parentpage' => $parentpage,
-					  	   'users' => $this->model->getusers()));
-	    }
->>>>>>> cf05b60333af890f384d6f16c8b6dbb2ef2a8b1c
 
 
 	    
