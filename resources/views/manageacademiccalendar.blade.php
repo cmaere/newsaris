@@ -17,27 +17,28 @@
 @endsection
 
 
+
 @section('content')
 
 	
 	<div class="col-lg-8">	
 	<section class="panel"> 
 		<!-- BEGIN heading-->
-		<header class="panel-heading">{{$currentpage}} Information</header> 
+		<header class="panel-heading">Change Programme Semester or Academic Year</header> 
 		<div class="row text-sm wrapper"> 
-			<div class="col-sm-5 m-b-xs">
-				<a href={{route('newinstitution')}}>
-					<button class="btn btn-sm btn-white">Add New Institution</button>
+			<!--<div class="col-sm-5 m-b-xs">
+				<a href="{LINK}">
+					<button class="btn btn-sm btn-white">ADD NEW DEPARTMENT</button>
 				</a> 
-			</div> 
+			</div> -->
 			<div class="col-sm-4 m-b-xs"> </div> 
 			<div class="col-sm-3"> 
-				<div class="input-group"> 
+				<!--<div class="input-group"> 
 					<input type="text" placeholder="Search" class="input-sm form-control"> 
 					<span class="input-group-btn"> 
 						<button type="button" class="btn btn-sm btn-white">Go!</button> 
 					</span> 
-				</div> 
+				</div>  -->
 			</div> 
 		</div> 
 		<!-- END heading-->
@@ -45,63 +46,39 @@
 		
 		<form name="listform" id="listform">
 		<div class="table-responsive"> 
-			<table class="table table-striped b-t text-sm"> 
+			<table class="table table-striped b-t text-sm" > 
 				<thead> 
 					<tr> 
 					
 						<th width="20"><input type="checkbox"></th> 
 						<!-- BEGIN columns -->
-						<th {OPTIONS}>Campus
-						</th> 
-						<th {OPTIONS}>Location
-						</th> 
-						<th {OPTIONS}>Address
-						</th> 
-						<th {OPTIONS}>Tel
-						</th> 
-						<th {OPTIONS}>Email
-						</th> 
+						<th >Academic Year</th> 
+						<th >Programme</th>
+						<th >Semester</th>
+						<th >Cohort </th>
+						
+						
 						<!-- END columns -->
 					
-						<th>Edit</th> 
+						<th>Rollover</th> 
 					</tr> 
+					
 				</thead> 
 				<tbody> 
 				
-				 @foreach($campusinfo as $list)
-				 <tr>
-				 		<!-- BEGIN id -->
-						<td><input type='checkbox' value='{ID}' name='checkbox[]'></td> 
-						<!-- END id --> 
-						<!-- BEGIN innercolumns -->
-						
-						
+				@foreach($department as $list)
 					
-					
-							<td>
-								{{$list->campus}}
-							</td>
-							<td>
-								{{$list->location}}
-							</td>
-							<td>
-								{{$list->address}}
-							</td>
-							<td>
-								{{$list->tel}}
-							</td>
-							<td>
-								{{$list->Email}}
-							</td>
-								
-								<!-- BEGIN edit -->
-						<td> 
+					   <tr> <td {OPTIONS}><input type='checkbox' value='{ID}' name='checkbox[]'> </td> 
+					   
+						    <td>{{$list->AYear}} </td> <td>{{$list->programmeCode}}</td>  <td>{{$list->Semister_status}} </td>  <td>{{$list->cohort}} </td> 
+							<td> 
 						<a  class='active' href='{ID}'>
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
-						</td>							
-					</tr>
-							@endforeach; 
+						</td> </tr>
+                           @endforeach
+					<!-- BEGIN row -->
+					
 					<!-- END row -->
 				
 				
@@ -114,8 +91,8 @@
 					<!-- BEGIN delete -->
 					 <select class="input-sm form-control input-s-sm inline"> 
 					 	<option value="0">Bulk action</option> 
-					 	<option value="1" onClick=" delete_records('{FORM}');">Delete selected</option> 
-						 <option value="3">Export</option> 
+					 	<option value="1" onClick=" delete_records('{FORM}');">Rollover selected</option> 
+						 <option value="3"> </option> 
 				 	</select> 
 					<!-- END delete -->
 				
@@ -152,10 +129,13 @@
 				 	</ul> 
 				 </div> 
 			 </div>
-			  </form>
-			  </footer>
-			  </section>
-</div>
+		</footer>
+			 </form>
+			  
+			  
+	</section>
+	</div>
+
 @endsection
 
 

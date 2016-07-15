@@ -39,5 +39,14 @@ return $this->selectQuery($query);
     	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";
 		return $this->selectQuery($query);
     }
+
+    public function enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted)
+    {
+    	// $query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy, Faculty, Sponsor, GradYear, Status, Nationality, ParentOccupation, Disability, AdmissionNo, village, kin, kin_phone, account_number, bank_name, paddress, studylevel, kin_relationship, Email, Phone, kin_address, kin_email) VALUES('$lastname', '$regNumber', '$sex', '$dateOfBirth', '$mannerOfEntry', '$maritalStatus', '$campus', '$program','$faculty','$sponsor', '$graddate','$studentStatus', '$nationality, '$occupation', '$disability', '$admissionNumber', '$homeVillage', '$parentName', '$parentPhone', '$bankAccount', '$bankName', '$physAddress', '$leveOfStudy', '$relationship', '$email', '$phone', '$parentAddress', '$parentEmail')";
+    	// return $this->selectQuery($query);
+    }
+    
+
+
 }
 

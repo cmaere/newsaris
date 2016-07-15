@@ -19,20 +19,20 @@
 
 
 @section('content')
-<div class="col-lg-8">	
+<div class="col-lg-8">  
 <section class="panel"> 
-	<!-- BEGIN heading-->
-	<header class="panel-heading">Student admission</header> 
-	<div class="row text-sm wrapper"> 
-		<div class="col-sm-12 m-b-xs">
-			@include('includes.uploadfile') 	
-		</div>   
-	</div> 
-	<!-- END heading-->
+  <!-- BEGIN heading-->
+  <header class="panel-heading">Student admission</header> 
+  <div class="row text-sm wrapper"> 
+    <div class="col-sm-12 m-b-xs">
+      @include('includes.uploadfile')   
+    </div>   
+  </div> 
+  <!-- END heading-->
 <section class="panel"> 
-	<header class="panel-heading font-bold"> New Student </header> 
-	<div class="panel-body"> 
-		<form class="form-horizontal" action="{{route('page1')}}" method="POST">
+  <header class="panel-heading font-bold"> New Student </header> 
+  <div class="panel-body"> 
+    <form class="form-horizontal" action="{{route('page1')}}" method="POST">
   <fieldset>
     <legend>Study Programme Information</legend>
     <div class="form-group">
@@ -143,8 +143,8 @@
     </div>
  </fieldset>
 </form>
-	</div> 
+  </div> 
 </section>
-</section>	
+</section>  
 </div>
 @endsection

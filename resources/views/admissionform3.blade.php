@@ -32,7 +32,7 @@
 <section class="panel"> 
   <header class="panel-heading font-bold"> New Student </header> 
   <div class="panel-body"> 
-  <form class="form-horizontal" action="<!--  -->" method="POST">
+  <form class="form-horizontal" action="{{ route('submitAdmissionForm')}}" method="POST">
     <fieldset>
       <legend>Information About Parents/Guardian (If Applicable)</legend>
         <div class="form-group">
