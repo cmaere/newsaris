@@ -38,3 +38,4 @@ Route::get('Policy/ManageAcademicCalendar', ['middleware' => 'auth', 'uses' => '
   
 Route::get('/home', 'main@index');
 
+Route::get('Policy/institution_edit/{id?}', 'policycontroller@institution_edit')->name("institution_edit");

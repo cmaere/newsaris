@@ -41,11 +41,10 @@ class policymodel extends Model
     }
      public function  editcampus($id){
      	
-    	$query = "select campus,location,address,tel,Email from campus where CampusID = '$id'";
+    	$query = "select campus,location,address,tel,Email,CampusID from campus where CampusID = '$id'";
 
     	return $this->selectQuery($query);
     }
-
 	
 	public function manageacademiccalendar(){
 		$query = "SELECT AYear, programmeCode,Semister_status,cohort FROM `academicyear` WHERE Status = 1" ;

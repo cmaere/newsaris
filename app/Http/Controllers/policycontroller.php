@@ -271,28 +271,30 @@ class policycontroller extends Controller
 					  'currentpage' => $currentpage ));
 		
     }
-    public function institution_edit(Request $request) {
-    $id=$request['CampusID'];
-	
-    $model = new \App\policymodel();
-	$data= $model->editcampus($id);
+    public function institution_edit($id) {
+	    //$id=$request['CampusID'];
 		
+	    $model = new \App\policymodel();
+    	$data= $model->editcampus($id);
 
-	$currentpage = "edir New Institution";
-	$parentpage ="Policy";
-	$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 	
-    return view('institution_edit', 
-				array('page' => 'home',
-					  'chasections' => $this->main->data,
-					  'chasubsections' => $this->main->menulist,
-					  'x' => 0,
-					  'loginname' => $this->main->loginname,
-					  'institution', 'campusinfo' => $data,
-					  'welcomemessage' => $welcomemessage,
-					  'currentpage' => $currentpage ));
+
+		$currentpage = "edir New Institution";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 		
-    }
+	    return view('institution_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'institution', 'campusinfo' => $data,
+						  'welcomemessage' => $welcomemessage,
+ 						  'parentpage' => $parentpage,
+						  'currentpage' => $currentpage ));
+			
+	    }
 		 
 
 	    public function admissionform()
