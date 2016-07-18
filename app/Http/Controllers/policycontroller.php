@@ -145,7 +145,7 @@ class policycontroller extends Controller
 	    	
 	    	if($this->model->insertIntoFaculty($faculty,$address,$email,$tel,$location))
 	    	{
-	    		//return redirect()->back();
+	    		return redirect('/Policy/Faculty');
 	    	}
 
 	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
@@ -153,9 +153,15 @@ class policycontroller extends Controller
 	    }
 	    public function admissionform()
 	    {
-	    	$currentpage = "Admit student";
-			$parentpage ="Admision";
+	    	$currentpage = "Enroll student";
+			$parentpage ="Policy";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			$campus = $this->model->getCampus();
+			$programmes = $this->model->getProgrammes();
+			$faculties = $this->model->getFaculty();
+			$sponsors = $this->model->getSponsors();
+			$mannerofentry = $this->model->getMannerOfEntry();
+
 	    	return view('admissionform', 
 					array('page' => 'home',
 						  'chasections' => $this->main->data,
@@ -164,10 +170,19 @@ class policycontroller extends Controller
 						  'loginname' => $this->main->loginname,
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage));
+						  'parentpage' => $parentpage,
+						  'campus' => $campus,
+						  'programmes' => $programmes,
+						  'faculties' => $faculties,
+						  'sponsors' => $sponsors,
+						  'entrymanners' => $mannerofentry));
 	    }
 	    public function admissionform2(Request $request)
 	    {
+	    	$this->validate($request, [
+	    		'admissionnumber' => 'required',
+	    		'graddate' => 'required|date_format:"Y-m-d"'
+	    	]);
 	    	session([
 	    			'yearOfStudy' => $request['yearofstudy'],
 	    			'admissionNumber' => $request['admissionnumber'],
@@ -183,6 +198,7 @@ class policycontroller extends Controller
 	    	$currentpage = "Enroll student";
 			$parentpage ="Admision";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+
 	    	return view('admissionform2', 
 					array('page' => 'home',
 						  'chasections' => $this->main->data,
@@ -192,25 +208,42 @@ class policycontroller extends Controller
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
-						  'session' => session()->get('campus')));
+						  'gender' => $this->model->getSex(),
+						  'studentstatus' => $this->model->getStudentStatus(),
+						  'disabilities' => $this->model->getDisability(),
+						  'religion' => $this->model->getReligion(),
+						  'maritalstatus' => $this->model->getMaritalStatus()));
 	    }
 
 	    public function admissionform3(Request $request)
 	    {
+	    	$this->validate($request, [
+	    		'lastname' => 'required|alpha',
+	    		'middlename' => 'alpha',
+	    		'firstname' => 'required|alpha',
+	    		'sex' => 'required',
+	    		'dateofbirth' => 'required|date_format:"Y-m-d"',
+	    		'ta' => 'alpha',
+	    		'phone' => 'numeric',
+	    		'email' => 'email'
+	    	]);
 	    	session([
-	    			'lastname' => $request['lname'],'middlename' => $request['mname'],
-	    			'firstname' => $request['fname'],'sex' => $request['sex'],
-	    			'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['hdistrict'],
-	    			'ta' => $request['ta'],'homeVillage' => $request['hvillage'],
-	    			'nationality' => $request['nationality'],'studentStatus' => $request['stustatus'],
+	    			'lastname' => $request['lastname'],'middlename' => $request['middlename'],
+	    			'firstname' => $request['firstname'],'sex' => $request['sex'],
+	    			'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['homedistrict'],
+	    			'ta' => $request['ta'],'homeVillage' => $request['homevillage'],
+	    			'nationality' => $request['nationality'],'studentStatus' => $request['studentstatus'],
 	    			'religion' => $request['religion'],'maritalStatus' => $request['marital'],
-	    			'disability' => $request['disability'],'physAddress' => $request['paddress'],
+	    			'disability' => $request['disability'],'physAddress' => $request['physicaladdress'], 
+	    			'curAddress' => $request['currentaddress'],
 	    			'phone' => $request['phone'],'email' => $request['email'],
 	    			'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
 	    		]);
 	    	$currentpage = "Enroll student";
 			$parentpage ="Admision";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			
+
 	    	return view('admissionform3', 
 					array('page' => 'home',
 						  'chasections' => $this->main->data,
@@ -220,7 +253,8 @@ class policycontroller extends Controller
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
-						  'session' => session()->get('lastname')));
+						  
+						  ));
 
 	    }
 
@@ -230,9 +264,14 @@ class policycontroller extends Controller
 	    	{
 	    		$file = $request->file('adm_file');
 	    		$files = fopen($file, 'r');
+
 	    		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
 	    		{
-
+	    			// if($fileop[0] = 'BACHELOR  OF SCIENCE IN NURSING')
+	    			// {
+	    			// 	echo 'Ndakupeza';
+	    			// 	die();
+	    			// }
 	    			$name = $fileop[0];
 	    			$gender = $fileop[1];
 	    			$cand_num = $fileop[2];
@@ -257,47 +296,128 @@ class policycontroller extends Controller
 	    			'examNumber' => $request['examnum'],
 	    			'yearCompleted' => $request['yearcompleted']
 	    		]);
-	    	$yearOfStudy = session()->get('yearOfStudy');
-	    	$admissionNumber = session()->get('admissionNumber');
-	    	$campus = session()->get('campus');
-	    	$regNumber = session()->get('regNumber');
-	    	$leveOfStudy = session()->get('leveOfStudy');
-	    	$mannerOfEntry = session()->get('mannerOfEntry');
-	    	$sponsor = session()->get('sponsor');
-	    	$faculty = session()->get('faculty');
-	    	$graddate = session()->get('graddate');
-	    	$program = session()->get('program');
-	    	$lastname = session()->get('lastname');
-	    	$middlename = session()->get('middlename');
-	    	$firstname = session()->get('firstname');
-	    	$sex = session()->get('sex');
-	    	$dateOfBirth = session()->get('dateOfBirth');
-	    	$homeDistrict = session()->get('homeDistrict');
-	    	$ta = session()->get('ta');
-	    	$homeVillage = session()->get('homeVillage');
-	    	$nationality = session()->get('nationality');
-	    	$studentStatus =session()->get('studentStatus');
-	    	$religion =session()->get('religion');
-	    	$maritalStatus = session()->get('maritalStatus');
-	    	$disability =session()->get('disability');
-	    	$physAddress =session()->get('physAddress');
-	    	$phone =session()->get('phone');
-	    	$email =session()->get('email');
-	    	$bankName =session()->get('bankName');
-	    	$bankAccount = session()->get('bankAccount');
-	    	$parentName = session()->get('bankAccount');
-	    	$relationship = session()->get('bankAccount');
-	    	$occupation = session()->get('bankAccount');
-	    	$parentAddress = session()->get('bankAccount');
-	    	$parentEmail = session()->get('parentEmail');
-	    	$parentPhone = session()->get('parentPhone');
-	    	$schoolName = session()->get('schoolName');
-	    	$examNumber = session()->get('examNumber');
-	    	$yearCompleted = session()->get('yearCompleted');
+	    	$yearOfStudy = session()->pull('yearOfStudy');
+	    	$admissionNumber = session()->pull('admissionNumber');
+	    	$campus = session()->pull('campus');
+	    	$regNumber = session()->pull('regNumber');
+	    	$leveOfStudy = session()->pull('leveOfStudy');
+	    	$mannerOfEntry = session()->pull('mannerOfEntry');
+	    	$sponsor = session()->pull('sponsor');
+	    	$faculty = session()->pull('faculty');
+	    	$graddate = session()->pull('graddate');
+	    	$program = session()->pull('program');
+	    	$lastname = session()->pull('lastname');
+	    	$middlename = session()->pull('middlename');
+	    	$firstname = session()->pull('firstname');
+	    	$sex = session()->pull('sex');
+	    	$dateOfBirth = session()->pull('dateOfBirth');
+	    	$homeDistrict = session()->pull('homeDistrict');
+	    	$ta = session()->pull('ta');
+	    	$homeVillage = session()->pull('homeVillage');
+	    	$nationality = session()->pull('nationality');
+	    	$studentStatus =session()->pull('studentStatus');
+	    	$religion =session()->pull('religion');
+	    	$maritalStatus = session()->pull('maritalStatus');
+	    	$disability =session()->pull('disability');
+	    	$physAddress =session()->pull('physAddress');
+	    	$phone =session()->pull('phone');
+	    	$email =session()->pull('email');
+	    	$bankName =session()->pull('bankName');
+	    	$bankAccount = session()->pull('bankAccount');
+	    	$parentName = session()->pull('bankAccount');
+	    	$relationship = session()->pull('bankAccount');
+	    	$occupation = session()->pull('bankAccount');
+	    	$parentAddress = session()->pull('bankAccount');
+	    	$parentEmail = session()->pull('parentEmail');
+	    	$parentPhone = session()->pull('parentPhone');
+	    	$schoolName = session()->pull('schoolName');
+	    	$examNumber = session()->pull('examNumber');
+	    	$yearCompleted = session()->pull('yearCompleted');
 	    	
-	    	$enrollStudent = $this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted);
-	    	//return redirect()->route()
+	    	if($this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted))
+	    	{
+	    		return redirect('/Policy/EnrollStudent')->with('feedback','Student enrolled successfully!');
+	    	}
+	    	else
+	    	{
+	    		return redirect('/Policy/EnrollStudent')->with('feedback','Student could not be enrolled!');
+	    	}
+	    	
 	    }
 	    
+	    public function createaccountform(){
+	    	$currentpage = "Create Account";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+
+	    	return view('createaccountform',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'positions' => $this->model->getPrivilege()
+						  ));
+	    }
+
+	    public function addaccount(Request $request)
+	    {
+	    	$this->validate($request,[
+	    		'lastname' => 'required|alpha',
+	    		'firstname' => 'required|alpha',
+	    		'dateofbirth' => 'required|date_format:"Y-m-d"',
+	    		'registrationnumber' => 'required',
+	    		'position' => 'required',
+	    		'username' => 'required',
+	    		'password' => 'required|alpha_num',
+	    		'email' => 'email'
+	    		]);
+
+	    	$lastname = $request['lastname'];
+	    	$firstname = $request['firstname'];
+	    	$dateofbirth = $request['dateofbirth'];
+	    	$regNumber = $request['registrationnumber'];
+	    	$position = $request['position'];
+	    	$username = $request['username'];
+	    	$password = $request['password'];
+	    	$email = $request['email'];
+	    	$count = $this->model->verifyUser($lastname,$firstname,$dateofbirth,$regNumber);
+
+	    	foreach ($count as $value) {
+	    		$number = $value->count;
+	    	}
+	    	if ($number > 0) 
+	    	{
+	    		// if($this->createAccount())
+	    		// {
+	    		 	return redirect('/Policy/CreateAccount');
+	    		// }
+	    	}
+	    	else
+	    	{
+	    		return redirect('/Policy/CreateAccount')->with('failure', 'User could not be verified!')
+	    												->withInput();
+	    	}
+	    	
+
+	    	// if($this->model->verifyUser($lastname,$firstname,$dateofbirth,$regNumber) = 0)
+	    	// {
+	    	// 	if($this->model->createAccount())
+	    	// 	{
+	    	// 		
+	    	// 	}
+	    	// 	else
+	    	// 	{
+	    	// 		redirect('/Policy/CreateAccount')->with('feedback', 'Account could not be created!');
+	    	// 	}
+	    	// }
+	    	// else
+	    	// {
+	    	// 	redirect('/Policy/CreateAccount')->with('feedback', 'User could not be verified!');
+	    	// }
+	    }
    
 }

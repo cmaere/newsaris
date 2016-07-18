@@ -42,11 +42,70 @@ return $this->selectQuery($query);
 
     public function enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted)
     {
-    	// $query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy, Faculty, Sponsor, GradYear, Status, Nationality, ParentOccupation, Disability, AdmissionNo, village, kin, kin_phone, account_number, bank_name, paddress, studylevel, kin_relationship, Email, Phone, kin_address, kin_email) VALUES('$lastname', '$regNumber', '$sex', '$dateOfBirth', '$mannerOfEntry', '$maritalStatus', '$campus', '$program','$faculty','$sponsor', '$graddate','$studentStatus', '$nationality, '$occupation', '$disability', '$admissionNumber', '$homeVillage', '$parentName', '$parentPhone', '$bankAccount', '$bankName', '$physAddress', '$leveOfStudy', '$relationship', '$email', '$phone', '$parentAddress', '$parentEmail')";
-    	// return $this->selectQuery($query);
+        $fullname = strtoupper($firstname).' '.$lastname;
+        $fullname = str_replace(' ', ', ', $fullname);
+    	$query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy,";
+        $query .= "Faculty, Sponsor, GradYear, Status, Nationality, ParentOccupation, Disability, AdmissionNo, village, kin,";
+        $query .= "kin_phone, account_number, bank_name, paddress, studylevel, kin_relationship, Email, Phone, kin_address, kin_email) ";
+        $query .= "VALUES('$fullname','$regNumber','$sex','$dateOfBirth','$mannerOfEntry','$maritalStatus','$campus','$program',";
+        $query .= "'$faculty','$sponsor','$graddate','$studentStatus','$nationality','$occupation','$disability','$admissionNumber',"; 
+        $query .= "'$homeVillage','$parentName','$parentPhone','$bankAccount','$bankName','$physAddress','$leveOfStudy',";
+        $query .= "'$relationship','$email','$phone','$parentAddress','$parentEmail')";
+    	return $this->selectQuery($query);
+    }
+
+    public function getCampus(){
+    	$query = "select * from campus";
+    	return $this->selectQuery($query);
     }
     
+    public function getSponsors(){
+    	$query = "select * from sponsors";
+    	return $this->selectQuery($query);
+    }
 
+    public function getMannerOfEntry(){
+    	$query = "select * from mannerofentry";
+    	return $this->selectQuery($query);
+    }
+
+    public function getSex(){
+    	$query = "select * from sex";
+    	return $this->selectQuery($query);
+    }
+
+    public function getStudentStatus(){
+        $query = "select * from studentstatus";
+        return $this->selectQuery($query);
+    }
+
+    public function getDisability(){
+        $query = "select * from disability";
+        return $this->selectQuery($query);
+    }
+
+    public function getReligion(){
+        $query = "select * from religion";
+        return $this->selectQuery($query);
+    }
+
+    public function getMaritalStatus(){
+        $query = "select * from maritalstatus";
+        return $this->selectQuery($query);
+    }
+
+    public function getPrivilege()
+    {
+        $query = "select * from privilege";
+        return $this->selectQuery($query);
+    }
+    
+    public function verifyUser($lastname,$firstname,$dateofbirth,$regNumber){
+        $fullname = strtoupper($firstname).' '.$lastname;
+        $name = str_replace(' ', ', ', $fullname);
+        $query = "select count('id') as count from student where Name = '$name' and DBirth = '$dateofbirth' and RegNo = '$regNumber' limit 1";
+        return $this->selectQuery($query);
+    }
 
 }
 
