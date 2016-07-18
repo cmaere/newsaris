@@ -38,3 +38,5 @@ Route::get('Policy/ManageAcademicCalendar', ['middleware' => 'auth', 'uses' => '
   
 Route::get('/home', 'main@index');
 
+Route::get('/home', 'HomeController@index');
+

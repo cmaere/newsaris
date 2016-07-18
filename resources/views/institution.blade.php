@@ -74,9 +74,6 @@
 						<td><input type='checkbox' value='{ID}' name='checkbox[]'></td> 
 						<!-- END id --> 
 						<!-- BEGIN innercolumns -->
-						
-						
-					
 					
 							<td>
 								{{$list->campus}}

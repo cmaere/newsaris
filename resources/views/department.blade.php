@@ -17,18 +17,17 @@
 @endsection
 
 
-
 @section('content')
 
 	
 	<div class="col-lg-8">	
 	<section class="panel"> 
 		<!-- BEGIN heading-->
-		<header class="panel-heading">Department Information</header> 
+		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href="{LINK}">
-					<button class="btn btn-sm btn-white">ADD NEW DEPARTMENT</button>
+				<a href={{route('newinstitution')}}>
+					<button class="btn btn-sm btn-white">Add New Department</button>
 				</a> 
 			</div> 
 			<div class="col-sm-4 m-b-xs"> </div> 
@@ -50,48 +49,55 @@
 				<thead> 
 					<tr> 
 					
-						<th width="20"><input type="checkbox"></th> 
+			<!--			<th width="20"><input type="checkbox"></th>       -->
 						<!-- BEGIN columns -->
-						<th >Department</th> 
-						<th >Location</th>
-						<th >Hod</th>
-						<th >Address </th>
-						<th >Telephone </th>
-						<th >Email Address</th>
-						
+						<th {OPTIONS}>Department</th> 
+						<th {OPTIONS}>Location</th> 
+						<th {OPTIONS}>Hod</th>
+						<th {OPTIONS}>Address</th> 
+						<th {OPTIONS}>Tel</th> 
+						<th {OPTIONS}>Email</th>  
 						<!-- END columns -->
 					
 						<th>Edit</th> 
 					</tr> 
-					
 				</thead> 
 				<tbody> 
 				
-				@foreach($department as $list)
-					
-					   <tr> <td {OPTIONS}><input type='checkbox' value='{ID}' name='checkbox[]'> </td> 
-					   
-						    <td>{{$list->DeptName}} </td> {{$list->DeptPhysAdd}}</td>  <td>{{$list->DeptHead}} </td>  <td>{{$list->DeptAddress}} </td> <td>{{$list->DeptTel}} </td> <td>{{$list->DeptEmail}} </td></tr>
-                           @endforeach
-					<!-- BEGIN row -->
-					<tr> 
-						<!-- BEGIN id -->
+				 @foreach($department as $list)
+				 <tr>
+				 		<!-- BEGIN id -->
 						<td><input type='checkbox' value='{ID}' name='checkbox[]'></td> 
 						<!-- END id --> 
-						
 						<!-- BEGIN innercolumns -->
-						<td>{ROWDATA}</td>   
-						<!-- END innercolumns --> 
-						<!-- BEGIN edit -->
+					
+							<<td>
+								{{$list->DeptName}}
+							</td>
+							<td>
+								{{$list->DeptPhysAdd}}
+							</td>
+							<td>
+								{{$list->DeptHead}}
+							</td>
+							<td>
+								{{$list->DeptAddress}}
+							</td>
+							<td>
+								{{$list->DeptTel}}
+							</td>
+							<td>
+								{{$list->DeptEmail}}
+							</td>
+								
+								<!-- BEGIN edit -->
 						<td> 
 						<a  class='active' href='{ID}'>
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
-						</td> 
-						<!-- END edit -->
-					
-					
-					</tr> 
+						</td>							
+					</tr>
+							@endforeach; 
 					<!-- END row -->
 				
 				
@@ -142,13 +148,10 @@
 				 	</ul> 
 				 </div> 
 			 </div>
-		</footer>
-			 </form>
-			  
-			  
-	</section>
-	</div>
-
+			  </form>
+			  </footer>
+			  </section>
+</div>
 @endsection
 
 
