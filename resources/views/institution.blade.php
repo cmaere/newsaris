@@ -93,6 +93,8 @@
 							<td>
 								{{$list->Email}}
 							</td>
+
+							
 								
 								<!-- BEGIN edit -->
 						<td> 

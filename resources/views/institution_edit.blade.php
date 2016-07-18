@@ -45,7 +45,7 @@
 		
 		
 	
-		<form action="<?php //echo $editFormAction; ?>" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal">
+		<form action="{{route('institution_edited')}}" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal">
 		 @foreach($campusinfo as $list) 
 			<div class="form-group"> <label class="col-sm-2 control-label">Institution</label> 
 				<div class="col-sm-10"> <input type="text" name="campus" class="form-control rounded" value={{$list->campus}}> </div> 
@@ -80,8 +80,8 @@
 	    	     	<div class="line line-dashed line-lg pull-in"></div> 
 			
     		    	<div class="form-group"> <div class="col-sm-4 col-sm-offset-2">  
-	    		    <button class="btn btn-primary" type="submit">Edit Record</button> 
-			    <input type="hidden" name="MM_update" value="frmInstEdit">
+	    		    <button class="btn btn-primary" type="submit" name="submit">Edit Record</button> 
+			    	<input type="hidden" name="_token" value="{{ Session::token() }}">
     	    		</div> 
     	    		 @endforeach;
 		</form> 

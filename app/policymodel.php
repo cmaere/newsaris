@@ -24,14 +24,34 @@ class policymodel extends Model
 		$query="insert into faculty (FacultyName, Address, Email, Tel, Location) values ('$faculty','$address','$email','$tel', '$location')";
 		return $this->selectQuery($query);
 	}
+    public function  addInstitution($campus,$location,$address,$tel,$email){
+        $query = "INSERT INTO campus (Campus,Location,Address,Tel,Email) VALUES ('$campus','$location','$address','$tel','$email')";
+
+        return $this->selectQuery($query);
+    }
 	public function getdepartment(){
 		$query = "SELECT DeptName, DeptPhysAdd, DeptHead, DeptAddress, DeptTel, DeptEmail FROM `department`";
-return $this->selectQuery($query);
+    return $this->selectQuery($query);
 	}
     public function  getinstitution(){
-    	$query = "select campus,location,address,tel,Email from campus";
+    	$query = "select campus,location,address,tel,Email,CampusID from campus";
 
     	return $this->selectQuery($query);
+    }
+    public function  editcampus($id){
+        
+        $query = "select campus,location,address,tel,Email,CampusID from campus where CampusID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+
+     public function  editedcampus($campus,$paddress,$address,$tel,$email,$id){
+        
+       $query = "UPDATE campus
+                SET Campus ='$campus', Location ='$paddress', Address ='$address',Tel ='tel',Email ='$email'
+                WHERE CampusID ='$id'";
+
+        return $this->selectQuery($query);
     }
 
     public function insertIntoStudentTable($name, $gender, $cand_num)

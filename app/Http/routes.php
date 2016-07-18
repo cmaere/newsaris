@@ -32,3 +32,11 @@ Route::get('/Policy/CreateAccount',['middleware' => 'auth', 'uses' => 'policycon
 Route::post('Policy/CreateAccount', ['middleeware' => 'auth', 'uses' => 'policycontroller@addaccount', 'as' => 'createaccount']);
 Route::auth();
 Route::get('/home', 'main@index');
+
+
+
+
+Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution')->name("newinstitution"); 
+Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");
+Route::get('Policy/institution_edit/{id?}', 'policycontroller@institution_edit')->name("institution_edit");
+Route::post('Policy/institution_edit/success', 'policycontroller@institution_edited')->name("institution_edited");

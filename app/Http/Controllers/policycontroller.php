@@ -23,6 +23,7 @@ class policycontroller extends Controller
 	
  	public function institution() {
  		//page initalization
+ 		$model = new \App\policymodel();
  		
      	$data = $this->model->getinstitution();
  		$currentpage = "Institution";
@@ -44,6 +45,75 @@ class policycontroller extends Controller
  						  'currentpage' => $currentpage ));
 			
  	    }
+		 public function addinstitution(Request $request) {
+	    	$campus=$request['campus'];
+	    	$location=$request['paddress'];
+	    	$address=$request['address'];
+	    	$tel=$request['tel'];
+	    	$email=$request['email'];
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->addInstitution($campus,$location,$address,$tel,$email);
+		
+	    }
+
+ 	    public function newinstitution() {
+	    	
+		$currentpage = "Add New Institution";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('newinstitution', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+ 	    public function institution_edit($id) {
+	    //$id=$request['CampusID'];
+		
+	    $model = new \App\policymodel();
+    	$data= $model->editcampus($id);
+
+	
+
+		$currentpage = "edir New Institution";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('institution_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'institution', 'campusinfo' => $data,
+						   'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+		public function institution_edited(Request $request) {
+	    	$campus=$request['campus'];
+	    	$location=$request['paddress'];
+	    	$address=$request['address'];
+	    	$tel=$request['tel'];
+	    	$email=$request['email'];
+	    	$id=$request['id'];
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->editedcampus($campus,$location,$address,$tel,$email,$id);
+		
+	    }
 		
 
 	  public function faculty() {
