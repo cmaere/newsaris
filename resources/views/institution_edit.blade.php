@@ -45,44 +45,45 @@
 		
 		
 	
-		<form action="<?php //echo $editFormAction; ?>" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal"> 
+		<form action="{{route('institution_edited')}}" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal">
+		 @foreach($campusinfo as $list) 
 			<div class="form-group"> <label class="col-sm-2 control-label">Institution</label> 
-				<div class="col-sm-10"> <input type="text" name="txtName" class="form-control rounded" value="<?php //echo $row_instEdit['Campus']; ?>"> </div> 
-
- @foreach($campusinfo as $list)
-
- {{$list->campus}}
-
- @endforech;
-
-
+				<div class="col-sm-10"> <input type="text" name="campus" class="form-control rounded" value={{$list->campus}}> </div> 
 			</div> 
-			<div class="line line-dashed line-lg pull-in"></div> 
-			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
-			 	<?php// Wysiwyg('txtAdd',$row_instEdit['Address']); ?>
-			 </div>
-	   	         <div class="line line-dashed line-lg pull-in"></div> 
-			 <div class="form-group"> <label class="col-sm-2 control-label">Physical Address</label> 
-			 	<?php// Wysiwyg('txtPhyAdd',$row_instEdit['Location']); ?>
-			 </div>
+			<div class="line line-dashed line-lg pull-in"></div>
+
+			<div class="form-group"> <label class="col-sm-2 control-label">Address</label>  
+				<div class="col-sm-10"> 
+					<div data-target="#editor" data-role="editor-toolbar" class="btn-toolbar m-b-sm btn-editor"> 
+					<textarea name="address" style="overflow:scroll;height:150px;max-height:150px" class="form-control"> {{$list->address}}</textarea> </div>
+					</div> 
+			</div>
+	   	     <div class="line line-dashed line-lg pull-in"></div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Physical Address</label>  
+				<div class="col-sm-10"> 
+					<div data-target="#editor" data-role="editor-toolbar" class="btn-toolbar m-b-sm btn-editor"> 
+					<textarea name="paddress" style="overflow:scroll;height:150px;max-height:150px" class="form-control"> {{$list->location}}</textarea> </div>
+					</div> 
+			</div>
 			 <div class="line line-dashed line-lg pull-in"></div> 
  			<div class="form-group"> <label class="col-sm-2 control-label">Telephone</label> 
- 				<div class="col-sm-10"> <input type="text" name="txtTel" class="form-control rounded" value="<?php //echo $row_instEdit['Tel']; ?>"> </div> 
+ 				<div class="col-sm-10"> <input type="text" name="tel" class="form-control rounded" value={{$list->tel}}></div> 
  			</div>
 			<div class="line line-dashed line-lg pull-in"></div> 
 			
 			<div class="form-group"> <label class="col-sm-2 control-label">Email</label> 
-				<div class="col-sm-10"> <input type="text" name="txtEmail" class="form-control rounded" value="<?php //echo $row_instEdit['Email']; ?>"><input name="id" type="hidden" id="id" value="<?php //echo $key ?>">
+				<div class="col-sm-10"> <input type="text" name="email" class="form-control rounded" value={{$list->Email}}>
+				<input name="id" type="hidden" id="id" value="{{$list->CampusID}}">
 				</div> 
 			</div>
 			
 	    	     	<div class="line line-dashed line-lg pull-in"></div> 
 			
     		    	<div class="form-group"> <div class="col-sm-4 col-sm-offset-2">  
-	    		    <button class="btn btn-primary" type="submit">Edit Record</button> 
-			    <input type="hidden" name="MM_update" value="frmInstEdit">
+	    		    <button class="btn btn-primary" type="submit" name="submit">Edit Record</button> 
+			    	<input type="hidden" name="_token" value="{{ Session::token() }}">
     	    		</div> 
-
+    	    		 @endforeach;
 		</form> 
 	</footer>
 	</section>

@@ -22,21 +22,26 @@ Route::get('/Policy/Programme', ['middleware' => 'auth', 'uses' =>'policycontrol
 Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'policycontroller@newfaculty'])->name('newfaculty');
 Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
-
-Route::get('Policy/AdmissionForm', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform']);
-Route::post('Policy/AdmissionForm/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
-Route::post('Policy/AdmissionForm', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
-
+Route::get('Policy/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform']);
+Route::post('Policy/EnrollStudent/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
+Route::post('Policy/EnrollStudent1', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
+Route::post('Policy/EnrollStudent2', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform3', 'as' => 'page2']);
+Route::post('Policy/Success', ['middleware' => 'auth', 'uses' => 'policycontroller@admitStudent', 'as' => 'submitAdmissionForm']);
 Route::get('/Policy/Users',['middleware' => 'auth', 'uses' => 'policycontroller@users']);
+Route::get('/Policy/CreateAccount',['middleware' => 'auth', 'uses' => 'policycontroller@createaccountform']);
+Route::post('Policy/CreateAccount', ['middleeware' => 'auth', 'uses' => 'policycontroller@addaccount', 'as' => 'createaccount']);
 Route::auth();
-Route::get('/home', 'HomeController@index');
-Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution')->name("newinstitution"); 
-Route::get('Policy/Institution/editstitution', 'policycontroller@institution_edit')->name("institution_edit");
-Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");    
- 
-Route::get('Policy/ManageAcademicCalendar', ['middleware' => 'auth', 'uses' => 'policycontroller@manageacademiccalendar']);
-  
 Route::get('/home', 'main@index');
 
+
 Route::get('/home', 'HomeController@index');
+
+
+
+
+
+Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution')->name("newinstitution"); 
+Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");
+Route::get('Policy/institution_edit/{id?}', 'policycontroller@institution_edit')->name("institution_edit");
+Route::post('Policy/institution_edit/success', 'policycontroller@institution_edited')->name("institution_edited");
 

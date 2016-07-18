@@ -90,10 +90,12 @@
 							<td>
 								{{$list->Email}}
 							</td>
+
+							
 								
 								<!-- BEGIN edit -->
 						<td> 
-						<a  class='active' href='{ID}'>
+						<a  class='active' href="{{ route('institution_edit', ['id'=>$list->CampusID])}}">
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
 						</td>							

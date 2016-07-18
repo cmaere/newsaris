@@ -54,9 +54,9 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', 'saris.kcn.unima.mw'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'chasaris'),
+            'database' => env('DB_DATABASE', 'localhost'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
