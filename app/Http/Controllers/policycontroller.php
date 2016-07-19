@@ -471,23 +471,43 @@ class policycontroller extends Controller
 	    		return redirect('/Policy/CreateAccount')->with('failure', 'User could not be verified!')
 	    												->withInput();
 	    	}
-	    	
-
-	    	// if($this->model->verifyUser($lastname,$firstname,$dateofbirth,$regNumber) = 0)
-	    	// {
-	    	// 	if($this->model->createAccount())
-	    	// 	{
-	    	// 		
-	    	// 	}
-	    	// 	else
-	    	// 	{
-	    	// 		redirect('/Policy/CreateAccount')->with('feedback', 'Account could not be created!');
-	    	// 	}
-	    	// }
-	    	// else
-	    	// {
-	    	// 	redirect('/Policy/CreateAccount')->with('feedback', 'User could not be verified!');
-	    	// }
+	    }
+	     public function moduleregistration()
+	    {
+	    	$currentpage = "Register Module";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    	return view('moduleregistration',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage
+						  ));
+	    }
+	    public function getmoduleregistrationform(Request $request)
+	    {
+	    	if ($request->input('submit'))
+	    	{
+	    		$currentpage = "Register Module";
+				$parentpage ="Policy";
+				$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+	    		return view('moduleregistrationform',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'courses' => $this->model->getCourses()));
+        	}
+      //   return 'Is not set';
+	    	//return redirect('moduleregistration')->with('submitted');
 	    }
    
 }

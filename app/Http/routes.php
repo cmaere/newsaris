@@ -31,6 +31,7 @@ Route::get('/Policy/Users',['middleware' => 'auth', 'uses' => 'policycontroller@
 Route::get('/Policy/CreateAccount',['middleware' => 'auth', 'uses' => 'policycontroller@createaccountform']);
 Route::post('Policy/CreateAccount', ['middleeware' => 'auth', 'uses' => 'policycontroller@addaccount', 'as' => 'createaccount']);
 Route::get('/Policy/ModuleRegistration', ['middleware'=> 'auth', 'uses' => 'policycontroller@moduleregistration']);
+Route::post('/Policy/ModuleRegistrationForm', ['middleware' => 'auth', 'uses' => 'policycontroller@getmoduleregistrationform', 'as' => 'moduleregistrationform']);
 Route::auth();
 Route::get('/home', 'main@index');
 

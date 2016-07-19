@@ -126,6 +126,14 @@ class policymodel extends Model
         $query = "select count('id') as count from student where Name = '$name' and DBirth = '$dateofbirth' and RegNo = '$regNumber' limit 1";
         return $this->selectQuery($query);
     }
+    /**
+    to be updated
+    */
+    public function getCourses()
+    {
+        $query = "select * from course";
+        return $this->selectQuery($query);
+    }
 
 }
 
