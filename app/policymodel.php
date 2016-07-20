@@ -38,6 +38,13 @@ class policymodel extends Model
 
     	return $this->selectQuery($query);
     }
+    public function  delete_institution($check){
+        
+        $query = "DELETE FROM campus WHERE CampusID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+
     public function  editcampus($id){
         
         $query = "select campus,location,address,tel,Email,CampusID from campus where CampusID = '$id'";

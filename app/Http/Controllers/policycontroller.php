@@ -114,6 +114,22 @@ class policycontroller extends Controller
     	$post = $model->editedcampus($campus,$location,$address,$tel,$email,$id);
 		
 	    }
+
+	    public function institution_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_institution($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Institution");	
+		
+	    }
 		
 
 	  public function faculty() {

@@ -46,4 +46,5 @@ Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution
 Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");
 Route::get('Policy/institution_edit/{id?}', 'policycontroller@institution_edit')->name("institution_edit");
 Route::post('Policy/institution_edit/success', 'policycontroller@institution_edited')->name("institution_edited");
+Route::post('Policy/institution_edit/delete', 'policycontroller@institution_delete')->name("institution_delete");
 

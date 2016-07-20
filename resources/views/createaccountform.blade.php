@@ -119,7 +119,7 @@
       <label for="confirmpassword" class="col-lg-3 control-label">Confirm Password</label>
       <div class="col-lg-8">
         <input type="password" class="form-control rounded" id="confirmpassword" placeholder="re-enter your password" name="confirmpassword" value="{{old('confirmpassword')}}">
-        <span class="has_error""></span>
+        <span class="has_error"></span>
       </div>
     </div>
      
