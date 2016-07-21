@@ -275,6 +275,7 @@ class policycontroller extends Controller
 						  'currentpage' => $currentpage ));
 			
 	    }
+
 	    public function programme_edited(Request $request) {
 	    	$pcode=$request['pcode'];
 	    	$pname=$request['pname'];
@@ -318,14 +319,71 @@ class policycontroller extends Controller
 	    	$tel = $request['tel'];
 	    	$location = $request['paddress'];
 
-	    	
+	    	/*
 	    	if($this->model->insertIntoFaculty($faculty,$address,$email,$tel,$location))
 	    	{
-	    		return redirect('/Policy/Faculty');
-	    	}
+	    		return redirect('Policy/Faculty');
+	    	}*/
+	    	$model = new \App\policymodel();
+	    	$post = $model->insertIntoFaculty($faculty,$address,$email,$tel,$location);
 
-	    	//echo $faculty.' '.$address.' '.$email = $request['email'].' '.$tel = $request['tel'].' '.$location;
+	    	 return redirect("Policy/Faculty");	
 	    	
+	    	
+	    }
+	     public function faculty_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_faculty($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Faculty");	
+		
+	    }
+	    public function faculty_edit($id) {	
+	    $model = new \App\policymodel();
+    	$data= $model->editfaculty($id);
+
+	
+
+		$currentpage = "edit Faculty";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('faculty_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'faculty', 'faculties' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function faculty_edited(Request $request) {
+	    	$faculty=$request['faculty'];
+	    	$address=$request['address'];
+	    	$location=$request['location'];
+	    	$tel=$request['tel'];
+	    	$email=$request['email'];
+	    	$id=$request['id'];
+
+		//page initalization
+	      $model = new \App\policymodel();
+    	$post = $model->editedfaculty($faculty,$address,$location,$tel,$email,$id);
+    	
+	    		return redirect("Policy/Faculty");
+	    	
+
+		
 	    }
 	    public function admissionform()
 	    {

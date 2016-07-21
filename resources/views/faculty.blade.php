@@ -39,7 +39,8 @@
 			</div> 
 		</div> 
 	</div> 
-	<!-- END heading-->	<form name="listform" id="listform">
+	<!-- END heading-->	
+	<form name="listform" id="listform" action="{{route('faculty_delete')}}" method="POST">
 	<div class="table-responsive"> 
 		<table class="table table-striped b-t text-sm"> 
 			<thead> 
@@ -62,14 +63,14 @@
 			<tbody> 
 				@foreach($faculties as $faculty)
 				<tr> 
-					<td><input type='checkbox' value='13' name='checkbox[]'></td> 
+					<td><input type='checkbox' value='{{$faculty->FacultyID}}' name='checkbox[]'></td> 
 					<td>{{$faculty->FacultyName}}</td> 
 					<td>{{$faculty->Location}}</td>   
 					<td>{{$faculty->Address}}</td>   
 					<td>{{$faculty->Tel}}</td>   
 					<td>{{$faculty->Email}}</td>   
 					<td> 
-					<a  class='active' href='./?page=Institution&section=Policy&edit=13'>
+					<a  class='active' href="{{ route('faculty_edit', ['id'=>$faculty->FacultyID])}}">
 						<i class='fa fa-pencil text-success text-active'></i>
 						</a> 
 					</td> 
@@ -86,11 +87,12 @@
 		<div class="row"> 
 			<div class="col-sm-4 hidden-xs">
 				
-				 <select class="input-sm form-control input-s-sm inline"> 
+				  <select class="input-sm form-control input-s-sm inline" id="choose" > 
 				 	<option value="0">Bulk action</option> 
-				 	<option value="1" onClick=" delete_records('/dev/saris_dev/index.php?page=Institution&amp;section=Policy');">Delete selected</option> 
+				 	<option value="1" >Delete selected</option> 
 					 <option value="3">Export</option> 
 			 	</select> 
+				<input type="hidden" name="_token" value="{{ Session::token() }}">
 				
 				
 		 	</div> 
@@ -126,5 +128,19 @@
 
 </section>	
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
+
+
+ <script type="text/javascript">
+
+  jQuery(function() {
+    jQuery('#choose').change(function() {
+        this.form.submit();
+    });
+});
+</script>
+
 
 @endsection

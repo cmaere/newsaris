@@ -15,6 +15,12 @@ class policymodel extends Model
 		$query = "SELECT * FROM faculty";
 		return $this->selectQuery($query);
 	}
+    public function  delete_faculty($check){
+        
+        $query = "DELETE FROM faculty WHERE FacultyID = '$check'";
+
+        return $this->selectQuery($query);
+    }
 	public function getProgrammes()
 	{
 		$query="select * from programme";
@@ -29,6 +35,20 @@ class policymodel extends Model
 		$query="insert into faculty (FacultyName, Address, Email, Tel, Location) values ('$faculty','$address','$email','$tel', '$location')";
 		return $this->selectQuery($query);
 	}
+    public function  editfaculty($id){
+        
+        $query = "select FacultyName,Address,Email,Tel,Location,FacultyID FROM faculty WHERE FacultyID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+     public function  editedfaculty($faculty,$address,$location,$tel,$email,$id){
+        
+       $query = "UPDATE faculty
+                SET FacultyName ='$faculty', Address ='$address', Location ='$location', Email ='$email', Tel='$tel'
+                WHERE FacultyID ='$id'";
+
+        return $this->selectQuery($query);
+    }
     public function  addInstitution($campus,$location,$address,$tel,$email){
         $query = "INSERT INTO campus (Campus,Location,Address,Tel,Email) VALUES ('$campus','$location','$address','$tel','$email')";
 
