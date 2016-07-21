@@ -20,6 +20,11 @@ class policymodel extends Model
 		$query="select * from programme";
 		return $this->selectQuery($query);
 	}
+    public function  newprogramme($pcode,$pname,$ptitle,$pfaculty){
+        $query = "INSERT INTO programme (ProgrammeCode,ProgrammeName,Title,Faculty) VALUES ('$pcode','$pname','$ptitle','$pfaculty')";
+
+        return $this->selectQuery($query);
+    }
 	public function insertIntoFaculty($faculty,$address,$email,$tel,$location){
 		$query="insert into faculty (FacultyName, Address, Email, Tel, Location) values ('$faculty','$address','$email','$tel', '$location')";
 		return $this->selectQuery($query);
@@ -41,6 +46,26 @@ class policymodel extends Model
     public function  delete_institution($check){
         
         $query = "DELETE FROM campus WHERE CampusID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+    public function  delete_programme($check){
+        
+        $query = "DELETE FROM programme WHERE ProgrammeID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editprogramme($id){
+        
+        $query = "select ProgrammeCode,ProgrammeName,Title,Faculty,ProgrammeID FROM programme WHERE ProgrammeID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editedprogramme($pcode,$pname,$ptitle,$pfaculty,$id){
+        
+       $query = "UPDATE programme
+                SET ProgrammeCode ='$pcode', ProgrammeName ='$pname', Title ='$ptitle', Faculty ='$pfaculty'
+                WHERE ProgrammeID ='$id'";
 
         return $this->selectQuery($query);
     }

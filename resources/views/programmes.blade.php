@@ -25,7 +25,7 @@
 	<header class="panel-heading">Programmes Information</header> 
 	<div class="row text-sm wrapper"> 
 		<div class="col-sm-5 m-b-xs">
-			<a href="./?page=Institution&section=Policy&new=1">
+			<a href={{route('newprogramme')}}>
 				<button class="btn btn-sm btn-white">Add New Programmes</button>
 			</a> 
 		</div> 
@@ -39,7 +39,8 @@
 			</div> 
 		</div> 
 	</div> 
-	<!-- END heading-->	<form name="listform" id="listform">
+	<!-- END heading-->	
+	<form name="listform" id="listform" action="{{route('programme_delete')}}" method="POST">
 	<div class="table-responsive"> 
 		<table class="table table-striped b-t text-sm"> 
 			<thead> 
@@ -58,12 +59,12 @@
 			<tbody> 
 				@foreach($programmes as $programme)
 				<tr> 
-					<td><input type='checkbox' value='13' name='checkbox[]'></td> 
+					<td><input type='checkbox' value='{{$programme->ProgrammeID}}' name='checkbox[]'></td> 
 					<td>{{$programme->ProgrammeCode}}</td> 
 					<td>{{$programme->ProgrammeName}}</td>   
 					<td>{{$programme->Faculty}}</td>    
 					<td> 
-					<a  class='active' href='./?page=Institution&section=Policy&edit=13'>
+					<a  class='active' href="{{ route('programme_edit', ['id'=>$programme->ProgrammeID])}}">
 						<i class='fa fa-pencil text-success text-active'></i>
 						</a> 
 					</td> 
@@ -80,12 +81,12 @@
 		<div class="row"> 
 			<div class="col-sm-4 hidden-xs">
 				
-				 <select class="input-sm form-control input-s-sm inline"> 
+				 <select class="input-sm form-control input-s-sm inline" id="choose" > 
 				 	<option value="0">Bulk action</option> 
-				 	<option value="1" onClick=" delete_records('/dev/saris_dev/index.php?page=Institution&amp;section=Policy');">Delete selected</option> 
+				 	<option value="1" >Delete selected</option> 
 					 <option value="3">Export</option> 
 			 	</select> 
-				
+				<input type="hidden" name="_token" value="{{ Session::token() }}">
 				
 		 	</div> 
 			
@@ -120,5 +121,17 @@
 
 </section>	
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
+
+
+ <script type="text/javascript">
+
+  jQuery(function() {
+    jQuery('#choose').change(function() {
+        this.form.submit();
+    });
+});
+</script>
 
 @endsection

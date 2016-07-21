@@ -204,6 +204,96 @@ class policycontroller extends Controller
 						  'programmes' => $programmes));
 			
 	    }
+	    public function addprogramme(Request $request) {
+	    	$pcode=$request['pcode'];
+	    	$pname=$request['pname'];
+	    	$ptitle=$request['ptitle'];
+	    	$pfaculty=$request['pfaculty'];
+	    
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->newprogramme($pcode,$pname,$ptitle,$pfaculty);
+
+    	return redirect("Policy/Programme");	
+		
+	    }
+
+	    public function newprogramme() {
+	    	
+		$currentpage = "Add New Programme";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('newprogramme', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function programme_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_programme($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Programme");	
+		
+	    }
+	    public function programme_edit($id) {
+	    //$id=$request['CampusID'];
+		
+	    $model = new \App\policymodel();
+    	$data= $model->editprogramme($id);
+
+	
+
+		$currentpage = "edit Programmes";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('programme_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'institution', 'programmeinfo' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function programme_edited(Request $request) {
+	    	$pcode=$request['pcode'];
+	    	$pname=$request['pname'];
+	    	$ptitle=$request['ptitle'];
+	    	$pfaculty=$request['pfaculty'];
+	    	$id=$request['id'];
+
+		//page initalization
+	      $model = new \App\policymodel();
+    		$post = $model->editedprogramme($pcode,$pname,$ptitle,$pfaculty,$id);
+    	
+	    		return redirect("Policy/Programme");
+	    	
+
+		
+	    }
+
+
+
 	    public function newfaculty()
 	    {
 	    	$currentpage = "Add new Faculty";
