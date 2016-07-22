@@ -43,7 +43,7 @@
 		<!-- END heading-->
 		
 		
-		<form name="listform" id="listform">
+		<form name="listform" id="listform" action="{{route('institution_delete')}}" method="POST">
 		<div class="table-responsive"> 
 			<table class="table table-striped b-t text-sm"> 
 				<thead> 
@@ -71,9 +71,12 @@
 				 @foreach($campusinfo as $list)
 				 <tr>
 				 		<!-- BEGIN id -->
-						<td><input type='checkbox' value='{ID}' name='checkbox[]'></td> 
+						<td><input type='checkbox' value='{{$list->CampusID}}' name='checkbox[]'></td> 
 						<!-- END id --> 
 						<!-- BEGIN innercolumns -->
+						
+						
+					
 					
 							<td>
 								{{$list->campus}}
@@ -90,6 +93,7 @@
 							<td>
 								{{$list->Email}}
 							</td>
+
 
 							
 								
@@ -111,13 +115,16 @@
 			<div class="row"> 
 				<div class="col-sm-4 hidden-xs">
 					<!-- BEGIN delete -->
-					 <select class="input-sm form-control input-s-sm inline"> 
+					 <select class="input-sm form-control input-s-sm inline" id="choose" > 
 					 	<option value="0">Bulk action</option> 
-					 	<option value="1" onClick=" delete_records('{FORM}');">Delete selected</option> 
+					 	<option value="1" >Delete selected</option> 
 						 <option value="3">Export</option> 
 				 	</select> 
-					<!-- END delete -->
-				
+				 	<input type="hidden" name="_token" value="{{ Session::token() }}">
+					<!-- END delete --> 
+				<!-- <input class="btn btn-primary" type="submit" value="delete selected" name="submit"> 
+			   	<input type="hidden" name="_token" value="{{ Session::token() }}">
+				-->
 			 	</div> 
 				<!-- BEGIN pagenumstat -->
 			 	<div class="col-sm-4 text-center"> 
@@ -155,6 +162,21 @@
 			  </footer>
 			  </section>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
+
+
+ <script type="text/javascript">
+
+  jQuery(function() {
+    jQuery('#choose').change(function() {
+        this.form.submit();
+    });
+});
+</script>
+
+
 @endsection
 
 

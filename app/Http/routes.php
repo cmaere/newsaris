@@ -46,4 +46,13 @@ Route::get('Policy/Institution/addinstitution', 'policycontroller@newinstitution
 Route::post('Policy/Institution/success', 'policycontroller@addinstitution')->name("addinstitution");
 Route::get('Policy/institution_edit/{id?}', 'policycontroller@institution_edit')->name("institution_edit");
 Route::post('Policy/institution_edit/success', 'policycontroller@institution_edited')->name("institution_edited");
+Route::post('Policy/institution_edit/delete', 'policycontroller@institution_delete')->name("institution_delete");
+Route::post('Policy/Programme/addprogramme', 'policycontroller@addprogramme')->name("addprogramme"); 
+Route::get('Policy/Programme/addprogramme', 'policycontroller@newprogramme')->name("newprogramme"); 
+Route::post('Policy/Programme/delete', 'policycontroller@programme_delete')->name("programme_delete");
+Route::get('Policy/programme_edit/{id?}', 'policycontroller@programme_edit')->name("programme_edit");
+Route::post('Policy/programme/edited', 'policycontroller@programme_edited')->name("programme_edited");
+Route::post('Policy/Faculty/delete', 'policycontroller@faculty_delete')->name("faculty_delete");
+Route::get('Policy/Faculty/{id?}', 'policycontroller@faculty_edit')->name("faculty_edit");
+Route::post('Policy/Faculty/success', 'policycontroller@faculty_edited')->name("faculty_edited");
 
