@@ -105,6 +105,36 @@ class policymodel extends Model
 
         return $this->selectQuery($query);
     }
+    public function sponsors()
+    {
+        $query="select * from sponsors";
+        return $this->selectQuery($query);
+    }
+    public function  addsponsor($name,$address,$comment){
+        $query = "INSERT INTO sponsors (Name,Address,comment) VALUES ('$name','$address','$comment')";
+
+        return $this->selectQuery($query);
+    }
+    public function  delete_sponsor($check){
+        
+        $query = "DELETE FROM sponsors WHERE SponsorID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editsponsor($id){
+        
+        $query = "select * from sponsors where SponsorID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editedsponsor($name,$address,$comment,$id){
+        
+       $query = "UPDATE sponsors
+                SET Name ='$name', Address ='$address', comment ='$comment'
+                WHERE SponsorID ='$id'";
+
+        return $this->selectQuery($query);
+    }
 
     public function insertIntoStudentTable($name, $gender, $cand_num)
     {

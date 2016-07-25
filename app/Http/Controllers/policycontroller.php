@@ -411,6 +411,114 @@ class policycontroller extends Controller
 						  'sponsors' => $sponsors,
 						  'entrymanners' => $mannerofentry));
 	    }
+
+	    public function sponsor() {
+
+		//page initalization
+		$model = new \App\policymodel();
+    	$data = $model->sponsors();
+		$currentpage = "Sponsor";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+
+	    return view('sponsor', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'institution', 'sponsorinfo' => $data,
+						   'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	     public function newsponsor() {
+
+		$currentpage = "New Sponsor";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+
+	    return view('newsponsor', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						   'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	     public function addsponsor(Request $request) {
+	    	$name=$request['name'];
+	    	$address=$request['address'];
+	    	$comment=$request['comment'];
+	    
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->addsponsor($name,$address,$comment);
+    	return redirect("Policy/Sponsor");
+		
+	    }
+	    public function sponsor_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_sponsor($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Sponsor");	
+		
+	    }
+	     public function sponsor_edit($id) {	
+	    $model = new \App\policymodel();
+    	$data= $model->editsponsor($id);
+
+	
+
+		$currentpage = "edit Faculty";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('sponsor_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'faculty', 'sponsors' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function sponsor_edited(Request $request) {
+	    	$name=$request['name'];
+	    	$address=$request['address'];
+	    	$comment=$request['comment'];
+	    	$id=$request['id'];
+
+
+	    $model = new \App\policymodel();
+    	$post = $model->editedsponsor($name,$address,$comment,$id);
+    	
+	    		return redirect("Policy/Sponsor");
+	    	
+
+		
+	    }
+
+
+
 	    public function admissionform2(Request $request)
 	    {
 	    	$this->validate($request, [

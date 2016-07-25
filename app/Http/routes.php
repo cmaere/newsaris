@@ -55,4 +55,11 @@ Route::post('Policy/programme/edited', 'policycontroller@programme_edited')->nam
 Route::post('Policy/Faculty/delete', 'policycontroller@faculty_delete')->name("faculty_delete");
 Route::get('Policy/Faculty/{id?}', 'policycontroller@faculty_edit')->name("faculty_edit");
 Route::post('Policy/Faculty/success', 'policycontroller@faculty_edited')->name("faculty_edited");
+Route::get('Policy/Sponsor', 'policycontroller@Sponsor')->name("Sponsor"); 
+Route::get('Policy/Sponsor/addsponsor', 'policycontroller@newsponsor')->name("newsponsor"); 
+Route::post('Policy/Sponsor/addsponsor', 'policycontroller@addsponsor')->name("addsponsor"); 
+Route::post('Policy/Sponsor/delete', 'policycontroller@sponsor_delete')->name("sponsor_delete");
+Route::get('Policy/sponsor_edit/{id?}', 'policycontroller@sponsor_edit')->name("sponsor_edit");
+Route::post('Policy/sponsor_edit/success', 'policycontroller@sponsor_edited')->name("sponsor_edited");
+
 
