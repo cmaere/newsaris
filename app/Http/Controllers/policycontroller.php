@@ -155,6 +155,12 @@ class policycontroller extends Controller
 						  'faculties' => $faculties));
 			
 	    }
+
+
+
+
+
+
 		
   	  public function department() {
   		//page initalization
@@ -181,6 +187,237 @@ class policycontroller extends Controller
 		
 			
   	    }  
+
+  	    public function newdepartment() {
+	    	
+		$currentpage = "Add New Department";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('newdepartment', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+		public function adddepartment(Request $request) {
+	    	$departmentname=$request['departmentname'];
+	    	$Hod=$request['Hod'];
+	    	$address=$request['address'];
+	    	$paddress=$request['paddress'];
+	    	$tel=$request['tel'];
+	    	$email=$request['email'];
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->adddepartment($departmentname,$Hod,$address,$paddress,$tel,$email);
+		
+
+		return redirect("Policy/Department");
+	    }
+
+
+ public function department_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_department($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Department");	
+		
+	    }
+
+
+
+public function department_edit($id) {
+	    //$id=$request['CampusID'];
+		
+	    $model = new \App\policymodel();
+    	$data= $model->editdepartment($id);
+
+	
+
+		$currentpage = "edit department";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('department_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'department', 'departmentinfo' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+
+
+public function department_edited(Request $request) {
+			$id=$request['id'];
+	    	$departmentname=$request['departmentname'];
+	    	$Hod=$request['Hod'];
+	    	$address=$request['address'];
+	    	$paddress=$request['paddress'];
+	    	$tel=$request['tel'];
+	    	$email=$request['email'];
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->editeddepartment($departmentname,$Hod,$address,$paddress,$tel,$email,$id);
+
+		return redirect("Policy/Department");
+	    }
+
+
+
+
+
+
+public function course() {
+        //page initalization
+        
+        
+        $data = $this->model->getcourse();
+        $currentpage = "course";
+        $parentpage ="Policy";
+        $welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+        
+        //var_dump($this->main->data);
+        //call view
+        return view('course', 
+                    array('page' => 'home',
+                          'chasections' => $this->main->data,
+                          'chasubsections' => $this->main->menulist,
+                          'x' => 0,
+                          'loginname' => $this->main->loginname,
+                          'welcomemessage' => $welcomemessage,
+                          'currentpage' => $currentpage,
+                          'parentpage' => $parentpage,
+                          'course' => $data));
+        //return view("department", array());        
+}
+
+
+
+
+ public function newcourse() {
+	    	
+		$currentpage = "Add New Course";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('newcourse', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+public function addcourse(Request $request) {
+	    	$CourseCode=$request['CourseCode'];
+	    	$CourseName=$request['CourseName'];
+	    	$Department=$request['Department'];
+	    	$Units=$request['Units'];
+	    	
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->addcourse($CourseCode,$CourseName,$Department,$Units);
+		
+
+		return redirect("Policy/Subject");
+	    }
+
+
+ public function course_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_course($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Subject");	
+		
+	    }
+ 
+
+public function course_edit($id) {
+	    //$id=$request['CampusID'];
+		
+	    $model = new \App\policymodel();
+    	$data= $model->editcourse($id);
+
+	
+
+		$currentpage = "edit course";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('course_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'course', 'courseinfo' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+
+
+public function course_edited(Request $request) {
+			$id=$request['id'];
+	    	$CourseCode=$request['CourseCode'];
+	    	$CourseName = $request['CourseName'];
+	    	$Department=$request['Department'];
+	    	$Units=$request['Units'];
+	    	
+
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->editedcourse($CourseCode,$CourseName,$Department,$Units,$id);
+
+		return redirect("Policy/Subject");
+	    }
+
+
+
+
+
+
+
+
+
+
 
 	    public function programmes()
 	    {

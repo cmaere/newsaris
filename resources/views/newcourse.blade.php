@@ -26,8 +26,8 @@
 		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href={{route('newdepartment')}}>
-					<button class="btn btn-sm btn-white">Add New Department</button>
+				<a href={{route('newcourse')}}>
+					<button class="btn btn-sm btn-white">Add New Course</button>
 				</a> 
 			</div> 
 			<div class="col-sm-4 m-b-xs"> </div> 
@@ -45,36 +45,29 @@
 		
 		
 	
-		<form action="{{route('adddepartment')}}" method="POST" name="frmInst" id="frmInst" class="form-horizontal"> 
-			<div class="form-group"> <label class="col-sm-2 control-label">Department Name</label> 
-				<div class="col-sm-8"> <input type="text" name="departmentname" class="form-control rounded"> </div> 
+		<form action="{{route('addcourse')}}" method="POST" name="frmInst" id="frmInst" class="form-horizontal"> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Course Code</label> 
+				<div class="col-sm-8"> <input type="text" name="CourseCode" class="form-control rounded"> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 
 
 
-			<div class="form-group"> <label class="col-sm-2 control-label">Head of Department</label> 
-			<div class="col-sm-8"> <input type="text" name="Hod" class="form-control rounded"> </div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Course Name</label> 
+			<div class="col-sm-8"> <input type="text" name="CourseName" class="form-control rounded"> </div> 
 			 </div>
 			
 
 
-			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
-			<div class="col-sm-8"> <input type="text" name="address" class="form-control rounded"> </div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Department</label> 
+			<div class="col-sm-8"> <input type="text" name="Department" class="form-control rounded"> </div> 
 			 </div>
 	   	         <div class="line line-dashed line-lg pull-in"></div> 
-			 <div class="form-group"> <label class="col-sm-2 control-label">Physical Address</label> 
-			 <div class="col-sm-8"> <input type="text" name="paddress" class="form-control rounded"> </div> 
+			 <div class="form-group"> <label class="col-sm-2 control-label">Units</label> 
+			 <div class="col-sm-8"> <input type="text" name="Units" class="form-control rounded"> </div> 
 
 			 </div>
-			 <div class="line line-dashed line-lg pull-in"></div> 
- 			<div class="form-group"> <label class="col-sm-2 control-label">Telephone</label> 
- 				<div class="col-sm-8"> <input type="text" name="tel" class="form-control rounded"> </div> 
- 			</div>
-			<div class="line line-dashed line-lg pull-in"></div> 
-			<div class="form-group"> <label class="col-sm-2 control-label">Email</label> 
-				<div class="col-sm-8"> <input type="text" name="email" class="form-control rounded"> </div> 
-			</div>
+			 
 	    	     	<div class="line line-dashed line-lg pull-in"></div> 
     		    	<div class="form-group"> <div class="col-sm-4 col-sm-offset-2">  
 	    		    <input class="btn btn-primary" type="submit" value="Add Record" name="submit"> 

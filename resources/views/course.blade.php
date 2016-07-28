@@ -26,8 +26,8 @@
 		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href={{route('newdepartment')}}>
-					<button class="btn btn-sm btn-white">Add New Department</button>
+				<a href={{route('newcourse')}}>
+					<button class="btn btn-sm btn-white">Add New Course</button>
 				</a> 
 			</div> 
 			<div class="col-sm-4 m-b-xs"> </div> 
@@ -43,20 +43,19 @@
 		<!-- END heading-->
 		
 		
-		<form name="listform" action="{{route('department_delete')}}" method="POST" id="listform">
+		<form name="listform" action="{{route('course_delete')}}" method="POST" > 
 		<div class="table-responsive"> 
 			<table class="table table-striped b-t text-sm"> 
 				<thead> 
 					<tr> 
 					
-			<!--			<th width="20"><input type="checkbox"></th>       -->
+					<th width="20"><input type="checkbox"></th>       
 						<!-- BEGIN columns -->
-						<th {OPTIONS}>Department</th> 
-						<th {OPTIONS}>Location</th> 
-						<th {OPTIONS}>Hod</th>
-						<th {OPTIONS}>Address</th> 
-						<th {OPTIONS}>Tel</th> 
-						<th {OPTIONS}>Email</th>  
+						<th {OPTIONS}>CourseCode</th> 
+						<th {OPTIONS}>CourseName</th> 
+						<th {OPTIONS}>Department</th>
+						<th {OPTIONS}>Units</th> 
+		 
 						<!-- END columns -->
 					
 						<th>Edit</th> 
@@ -64,35 +63,30 @@
 				</thead> 
 				<tbody> 
 				
-				 @foreach($department as $list)
+				 @foreach($course as $course)
 				 <tr>
 				 		<!-- BEGIN id -->
-						<td><input type='checkbox' value='{{$list->DeptID}}' name='checkbox[]'></td> 
+						<td><input type='checkbox' value='{{$course->Id}}' name='checkbox[]'></td> 
 						<!-- END id --> 
 						<!-- BEGIN innercolumns -->
 					
 							<td>
-								{{$list->DeptName}}
+								{{$course->CourseCode}}
 							</td>
 							<td>
-								{{$list->DeptPhysAdd}}
+								{{$course->CourseName}}
 							</td>
 							<td>
-								{{$list->DeptHead}}
+								{{$course->Department}}
 							</td>
 							<td>
-								{{$list->DeptAddress}}
+								{{$course->Units}}
 							</td>
-							<td>
-								{{$list->DeptTel}}
-							</td>
-							<td>
-								{{$list->DeptEmail}}
-							</td>
+							
 								
 								<!-- BEGIN edit -->
 						<td> 
-						<a  class='active' href="{{ route('department_edit', ['id'=>$list->DeptID])}}">
+						<a  class='active' href="{{ route('course_edit', ['id'=>$course->Id])}}">
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
 						</td>							
@@ -173,5 +167,3 @@
 
 
 @endsection
-
-
