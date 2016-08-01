@@ -26,8 +26,8 @@
 		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href={{route('newdepartment')}}>
-					<button class="btn btn-sm btn-white">Add New Department</button>
+				<a href={{route('newsponsor')}}>
+					<button class="btn btn-sm btn-white">Add New Sponsor</button>
 				</a> 
 			</div> 
 			<div class="col-sm-4 m-b-xs"> </div> 
@@ -43,20 +43,21 @@
 		<!-- END heading-->
 		
 		
-		<form name="listform" action="{{route('department_delete')}}" method="POST" id="listform">
+		<form name="listform"  id="listform" action="{{route('sponsor_delete')}}" method="POST">
 		<div class="table-responsive"> 
 			<table class="table table-striped b-t text-sm"> 
 				<thead> 
 					<tr> 
 					
-			<!--			<th width="20"><input type="checkbox"></th>       -->
+						<th width="20"><input type="checkbox"></th> 
 						<!-- BEGIN columns -->
-						<th {OPTIONS}>Department</th> 
-						<th {OPTIONS}>Location</th> 
-						<th {OPTIONS}>Hod</th>
-						<th {OPTIONS}>Address</th> 
-						<th {OPTIONS}>Tel</th> 
-						<th {OPTIONS}>Email</th>  
+						<th {OPTIONS}>Sponsor Name
+						</th> 
+						<th {OPTIONS}>Address
+						</th> 
+						<th {OPTIONS}>Comment
+						</th> 
+						
 						<!-- END columns -->
 					
 						<th>Edit</th> 
@@ -64,40 +65,30 @@
 				</thead> 
 				<tbody> 
 				
-				 @foreach($department as $list)
+				 @foreach($sponsorinfo as $list)
 				 <tr>
 				 		<!-- BEGIN id -->
-						<td><input type='checkbox' value='{{$list->DeptID}}' name='checkbox[]'></td> 
+						<td><input type='checkbox' value='{{$list->SponsorID}}' name='checkbox[]'></td> 
 						<!-- END id --> 
-						<!-- BEGIN innercolumns -->
-					
+						<!-- BEGIN innercolumns -->			
 							<td>
-								{{$list->DeptName}}
+								{{$list->Name}}
 							</td>
 							<td>
-								{{$list->DeptPhysAdd}}
+								{{$list->Address}}
 							</td>
 							<td>
-								{{$list->DeptHead}}
+								{{$list->comment}}
 							</td>
-							<td>
-								{{$list->DeptAddress}}
-							</td>
-							<td>
-								{{$list->DeptTel}}
-							</td>
-							<td>
-								{{$list->DeptEmail}}
-							</td>
-								
+												
 								<!-- BEGIN edit -->
 						<td> 
-						<a  class='active' href="{{ route('department_edit', ['id'=>$list->DeptID])}}">
+						<a  class='active' href="{{ route('sponsor_edit', ['id'=>$list->SponsorID])}}">
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
 						</td>							
 					</tr>
-							@endforeach
+							@endforeach; 
 					<!-- END row -->
 				
 				
@@ -108,14 +99,16 @@
 			<div class="row"> 
 				<div class="col-sm-4 hidden-xs">
 					<!-- BEGIN delete -->
-					  <select class="input-sm form-control input-s-sm inline" id="choose" > 
+					 <select class="input-sm form-control input-s-sm inline" id="choose" > 
 					 	<option value="0">Bulk action</option> 
 					 	<option value="1" >Delete selected</option> 
 						 <option value="3">Export</option> 
 				 	</select> 
 				 	<input type="hidden" name="_token" value="{{ Session::token() }}">
-					<!-- END delete -->
-				
+					<!-- END delete --> 
+				<!-- <input class="btn btn-primary" type="submit" value="delete selected" name="submit"> 
+			   	<input type="hidden" name="_token" value="{{ Session::token() }}">
+				-->
 			 	</div> 
 				<!-- BEGIN pagenumstat -->
 			 	<div class="col-sm-4 text-center"> 
@@ -154,7 +147,6 @@
 			  </section>
 </div>
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
 
@@ -167,9 +159,6 @@
     });
 });
 </script>
-
-
-
 
 
 @endsection

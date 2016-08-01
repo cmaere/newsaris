@@ -55,4 +55,33 @@ Route::post('Policy/programme/edited', 'policycontroller@programme_edited')->nam
 Route::post('Policy/Faculty/delete', 'policycontroller@faculty_delete')->name("faculty_delete");
 Route::get('Policy/Faculty/{id?}', 'policycontroller@faculty_edit')->name("faculty_edit");
 Route::post('Policy/Faculty/success', 'policycontroller@faculty_edited')->name("faculty_edited");
+Route::get('Policy/Sponsor', 'policycontroller@Sponsor')->name("Sponsor"); 
+Route::get('Policy/Sponsor/addsponsor', 'policycontroller@newsponsor')->name("newsponsor"); 
+Route::post('Policy/Sponsor/addsponsor', 'policycontroller@addsponsor')->name("addsponsor"); 
+Route::post('Policy/Sponsor/delete', 'policycontroller@sponsor_delete')->name("sponsor_delete");
+Route::get('Policy/sponsor_edit/{id?}', 'policycontroller@sponsor_edit')->name("sponsor_edit");
+Route::post('Policy/sponsor_edit/success', 'policycontroller@sponsor_edited')->name("sponsor_edited");
+
+
+
+//Frazer's Work
+Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
+Route::get('Policy/Department/adddepartment', 'policycontroller@newdepartment')->name("newdepartment");
+Route::post('Policy/Department/success', 'policycontroller@adddepartment')->name("adddepartment"); 
+Route::post('Policy/Department/delete', 'policycontroller@department_delete')->name("department_delete");
+Route::get('Policy/department_edit/{id?}', 'policycontroller@department_edit')->name("department_edit");
+Route::post('Policy/department/success', 'policycontroller@department_edited')->name("department_edited");
+
+
+Route::get('Policy/Subject', ['middleware' => 'auth', 'uses' => 'policycontroller@course']);
+Route::get('Policy/course/addcourse', 'policycontroller@newcourse')->name("newcourse");
+Route::post('Policy/course/success1', 'policycontroller@addcourse')->name("addcourse");
+Route::post('Policy/course/delete', 'policycontroller@course_delete')->name("course_delete");
+Route::get('Policy/course_edit/{id?}', 'policycontroller@course_edit')->name("course_edit");
+Route::post('Policy/course/delete', 'policycontroller@course_delete')->name("course_delete");
+Route::get('Policy/course_edit/{id?}', 'policycontroller@course_edit')->name("course_edit");
+Route::post('Policy/course/success', 'policycontroller@course_edited')->name("course_edited");
+//End Frazer's Work
+
+
 

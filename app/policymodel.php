@@ -54,10 +54,101 @@ class policymodel extends Model
 
         return $this->selectQuery($query);
     }
-	public function getdepartment(){
-		$query = "SELECT DeptName, DeptPhysAdd, DeptHead, DeptAddress, DeptTel, DeptEmail FROM `department`";
+
+
+
+
+
+
+
+
+//Frazer's Work
+	
+
+    public function getdepartment(){
+        $query = "SELECT DeptName, DeptPhysAdd, DeptHead, DeptAddress, DeptTel, DeptEmail, DeptID FROM `department`";
     return $this->selectQuery($query);
-	}
+    }
+
+    public function  adddepartment($departmentname,$Hod,$address,$paddress,$tel,$email){
+        $query = "INSERT INTO department (DeptName,DeptPhysAdd,DeptAddress,DeptTel,DeptEmail,DeptHead) VALUES ('$departmentname','$paddress','$address','$tel','$email','$Hod')";
+
+        return $this->selectQuery($query);
+    }
+
+ public function  delete_department($check){
+        
+        $query = "DELETE FROM department WHERE DeptID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+
+ public function  editdepartment($id){
+        
+        $query = "select DeptName,DeptPhysAdd,DeptAddress,DeptTel,DeptEmail,DeptHead,DeptID from department where DeptID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+
+public function  editeddepartment($departmentname,$Hod,$address,$paddress,$tel,$email,$id){
+        
+       $query = "UPDATE department
+                SET DeptName = '$departmentname', DeptPhysAdd = '$paddress', DeptAddress = '$address', DeptTel = '$tel', DeptEmail = '$email', DeptHead = '$Hod'
+                WHERE DeptID ='$id'";
+
+        return $this->selectQuery($query);
+    }
+
+
+public function getcourse(){
+        $query = "SELECT CourseCode, CourseName, Department, Units, Id FROM `course`";
+    return $this->selectQuery($query);
+    }
+
+public function  addcourse($CourseCode,$CourseName,$Department,$Units){
+   
+
+        $query = "INSERT INTO course (CourseCode,CourseName,Department,Units) VALUES
+         ('$CourseCode','$CourseName','$Department','$Units')";
+
+        return $this->selectQuery($query);
+    }
+
+public function  delete_course($check){
+        
+        $query = "DELETE FROM course WHERE Id = '$check'";
+
+        return $this->selectQuery($query);
+
+    }
+
+public function  editcourse($id){
+        
+        $query = "select CourseCode, CourseName, Department, Units, Id from course where Id = '$id'";
+
+        return $this->selectQuery($query);
+    }
+
+public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
+        
+       $query = "UPDATE course
+                SET CourseCode = '$CourseCode', CourseName = '$CourseName', Department = '$Department', Units = '$Units' 
+                WHERE Id ='$id'";
+
+        return $this->selectQuery($query);
+    }    
+
+
+//End Frazer's Work
+
+
+
+
+
+
+
+
+
     public function  getinstitution(){
     	$query = "select campus,location,address,tel,Email,CampusID from campus";
 
@@ -102,6 +193,36 @@ class policymodel extends Model
        $query = "UPDATE campus
                 SET Campus ='$campus', Location ='$paddress', Address ='$address',Tel ='tel',Email ='$email'
                 WHERE CampusID ='$id'";
+
+        return $this->selectQuery($query);
+    }
+    public function sponsors()
+    {
+        $query="select * from sponsors";
+        return $this->selectQuery($query);
+    }
+    public function  addsponsor($name,$address,$comment){
+        $query = "INSERT INTO sponsors (Name,Address,comment) VALUES ('$name','$address','$comment')";
+
+        return $this->selectQuery($query);
+    }
+    public function  delete_sponsor($check){
+        
+        $query = "DELETE FROM sponsors WHERE SponsorID = '$check'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editsponsor($id){
+        
+        $query = "select * from sponsors where SponsorID = '$id'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editedsponsor($name,$address,$comment,$id){
+        
+       $query = "UPDATE sponsors
+                SET Name ='$name', Address ='$address', comment ='$comment'
+                WHERE SponsorID ='$id'";
 
         return $this->selectQuery($query);
     }
