@@ -22,30 +22,41 @@
 	<div class="col-lg-8">	
 <section class="panel"> 
 	<!-- BEGIN heading-->
-	<header class="panel-heading">Faculty Information</header> 
+	<header class="panel-heading">Student list</header> 
 	<div class="row text-sm wrapper"> 
 		<div class="col-sm-5 m-b-xs">
-			<a href="{{ url('/Policy/EnrollStudent') }}">
-				<button class="btn btn-sm btn-white">Add New Student</button>
+			<a href="{{ route('enrollstudentform') }}">
+				<button class="btn btn-sm btn-white">Enrol Student</button>
 			</a> 
 		</div> 
 		<div class="col-sm-4 m-b-xs"> </div> 
 		<div class="col-sm-3"> 
-			<form action="" method="post">	
+			<form action="{{route('searchstudent')}}" method="post">	
 				<div class="input-group"> 
 				<input type="text" placeholder="Search" name="searchkeyword" class="input-sm form-control" id="searchstudent"> 
 				<span class="input-group-btn"> 
 					<input type="submit" class="btn btn-sm btn-white" value="Go!" name="search" id="searchbutton"> 
 					<input type="hidden" value="{{Session::token()}}" name="_token">
-				</span> 
+				</span>
 			</div> 
-			<span id="searchresults"></span>
+			<span id="result"></span>
 			</form>
-			
-		</div> 
-		
+		</div>
 	</div> 
-	<!-- END heading-->	<form name="listform" id="listform">
+	<!-- END heading-->	
+	<form name="listform" id="listform">
+	@if (session('editfeedback'))
+      <div class="alert alert-success">
+      	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ session('editfeedback') }}
+      </div>
+  	@endif
+  	@if (session('feedback'))
+      <div class="alert alert-success">
+      	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ session('feedback') }}
+      </div>
+  	@endif
 	<div class="table-responsive"> 
 		<table class="table table-striped b-t text-sm"> 
 			<thead> 
@@ -71,9 +82,9 @@
 					<td>{{$student->ProgrammeofStudy}}</td>   
 					<td>{{$student->YearofStudy}}</td> 
 					<td> 
-					<a  class='active' href='./?page=Institution&section=Policy&edit=13'>
+					<a class='active' href="{{ route('editstudentpage', ['id'=>$student->Id] ) }}">
 						<i class='fa fa-pencil text-success text-active'></i>
-						</a> 
+					</a>
 					</td> 
 				</tr> 
 				@endforeach 
@@ -110,27 +121,31 @@
  	</footer> 
 </section>	
 </div>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
 	<script type="text/javascript">
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }
+    });
+  </script>
+	<script type="text/javascript">
 		$(document).ready(function(){
 			event.preventDefault();
-			$('#searchbutton').on('click', function(){
-				var student = $('#searchstudent').val();
+			$('#searchstudent').on('keyup', function(){
+				var keyword = $(this).val();
 				$.ajax({
-					type: "post",
-					url: "{{ url('searchstudent') }}",
-					beforeSend: function (xhr) {
-            			var token = $('meta[name="csrf_token"]').attr('content');
-
-            		if (token) {
-                  		return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-            			}
-        			},
-					data: {id: student},
-					
-				});
-			});
+					type: "POST",
+					url: "{{ route('searchsuggessions') }}",
+					data: {key: keyword, _token: '{{ csrf_token() }}'},
+					success: function(data){
+						console.log(data);
+						$('#result').html(data).css('color', 'red');
+					}
+				})
+			})
 		});
 	</script>
 @endsection

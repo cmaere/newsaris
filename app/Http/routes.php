@@ -22,16 +22,25 @@ Route::get('/Policy/Programme', ['middleware' => 'auth', 'uses' =>'policycontrol
 Route::get('/Policy/Faculty/NewFaculty', ['middleware' => 'auth', 'uses' => 'policycontroller@newfaculty'])->name('newfaculty');
 Route::post('/Policy/Faculty',['middleware' => 'auth', 'uses' => 'policycontroller@addfaculty'])->name('addfaculty');
 Route::get('Policy/Department', ['middleware' => 'auth', 'uses' => 'policycontroller@department']);
-Route::get('Policy/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform']);
+Route::get('Policy/EnrollStudentForm', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform', 'as' => 'enrollstudentform']);
 Route::post('Policy/EnrollStudent/uploadfile', ['middleware' => 'auth', 'uses' => 'policycontroller@exportexcel', 'as' => 'uploadfile']);
-Route::post('Policy/EnrollStudent1', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
-Route::post('Policy/EnrollStudent2', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform3', 'as' => 'page2']);
+Route::post('Policy/EnrollStudent/1', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform2', 'as' => 'page1']);
+Route::post('Policy/EnrollStudent/2', ['middleware' => 'auth', 'uses' => 'policycontroller@admissionform3', 'as' => 'page2']);
 Route::post('Policy/Success', ['middleware' => 'auth', 'uses' => 'policycontroller@admitStudent', 'as' => 'submitAdmissionForm']);
 Route::get('/Policy/Users',['middleware' => 'auth', 'uses' => 'policycontroller@users']);
 Route::get('/Policy/CreateAccount',['middleware' => 'auth', 'uses' => 'policycontroller@createaccountform']);
 Route::post('Policy/CreateAccount', ['middleeware' => 'auth', 'uses' => 'policycontroller@addaccount', 'as' => 'createaccount']);
 Route::get('/Policy/ModuleRegistration', ['middleware'=> 'auth', 'uses' => 'policycontroller@moduleregistration']);
 Route::post('/Policy/ModuleRegistrationForm', ['middleware' => 'auth', 'uses' => 'policycontroller@getmoduleregistrationform', 'as' => 'moduleregistrationform']);
+Route::post('/Policy/ModuleRegistration', ['middleware' => 'auth', 'uses' => 'policycontroller@registermodule', 'as' => 'registermodule']);
+Route::get('/Policy/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@getstudentlist']);
+Route::post('/Policy/Students/Search', ['middleware' => 'auth', 'uses' => 'policycontroller@getstudentlist', 'as' => 'searchstudent']);
+Route::get('Policy/EditStudent/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudentform', 'as' => 'editstudentpage']);
+Route::post('Policy/EditStudent/2/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudent', 'as' => 'nextedit']);
+Route::post('Policy/EditStudent/3/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudent1', 'as' => 'nextedit1']);
+Route::post('/Policy/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@updateStudent', 'as' => 'updatestudent']);
+Route::post('Policy/EnrollStudentForm/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@checkregnumber', 'as' => 'checkregnumber']);
+Route::post('Policy/SearchStudent/{key?}', ['middleware' =>'auth', 'uses' => 'policycontroller@seachsuggesstions', 'as' => 'searchsuggessions']);
 Route::auth();
 Route::get('/home', 'main@index');
 

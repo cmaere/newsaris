@@ -53,13 +53,8 @@
     <div class="form-group">
       <label for="select" class="col-lg-3 control-label">Year of Study</label>
       <div class="col-lg-8">
-        <select class="form-control rounded" id="yearofstudy" name="yearofstudy">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-      </div>  
+          <input type="number" class="form-control rounded" id="yearofstudy" name="yearofstudy" value="{{old('yearofstudy')}}" min="1" max="4">
+      </div> 
     </div> 
       
     <div class="form-group">
@@ -84,8 +79,9 @@
       <label for="registrationnumber" class="col-lg-3 control-label">Registration Number</label>
       <div class="col-lg-8">
         <input type="text" class="form-control rounded" id="registrationnumber" placeholder="Registration Number" name="regno" value="{{old('regno')}}">
-  
+      <span id="feedback"></span>
       </div>
+
     </div>
    
     <div class="form-group">
@@ -93,7 +89,7 @@
       <div class="col-lg-8">
         <select class="form-control rounded" id="program" name="program">
           @foreach($programmes as $programme)
-            <option value="{{$programme->ProgrammeID}}">{{$programme->ProgrammeName}}</option>
+            <option value="{{$programme->ProgrammeCode}}">{{$programme->Title}}</option>
           @endforeach
         </select> 
       </div>
@@ -102,7 +98,7 @@
     <div class="form-group">
       <label for="graduationdate" class="col-lg-3 control-label">Graduation Date</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control rounded" id="graduationdate" placeholder="YYYY-MM-DD" name="graddate" value="{{old('graddate')}}">
+        <input type="date" class="form-control rounded" id="graduationdate" placeholder="YYYY-MM-DD" name="graddate" value="{{old('graddate')}}">
       </div>
     </div>
     
@@ -133,10 +129,9 @@
       <label for="select" class="col-lg-3 control-label">Level of Study</label>
       <div class="col-lg-8">
         <select class="form-control rounded" id="levelofstudy" name="levelofstudy">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option name="3">3</option>
-          <option name="4">4</option>
+          @foreach($levelofstudy as $level)
+          <option value="{{$level->Code}}">{{$level->StudyLevel}}</option>
+          @endforeach
         </select> 
       </div>
     </div>  
@@ -164,4 +159,26 @@
 </section>
 </section>  
 </div>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
+  <script type="text/javascript">
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    $('#registrationnumber').blur(function(){
+      var reg = $(this).val();
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('checkregnumber') }}",
+        data: {id: reg, _token: '{{ csrf_token() }}'},
+        success: function(data){
+          $('#feedback').html(data).css('color', 'red');
+        }
+      });
+    });
+  </script>
 @endsection

@@ -622,32 +622,6 @@ public function course_edited(Request $request) {
 
 		
 	    }
-	    public function admissionform()
-	    {
-	    	$currentpage = "Enroll student";
-			$parentpage ="Policy";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-			$campus = $this->model->getCampus();
-			$programmes = $this->model->getProgrammes();
-			$faculties = $this->model->getFaculty();
-			$sponsors = $this->model->getSponsors();
-			$mannerofentry = $this->model->getMannerOfEntry();
-
-	    	return view('admissionform', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-						  'campus' => $campus,
-						  'programmes' => $programmes,
-						  'faculties' => $faculties,
-						  'sponsors' => $sponsors,
-						  'entrymanners' => $mannerofentry));
-	    }
 
 	    public function sponsor() {
 
@@ -756,11 +730,39 @@ public function course_edited(Request $request) {
 
 
 
+	    public function admissionform()
+	    {
+	    	$currentpage = "Enroll student";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			$campus = $this->model->getCampus();
+			$programmes = $this->model->getProgrammes();
+			$faculties = $this->model->getFaculty();
+			$sponsors = $this->model->getSponsors();
+			$mannerofentry = $this->model->getMannerOfEntry();
+
+	    	return view('admissionform', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'campus' => $campus,
+						  'programmes' => $programmes,
+						  'faculties' => $faculties,
+						  'sponsors' => $sponsors,
+						  'entrymanners' => $mannerofentry,
+						  'levelofstudy' => $this->model->getProgrammeLevel()));
+	    }
 	    public function admissionform2(Request $request)
 	    {
 	    	$this->validate($request, [
 	    		'admissionnumber' => 'required',
-	    		'graddate' => 'required|date_format:"Y-m-d"'
+	    		'graddate' => 'required|date_format:"Y-m-d"',
+	    		'program' => 'required'
 	    	]);
 	    	session([
 	    			'yearOfStudy' => $request['yearofstudy'],
@@ -813,8 +815,8 @@ public function course_edited(Request $request) {
 	    			'ta' => $request['ta'],'homeVillage' => $request['homevillage'],
 	    			'nationality' => $request['nationality'],'studentStatus' => $request['studentstatus'],
 	    			'religion' => $request['religion'],'maritalStatus' => $request['marital'],
-	    			'disability' => $request['disability'],'physAddress' => $request['physicaladdress'], 
-	    			'curAddress' => $request['currentaddress'],
+	    			'disability' => $request['disability'],'paddress' => $request['permanentaddress'], 
+	    			'curAddres' => $request['currentaddress'], 'bankbranchname' => $request['bankbranch'],
 	    			'phone' => $request['phone'],'email' => $request['email'],
 	    			'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
 	    		]);
@@ -831,9 +833,7 @@ public function course_edited(Request $request) {
 						  'loginname' => $this->main->loginname,
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-						  
-						  ));
+						  'parentpage' => $parentpage));
 
 	    }
 
@@ -846,19 +846,66 @@ public function course_edited(Request $request) {
 
 	    		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
 	    		{
-	    			// if($fileop[0] = 'BACHELOR  OF SCIENCE IN NURSING')
-	    			// {
-	    			// 	echo 'Ndakupeza';
-	    			// 	die();
-	    			// }
-	    			$name = $fileop[0];
-	    			$gender = $fileop[1];
-	    			$cand_num = $fileop[2];
-	    			//echo 'name= '.$name.' gender = '.$gender.' '.$cand_num;
-	    			//$center_num = $fileop[4];
+	    			if(($fileop[0] != "") && ($fileop[1] == ""))
+		    		{
+		    			$programme = ' ';
+		    			$programmecode = ' ';
+		    			$i = 0;
+		    			preg_match('#\((.*?)\)#', $fileop[0], $match);
+		    			$programme = preg_split('/\(.*?\)/',$fileop[0]);
+						// print @$match[1];
+						// echo "<br>";
+						// print_r($programme[0]);
+						$count = $this->model->verifyprogramme(strtolower($programme[0]));
 
-	    			//$insertStudentInfo = new policymodel();
-	    			$insertStudentInfo = $this->model->insertIntoStudentTable($name, $gender, $cand_num);
+						foreach ($count as $value) {
+							$number = $value->count;
+							$code = $value->code;
+						}
+						echo($number);
+		    			if($number > 0)
+		    			{
+		    				$programme = $programme[0];
+		    				$programmecode = $code;
+		    				$college = 'Kcn';
+		    			}
+		    			
+
+	    			}
+	    			if($fileop[1] != "")
+	    			{
+	    				echo isset($programmecode) ? $college.'/'.$programmecode.'/'.$i.'<br>' : ' ';
+	    			}
+	    			$i = str_pad($i + 1, 3, 0, STR_PAD_LEFT);
+
+	    // 			$name = str_replace(' ', ', ', $fileop[1]);
+	    // 			$last_space = strrpos($name, ' ');
+					// $last_word = substr($name, $last_space);
+					// $lastname = substr($name, 0, $last_space);
+					// $firstname = trim(strtolower($last_word));
+					// $firstname = ucfirst($firstname);
+					// $fullname = $lastname.' '.$firstname;
+
+					// $pieces = explode(' ', $fileop[0]);
+					// $program = @$pieces[0].' '.@$pieces[2].' '.@$pieces[3];
+					
+					// if($program = 'BACHELOR OF SCIENCE')
+					// {
+					// 	echo $program;
+					// }
+					
+	    // 			// for($i = 0; $i < strlen($fileop[0]); $i++)
+	    // 			// {
+	    // 			// 	echo substr($fileop[0], $i, 1 ).'<br>';
+	    // 			// }
+	    // 			$name = $fileop[1];
+	    			// $gender = $fileop[2];
+	    			// $cand_num = $fileop[3];
+	    			// if(strlen(trim($fullname)) > 0)
+	    			// {
+	    			// 	$insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
+	    			// }
+	    			
 	    		}
 	    	}
 	    }
@@ -898,29 +945,27 @@ public function course_edited(Request $request) {
 	    	$religion =session()->pull('religion');
 	    	$maritalStatus = session()->pull('maritalStatus');
 	    	$disability =session()->pull('disability');
-	    	$physAddress =session()->pull('physAddress');
+	    	$paddress =session()->pull('paddress');
 	    	$phone =session()->pull('phone');
 	    	$email =session()->pull('email');
 	    	$bankName =session()->pull('bankName');
 	    	$bankAccount = session()->pull('bankAccount');
-	    	$parentName = session()->pull('bankAccount');
-	    	$relationship = session()->pull('bankAccount');
-	    	$occupation = session()->pull('bankAccount');
-	    	$parentAddress = session()->pull('bankAccount');
+	    	$parentName = session()->pull('parentName');
+	    	$relationship = session()->pull('relationship');
+	    	$occupation = session()->pull('occupation');
+	    	$parentAddress = session()->pull('parentAddress');
 	    	$parentEmail = session()->pull('parentEmail');
 	    	$parentPhone = session()->pull('parentPhone');
 	    	$schoolName = session()->pull('schoolName');
 	    	$examNumber = session()->pull('examNumber');
 	    	$yearCompleted = session()->pull('yearCompleted');
+	    	$currentaddress = session()->pull('curAddres');
+	    	$bankbranchname = session()->pull('bankbranchname');
 	    	
-	    	if($this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted))
-	    	{
-	    		return redirect('/Policy/EnrollStudent')->with('feedback','Student enrolled successfully!');
-	    	}
-	    	else
-	    	{
-	    		return redirect('/Policy/EnrollStudent')->with('feedback','Student could not be enrolled!');
-	    	}
+	    	$this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$paddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted, $currentaddress, $bankbranchname);
+
+	    	return redirect('/Policy/EnrollStudent')->with('feedback','Student enrolled successfully!');
+	    	
 	    	
 	    }
 	    
@@ -963,17 +1008,17 @@ public function course_edited(Request $request) {
 	    	$username = $request['username'];
 	    	$password = $request['password'];
 	    	$email = $request['email'];
-	    	$count = $this->model->verifyUser($lastname,$firstname,$dateofbirth,$regNumber);
+	    	$count = $this->model->verifyStudent($lastname,$firstname,$dateofbirth,$regNumber);
 
 	    	foreach ($count as $value) {
 	    		$number = $value->count;
 	    	}
 	    	if ($number > 0) 
 	    	{
-	    		// if($this->createAccount())
-	    		// {
+	    		if($this->model->createAccount($name, $dateofbirth, $regNumber, $position, $username, $password, $email))
+	    		{
 	    		 	return redirect('/Policy/CreateAccount');
-	    		// }
+	    		}
 	    	}
 	    	else
 	    	{
@@ -983,6 +1028,12 @@ public function course_edited(Request $request) {
 	    }
 	     public function moduleregistration()
 	    {
+	    	$if_registered = $this->model->checkRegistered($this->main->regno);
+	    	foreach($if_registered as $registered)
+	    	{
+	    		$is_registered = $registered->count;
+	    	}
+	    	$courses = $this->model->getRegisteredCourses($this->main->regno);
 	    	$currentpage = "Register Module";
 			$parentpage ="Policy";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
@@ -994,8 +1045,9 @@ public function course_edited(Request $request) {
 						  'loginname' => $this->main->loginname,
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage
-						  ));
+						  'parentpage' => $parentpage,
+						  'registered' => $is_registered,
+						  'courses' => $courses));
 	    }
 	    public function getmoduleregistrationform(Request $request)
 	    {
@@ -1013,10 +1065,274 @@ public function course_edited(Request $request) {
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
-						  'courses' => $this->model->getCourses()));
+						  'courses' => $this->model->getCourses($this->main->regno)));
         	}
       //   return 'Is not set';
 	    	//return redirect('moduleregistration')->with('submitted');
+	    }
+   		
+   		public function registermodule(Request $request)
+   		{
+   			for($i=0; $i < count($this->model->getCourses($this->main->regno)); $i++)
+   			{
+   				$this->model->moduleregister($this->main->regno, $request['coursecode_'.$i]);
+   			}
+   			return redirect('/Policy/ModuleRegistration')->with('courses', $this->model->getRegisteredCourses($this->main->regno));
+   		}
+
+   		public function getstudentlist(Request $request)
+   		{
+	    	$currentpage = "Register Module";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+
+	    	if($request['search'] && ($request['search'] != ''))
+	    	{
+	    		$this->validate($request,['searchkeyword' => 'required']);
+	    		$keyword = $request['searchkeyword'];
+	    		$students = $this->model->searchstudet($keyword);
+	    	}else
+	    	{
+	    		$students = $this->model->studentList();
+	    	}
+	    	
+	    	return view('studentlist',
+	    				array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'students' => $students));
+	    }
+
+	    public function editstudentform(Request $request, $id)
+	    {
+	    	$currentpage = "Edit Student";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			$studentdetails = $this->model->getStudentDetails($id);
+			$campus = $studentdetails->CampusID;
+			$faculty = $studentdetails->FacultyID;
+			$programme = $studentdetails->ProgrammeofStudyID;
+			$sponsor = $studentdetails->SponsorID;
+			$entry = $studentdetails->MannerofEntryID;
+			$level = $studentdetails->StudyLevelID;
+			$status = $studentdetails->StatusID;
+
+	    	return view('editstudent',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'student' => $studentdetails,
+						  'campus' => $this->model->getCampus($campus),
+						  'faculties' => $this->model->getFaculty($faculty),
+						  'programmes' => $this->model->getProgrammes($programme),
+						  'sponsors' => $this->model->getSponsors($sponsor),
+						  'entrymanners' => $this->model->getMannerOfEntry($entry),
+						  'levelofstudy' => $this->model->getProgrammeLevel($level)));
+	    }
+
+	    public function editstudent(Request $request, $id)
+	    {
+	    	//General page information
+	    	$currentpage = "Edit Student";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			$studentdetails = $this->model->getStudentDetails($id);
+
+	    	//Edit study information validation
+	    	$this->validate($request, [
+	    		'yearofstudy' => 'required',
+	    		'campus' => 'required','graddate' => 'required|date_format:"Y-m-d"',
+	    		'faculty'=> 'required', 'levelofstudy' => 'required',
+	    		'program' => 'required', 'mannerofentry' => 'required'
+	    	]);
+	    	//store form data in session
+	    	session([
+	    			'editid' => $id,
+	    			'edityearOfStudy' => $request['yearofstudy'],
+	    			'editadmissionNumber' => $request['admissionnumber'],
+	    			'editcampus' => $request['campus'],
+	    			'editregNumber' => $request['regno'],
+	    			'editleveOfStudy' => $request['levelofstudy'],
+	    			'editmannerOfEntry' => $request['mannerofentry'],
+	    			'editsponsor' => $request['sponsor'],
+	    			'editfaculty' => $request['faculty'],
+	    			'editgraddate' => $request['graddate'],
+	    			'editprogram' => $request['program']
+	    		]);
+
+	    	$status = $studentdetails->StatusID;
+	    	$religion = $studentdetails->ReligionID;
+	    	$sex = $studentdetails->sexid;
+	    	$maritalstatus = $studentdetails->maritalStatusID;
+	    	$disability = $studentdetails->DisabilityCode;
+
+	    	//Split name
+	    	$name = explode(',', $studentdetails->Name);
+	    	
+	    	//returns next form 
+	    	return view('editstudent1',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'student' => $studentdetails,
+						  'firstname' => $name[1],
+						  'lastname' => $name[0],
+						  'status' => $this->model->getStudentStatus($status),
+						  'religions' => $this->model->getReligion($religion),
+						  'gender' => $this->model->getSex($sex),
+						  'maritalstatus' => $this->model->getMaritalStatus($maritalstatus),
+						  'disabilities' => $this->model->getDisability($disability)));
+	    }
+
+	    public function editstudent1(Request $request, $id)
+	    {
+	    	//General page info
+	    	$currentpage = "Edit Student";
+			$parentpage ="Policy";
+			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+			$studentdetails = $this->model->getStudentDetails($id);
+
+			// //Edit Personal Information Form validation
+	    	$this->validate($request, [
+	    		'lastname' => 'required|alpha'
+	    	]);
+
+	    	//store form data in session
+	    	session([
+	    			'editlastname' => $request['lastname'],'editmiddlename' => $request['middlename'],
+	    			'editfirstname' => $request['firstname'],'editsex' => $request['sex'],
+	    			'editdateOfBirth' => $request['dateofbirth'],'edithomeDistrict' => $request['homedistrict'],
+	    			'editta' => $request['ta'],'edithomeVillage' => $request['homevillage'],
+	    			'editnationality' => $request['nationality'],'editstudentStatus' => $request['studentstatus'],
+	    			'editreligion' => $request['religion'],'editmaritalStatus' => $request['marital'],
+	    			'editdisability' => $request['disability'],'editphysAddress' => $request['permanentaddress'], 
+	    			'editcurAddress' => $request['currentaddress'], 'editbankbranch' => $request['bankbranch'],
+	    			'editphone' => $request['phone'],'editemail' => $request['email'],
+	    			'editbankName' => $request['bankname'],'editbankAccount' => $request['bankaccount']
+	    		]);
+	    	
+	    	//returns next form
+	    	return view('editstudent2',
+	    		array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage,
+						  'parentpage' => $parentpage,
+						  'student' => $studentdetails));
+	    }
+
+	    /**
+	    / Function to send edited student data to the updatestudent model
+	    */
+
+	    public function updateStudent(Request $request)
+	    {
+	    	session([
+	    			'editparentName' => $request['pname'],
+	    			'editrelationship' => $request['relationship'],
+	    			'editoccupation' => $request['occupation'],
+	    			'editparentAddress' => $request['paddress'],
+	    			'editparentEmail' => $request['pemail'],
+	    			'editparentPhone' => $request['parphone'],
+	    			'editschoolName' => $request['schname'],
+	    			'editexamNumber' => $request['examnum'],
+	    			'edityearCompleted' => $request['yearcompleted']
+	    		]);
+	    	$id = session()->pull('editid');
+	    	$yearOfStudy = session()->pull('edityearOfStudy');
+	    	$admissionNumber = session()->pull('editadmissionNumber');
+	    	$campus = session()->pull('editcampus');
+	    	$regNumber = session()->pull('editregNumber');
+	    	$leveOfStudy = session()->pull('editleveOfStudy');
+	    	$mannerOfEntry = session()->pull('editmannerOfEntry');
+	    	$sponsor = session()->pull('editsponsor');
+	    	$faculty = session()->pull('editfaculty');
+	    	$graddate = session()->pull('editgraddate');
+	    	$program = session()->pull('editprogram');
+	    	$lastname = session()->pull('editlastname');
+	    	$middlename = session()->pull('editmiddlename');
+	    	$firstname = session()->pull('editfirstname');
+	    	$sex = session()->pull('editsex');
+	    	$dateOfBirth = session()->pull('editdateOfBirth');
+	    	$homeDistrict = session()->pull('edithomeDistrict');
+	    	$ta = session()->pull('editta');
+	    	$homeVillage = session()->pull('edithomeVillage');
+	    	$nationality = session()->pull('editnationality');
+	    	$studentStatus =session()->pull('editstudentStatus');
+	    	$religion =session()->pull('editreligion');
+	    	$maritalStatus = session()->pull('editmaritalStatus');
+	    	$disability =session()->pull('editdisability');
+	    	$physAddress =session()->pull('editphysAddress');
+	    	$phone =session()->pull('editphone');
+	    	$email =session()->pull('editemail');
+	    	$bankName =session()->pull('editbankName');
+	    	$bankAccount = session()->pull('editbankAccount');
+	    	$parentName = session()->pull('editparentName');
+	    	$relationship = session()->pull('editrelationship');
+	    	$occupation = session()->pull('editoccupation');
+	    	$parentAddress = session()->pull('editparentAddress');
+	    	$parentEmail = session()->pull('editparentEmail');
+	    	$parentPhone = session()->pull('editparentPhone');
+	    	$schoolName = session()->pull('editschoolName');
+	    	$examNumber = session()->pull('editexamNumber');
+	    	$yearCompleted = session()->pull('edityearCompleted');
+	    	$bankBranch = session()->pull('editbankbranch');
+	    	$currentAddress = session()->pull('editcurAddress');
+
+	    	//$name = $this->formatName($firstname, $lastname);
+
+	    	$this->model->updateStudentDetails($id, $firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict,$occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail);
+
+
+	    		$message = $regNumber.' has been updated!';
+	    		return redirect('/Policy/EnrollStudent')->with('editfeedback', $message);
+	    	
+	    	
+	    }
+
+	    public function checkregnumber(Request $request)
+	    {
+	    	$regNumber = $request->id;
+	    	$checkregnumber = $this->model->verifyregnumber($regNumber);
+	    	if($checkregnumber){
+	    		echo 'Registration Number already exist!';
+	    	}
+	    }
+
+	    public function seachsuggesstions(Request $request)
+	    {
+	    	// if(searchstudet($request->key))
+	    	// {
+	    	// 	echo 'Something is here!';
+	    	// }else{
+	    		echo "No result found...";
+	    	// }
+	    }
+
+	    public function formatName($firstname, $lastname)
+	    {
+
+	    	$fullname = strtoupper($lastname).' '.$firstname;
+        	$fullname = str_replace(' ', ', ', $fullname);
+        	return $fullname;
 	    }
    
 }

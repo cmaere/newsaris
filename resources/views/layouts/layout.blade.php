@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class=" js no-touch no-android no-chrome firefox no-iemobile no-ie no-ie10 no-ie11 no-ios" lang="en">
 <head>
-	
+	<meta name="_token" content="{!! csrf_token() !!}" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> <meta charset="utf-8">
  <title>@yield('title')</title> 
 <meta name="description" content="saris, kcn, nursing, university, malawi, kamuzu, college, ict, exams"> 
@@ -19,6 +19,12 @@
 	  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
 	  color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}
 	  .jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+	  .active {
+	  	display:inherit;
+	  }
+	  .page {
+	  	display: none;
+	  }
 	  </style></head><body>
   <section class="hbox stretch"> 
 	 
@@ -186,7 +192,7 @@
 				 <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a> 
 			 </section>
 			  <!-- /.vbox --> </section>
-															       <script src="scripts/app.js"></script> 
+															       <script src="{{asset('scripts/app.js')}}"></script> 
 															       <!-- Bootstrap -->  <!-- App --> 
 														       </body></html>
 											      

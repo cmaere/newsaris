@@ -10,22 +10,28 @@ class policymodel extends Model
 	public function selectQuery($sql_stmt) {
         return DB::select($sql_stmt);
     }
-    public function getFaculty()
-	{
-		$query = "SELECT * FROM faculty";
-		return $this->selectQuery($query);
-	}
-    public function  delete_faculty($check){
+   public function getFaculty($id = NULL)
+    {
+        if($id == NULL)
+        {
+            $query = "SELECT * FROM faculty";
+        }else{
+            $query = "SELECT * FROM faculty WHERE FacultyID NOT IN (select FacultyID from faculty where FacultyID = '$id')";
+        }
         
-        $query = "DELETE FROM faculty WHERE FacultyID = '$check'";
-
         return $this->selectQuery($query);
     }
-	public function getProgrammes()
-	{
-		$query="select * from programme";
-		return $this->selectQuery($query);
-	}
+	public function getProgrammes($id = NULL)
+    {
+        if($id == NULL)
+        {
+            $query="select * from programme";
+        }else{
+            $query = "select * from programme where ProgrammeCode not in (select ProgrammeCode from programme where ProgrammeCode = '$id')";
+        }
+        
+        return $this->selectQuery($query);
+    }
     public function  newprogramme($pcode,$pname,$ptitle,$pfaculty){
         $query = "INSERT INTO programme (ProgrammeCode,ProgrammeName,Title,Faculty) VALUES ('$pcode','$pname','$ptitle','$pfaculty')";
 
@@ -233,78 +239,230 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
 		return $this->selectQuery($query);
     }
 
-    public function enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$physAddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted)
+    public function enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$paddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted, $currentAddress, $bankbranch)
     {
-        $fullname = strtoupper($firstname).' '.$lastname;
-        $fullname = str_replace(' ', ', ', $fullname);
-    	$query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy,";
-        $query .= "Faculty, Sponsor, GradYear, Status, Nationality, ParentOccupation, Disability, AdmissionNo, village, kin,";
-        $query .= "kin_phone, account_number, bank_name, paddress, studylevel, kin_relationship, Email, Phone, kin_address, kin_email) ";
+        $fullname = strtoupper(trim($lastname)).', '.trim($firstname);
+        $date = date("Y-m-d H:i:s");
+        $query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy, Faculty, Sponsor, ";
+        $query .= "GradYear, Status, YearofStudy, Nationality, District, ParentOccupation, Received, Religion, AdmissionNo, village, ";
+        $query .= "TradAuthority, kin,kin_phone, account_number, bank_name, bank_branch_name,form7name, form7no, paddress, studylevel, ";
+        $query .= "kin_relationship, Email, Phone, f7year, kin_address, disabilityCategory, currentaddress, kin_email) ";
         $query .= "VALUES('$fullname','$regNumber','$sex','$dateOfBirth','$mannerOfEntry','$maritalStatus','$campus','$program',";
-        $query .= "'$faculty','$sponsor','$graddate','$studentStatus','$nationality','$occupation','$disability','$admissionNumber',"; 
-        $query .= "'$homeVillage','$parentName','$parentPhone','$bankAccount','$bankName','$physAddress','$leveOfStudy',";
-        $query .= "'$relationship','$email','$phone','$parentAddress','$parentEmail')";
-    	return $this->selectQuery($query);
+        $query .= "'$faculty','$sponsor','$graddate','$studentStatus','$yearOfStudy','$nationality','$homeDistrict','$occupation', '$date', "; 
+        $query .= "'$religion', '$admissionNumber','$homeVillage', '$ta', '$parentName','$parentPhone','$bankAccount','$bankName', '$bankbranch',";
+        $query .= "'$schoolName', '$examNumber', '$paddress','$leveOfStudy','$relationship','$email','$phone','$yearCompleted', '$parentAddress',";
+        $query .= "'$disability', '$currentAddress', '$parentEmail')";
+        return $this->selectQuery($query);
     }
 
-    public function getCampus(){
-    	$query = "select * from campus";
-    	return $this->selectQuery($query);
+    public function getCampus($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from campus";
+        }else{
+            $query = "select * from campus where CampusID not in (select CampusID from campus where CampusID = '$id')";
+        }
+        
+        return $this->selectQuery($query);
     }
     
-    public function getSponsors(){
-    	$query = "select * from sponsors";
-    	return $this->selectQuery($query);
-    }
-
-    public function getMannerOfEntry(){
-    	$query = "select * from mannerofentry";
-    	return $this->selectQuery($query);
-    }
-
-    public function getSex(){
-    	$query = "select * from sex";
-    	return $this->selectQuery($query);
-    }
-
-    public function getStudentStatus(){
-        $query = "select * from studentstatus";
+    public function getSponsors($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from sponsors";
+        }else{
+            $query = "select * from sponsors where SponsorID not in (select SponsorID from sponsors where SponsorID = '$id')";
+        }
+        
         return $this->selectQuery($query);
     }
 
-    public function getDisability(){
-        $query = "select * from disability";
+    public function getMannerOfEntry($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from mannerofentry";
+        }else{
+            $query = "select * from mannerofentry where ID not in (select ID from mannerofentry where ID = '$id')";
+        }
+        
         return $this->selectQuery($query);
     }
 
-    public function getReligion(){
-        $query = "select * from religion";
+    public function getProgrammeLevel($id = NULL)
+    {
+        if($id == NULL)
+        {
+            $query = "select * from programmelevel";
+        }else{
+            $query = "select * from programmelevel where Code not in (select Code from programmelevel where Code = '$id')";
+        }
+        
         return $this->selectQuery($query);
     }
 
-    public function getMaritalStatus(){
-        $query = "select * from maritalstatus";
+    public function getSex($id = NULL){
+        if($id == NULL)
+        {
+           $query = "select * from sex";
+        }else{
+            $query = "select * from sex where sexid not in (select sexid from sex where sexid = '$id')";
+        }
+        return $this->selectQuery($query);
+    }
+
+    public function getStudentStatus($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from studentstatus";
+        }else{
+            $query = "select * from studentstatus where StatusID not in (select StatusID from studentstatus where StatusID = '$id')";
+        }
+
+        return $this->selectQuery($query);
+    }
+
+    public function getDisability($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from disability";
+        }else{
+            $query = "select * from disability where DisabilityCode not in (select DisabilityCode from disability where DisabilityCode = '$id')";
+        }
+        return $this->selectQuery($query);
+    }
+
+    public function getReligion($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from religion";
+        }else{
+            $query = "select * from religion where ReligionID not in (select ReligionID from religion where ReligionID = '$id')";
+        }
+        
+        return $this->selectQuery($query);
+    }
+
+    public function getMaritalStatus($id = NULL){
+        if($id == NULL)
+        {
+            $query = "select * from maritalstatus";
+        }else{
+            $query = "select * from maritalstatus where intStatusID not in (select intStatusID from maritalstatus where intStatusID = '$id')";
+        }
         return $this->selectQuery($query);
     }
 
     public function getPrivilege()
     {
-        $query = "select * from privilege";
+        $query = "select * from privilege where privilegename = 'Student'";
         return $this->selectQuery($query);
     }
     
-    public function verifyUser($lastname,$firstname,$dateofbirth,$regNumber){
+    public function verifyStudent($lastname,$firstname,$dateofbirth,$regNumber){
         $fullname = strtoupper($firstname).' '.$lastname;
         $name = str_replace(' ', ', ', $fullname);
         $query = "select count('id') as count from student where Name = '$name' and DBirth = '$dateofbirth' and RegNo = '$regNumber' limit 1";
         return $this->selectQuery($query);
     }
-    /**
-    to be updated
-    */
-    public function getCourses()
+
+    public function createAccount($name, $dateofbirth, $regNumber, $position, $username, $password, $email)
     {
-        $query = "select * from course";
+        $date = date("Y-m-d");
+        $query = "insert into security (UserName, password, FullName, RegNo, Position, Email, Registered) values ('$username','$password','$name','$regNumber','$position', '$email','$date')";
+        return $this->selectQuery($query);
+    }
+
+    
+    public function getCourses($regNumber)
+    {
+        $query = "SELECT * FROM course c INNER JOIN student s ON (s.ProgrammeofStudy = c.Programme) WHERE s.RegNo = '$regNumber' and s.yearOfStudy = c.StudyLevel;";
+        return $this->selectQuery($query);
+    }
+
+    /**
+    / check if student is registered
+    /@param reg #
+    /@return count
+    */
+    public function checkRegistered($regNumber)
+    {
+        $query = "select count(*) as count from coursecandidate where RegNo = '$regNumber'";
+        return $this->selectQuery($query);
+    }
+
+    /**
+    / Register module
+    /@param registration number
+    /@param coursecode
+    */
+    public function moduleregister($regNumber, $coursecode)
+    {
+        $query ="insert into coursecandidate (RegNo, CourseCode) values ('$regNumber', '$coursecode')";
+        return $this->selectQuery($query);
+    }
+
+    /**
+    /get courses that as student is registered
+    /@param reg #
+    /@return courses
+    */
+    public function getRegisteredCourses($regNumber)
+    {
+        $query = "select * from coursecandidate s inner join course c on (c.CourseCode = s.CourseCode) where s.RegNo = '$regNumber'";
+        return $this->selectQuery($query);
+    }
+
+    /**
+    /Displays students list
+    /@return student list
+    */
+    public function studentList()
+    {
+        $query = "select * from studentDetails";
+        return $this->selectQuery($query);
+    }
+
+    public function searchstudet($keyword)
+    {
+        $query = "SELECT * FROM student WHERE Name LIKE '%$keyword%' OR RegNo LIKE '%$keyword%'";
+        return $this->selectQuery($query);
+    }
+
+    public function verifyprogramme($programme)
+    {
+        $query = "select count(ProgrammeID) as count, ProgrammeCode as code from programme where Title = '$programme'";
+        return $this->selectQuery($query);
+    }
+
+    public function getStudentDetails($id)
+    {
+        return DB::table('studentDetails')->where('Id', $id)->first();
+    }
+
+    public function updateStudentRecord()
+    {
+
+    }
+
+    public function verifyregnumber($regNumber)
+    {
+        return DB::table('student')->where('RegNo', $regNumber)->get();
+    }
+
+    public function updateStudentDetails($id,$firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,/**$address,*/$nationality,/** $region,*/ $homeDistrict,/**$country,*/ $occupation, /**date*/$religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail )
+    {
+        $name = strtoupper(trim($lastname)).', '.trim($firstname);
+
+        $query = "UPDATE student SET Name = '$name', RegNo = '$regNumber', Sex = '$sex',DBirth = '$dateOfBirth',MannerofEntry = '$mannerOfEntry',";
+        $query .= "MaritalStatus = '$maritalStatus',Campus = '$campus',ProgrammeofStudy = '$program',Faculty = '$faculty',Sponsor = '$sponsor',";
+        $query .= "GradYear = '$graddate',Status = '$studentStatus',YearofStudy = '$yearOfStudy',Nationality = '$nationality',";
+        $query .= "District = '$homeDistrict',ParentOccupation = '$occupation',Religion = '$religion',AdmissionNo = '$admissionNumber',";
+        $query .= "Village = '$homeVillage',TradAuthority = '$ta',kin = '$parentName',kin_phone = '$parentPhone',account_number = '$bankAccount',";
+        $query .= "bank_name = '$bankName',bank_branch_name = '$bankBranch',form7name = '$schoolName',form7no = '$examNumber',";
+        $query .= "paddress = '$physAddress',currentaddress = '$currentAddress',studylevel = '$leveOfStudy',kin_relationship = '$relationship',";
+        $query .= "Email = '$email',Phone = '$phone',f7year = '$yearCompleted',kin_address = '$parentAddress',disabilityCategory = '$disability',";
+        $query .= "kin_email = '$parentEmail' ";
+        $query .= "WHERE Id = '$id'";
         return $this->selectQuery($query);
     }
 

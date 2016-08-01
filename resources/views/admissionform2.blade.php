@@ -79,7 +79,7 @@
     <div class="form-group">
       <label for="dob" class="col-lg-3 control-label">Date of Birth</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control rounded" id="middlename" placeholder="YYYY-MM-DD" name="dateofbirth" value="{{old('dateofbirth')}}">
+        <input type="date" class="form-control rounded" id="middlename" placeholder="YYYY-MM-DD" name="dateofbirth" value="{{old('dateofbirth')}}">
       </div>
     </div>
     

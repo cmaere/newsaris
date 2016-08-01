@@ -58,12 +58,23 @@
         </tr> 
       </thead> 
       <tbody> 
+        <form action="{{route('registermodule')}}" method="POST">
+      <?php $i = 0; ?>
       @foreach($courses as $course)
         <tr>  
-          <td>{{$course->CourseCode}}</td>   
-          <td>{{$course->CourseName}}</td>   
-          <td>{{$course->Units}}</td>   
-          <td>{{$course->Hours}}</td>  
+          <td>{{$course->CourseCode}}
+            <input type="hidden" name="coursecode_{{$i}}" value="{{$course->CourseCode}}">
+          </td>   
+          <td>{{$course->CourseName}}
+            <input type="hidden" name="coursename" value="{{$course->CourseName}}">
+          </td>   
+          <td>{{$course->Units}}
+            <input type="hidden" name="courseunits" value="{{$course->Units}}">
+          </td>   
+          <td>{{$course->Hours}}
+            <input type="hidden" name="coursehours" value="{{$course->Hours}}">
+          </td> 
+        <?php $i++; ?> 
         </tr> 
         @endforeach
       </tbody> 
@@ -75,6 +86,7 @@
       <div class="col-sm-4 text-center"></div> 
       <div class="col-sm-4 text-right text-center-xs"> 
          <button type="submit" class="btn btn-sm btn-primary">Register</button>
+         <input type="hidden" value="{{Session::token()}}" name="_token">
        </div> 
      </div>
       </form> 

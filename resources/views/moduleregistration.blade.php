@@ -41,7 +41,37 @@
   <!-- END heading-->
 <section class="panel"> 
   <header class="panel-heading font-bold">Register for a Module</header> 
-  <div class="panel-body"> 
+  <div class="panel-body">
+  @if($registered >0)
+     <h3>{2016/2017} Academic Year</h3>
+     <p>
+      You are registered with the following modules for year {year} Semester {sem}
+    </p>
+    <p>
+      <div class="table-responsive"> 
+    <table class="table table-striped b-t text-sm"> 
+      <thead> 
+        <tr>   
+          <th >Course code </th> 
+          <th >Course name</th> 
+          <th >Units</th> 
+          <th >Hours</th> 
+        </tr> 
+      </thead> 
+      <tbody> 
+      @foreach($courses as $course)
+        <tr>  
+          <td>{{$course->CourseCode}}</td>   
+          <td>{{$course->CourseName}}</td>   
+          <td>{{$course->Units}}</td>   
+          <td>{{$course->Hours}}</td> 
+        </tr> 
+        @endforeach
+      </tbody> 
+    </table>
+  </div>
+    </p>
+  @else 
     Rules and regulations
     <p></p>
       <form class="form-horizontal" action="{{route('moduleregistrationform')}}" method="POST">
@@ -55,6 +85,7 @@
         <input type="hidden" name="_token" value="{{Session::token()}}">
       </form>
       </p>
+  @endif
   </div> 
 </section>
 </section>  

@@ -52,12 +52,12 @@
     </div>
     @endif
     @if (session('failure'))
-      <div class="alert alert-danger">
+      <div class="alert alert-warning">
         {{ session('failure') }}
       </div>
   	@endif
   	@if (session('success'))
-      <div class="alert alert-danger">
+      <div class="alert alert-success">
         {{ session('success') }}
       </div>
   	@endif
@@ -103,7 +103,7 @@
       <div class="form-group">
       <label for="username" class="col-lg-3 control-label">Username</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control rounded" id="username" placeholder="enter your username (format: flastname)" name="username" value="{{old('usename')}}">
+        <input type="text" class="form-control rounded" id="username" placeholder="enter your username (format: flastname)" name="username" value="{{old('username')}}">
       </div>
     </div>   
     
