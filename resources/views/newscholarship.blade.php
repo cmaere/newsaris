@@ -62,6 +62,16 @@
 					<div class="col-sm-10"> <input type="text" name="scholarship_period" class="form-control rounded" value=""> </div>
 	       		</div>
 	       	   	<div class="line line-dashed line-lg pull-in"></div>
+				<div class="form-group"> <label class="col-sm-2 control-label">Sponsor Name</label> 
+					<div class="col-sm-10"> 
+					<select class="form-control rounded" id="campus" name="campus">
+            			@foreach($sponsorinfo as $list)
+             			 <option value="{{$list->SponsorID}}">{{$list->Name}}</option>
+          				  @endforeach
+       					 </select> 
+					 </div>
+	       		</div>
+	       	   	<div class="line line-dashed line-lg pull-in"></div>
 	   	     
 			 <div class="line line-dashed line-lg pull-in"></div> 
 			

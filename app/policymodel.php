@@ -55,12 +55,21 @@ class policymodel extends Model
 
         return $this->selectQuery($query);
     }
+    public function  delete_faculty($check){
+        
+        $query = "DELETE FROM faculty WHERE FacultyID= '$check'";
+
+        return $this->selectQuery($query);
+    }
     public function  addInstitution($campus,$location,$address,$tel,$email){
         $query = "INSERT INTO campus (Campus,Location,Address,Tel,Email) VALUES ('$campus','$location','$address','$tel','$email')";
 
         return $this->selectQuery($query);
     }
-
+     public function verifyinstname($inst)
+    {
+        return DB::table('campus')->where('Campus', $inst)->get();
+    }
 
 
 

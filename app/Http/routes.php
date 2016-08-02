@@ -76,6 +76,7 @@ Route::post('Policy/Scholarship/addsponsor', 'policycontroller@addscholarship')-
 Route::post('Policy/Scholarship/delete', 'policycontroller@scholarship_delete')->name("scholarship_delete");
 Route::get('Policy/Scholarship/{id?}', 'policycontroller@scholarship_edit')->name("scholarship_edit");
 Route::post('Policy/Scholarship_edit/success', 'policycontroller@scholarship_edited')->name("scholarship_edited");
+Route::post('Policy/Institution/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@checkinstitution', 'as' => 'checkinstitution']);
 
 
 

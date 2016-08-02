@@ -146,7 +146,14 @@ class policycontroller extends Controller
 		
 	    }
 		
-
+		 public function checkinstitution(Request $request)
+	    {
+	    	$inst = $request->id;
+	    	$checkname = $this->model->verifyinstname($inst);
+	    	if($checkname){
+	    		echo 'institution name already exist!';
+	    	}
+	    }
 	  public function faculty() {
 		//page initalization
 		
@@ -787,6 +794,8 @@ public function course_edited(Request $request) {
 	    }
 
 	    public function newscholarship() {
+	    $model = new \App\policymodel();
+    	$data = $model->sponsors();	
 
 		$currentpage = "New Scholarship";
 		$parentpage ="Policy";
@@ -800,6 +809,7 @@ public function course_edited(Request $request) {
 						  'x' => 0,
 						  'loginname' => $this->main->loginname,
 						   'parentpage' => $parentpage,
+						   'institution', 'sponsorinfo' => $data,
 						  'welcomemessage' => $welcomemessage,
 						  'currentpage' => $currentpage ));
 			
