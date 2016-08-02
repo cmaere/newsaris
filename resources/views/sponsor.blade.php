@@ -88,7 +88,7 @@
 							</a> 
 						</td>							
 					</tr>
-							@endforeach; 
+							@endforeach
 					<!-- END row -->
 				
 				

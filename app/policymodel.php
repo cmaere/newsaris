@@ -233,6 +233,37 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         return $this->selectQuery($query);
     }
 
+    public function scholarship()
+    {
+        $query="select * from scholarship";
+        return $this->selectQuery($query);
+    }
+    public function  addscholarship($name,$period){
+        $query = "INSERT INTO scholarship (s_name,s_period) VALUES ('$name','$period')";
+
+        return $this->selectQuery($query);
+    }
+    public function  delete_scholarship($check){
+        
+        $query = "DELETE FROM scholarship WHERE s_id = '$check'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editscholarship($id){
+        
+        $query = "select * from scholarship where s_id = '$id'";
+
+        return $this->selectQuery($query);
+    }
+    public function  editedscholarship($name,$period,$id){
+        
+       $query = "UPDATE scholarship
+                SET s_name ='$name', s_period ='$period'
+                WHERE s_id ='$id'";
+
+        return $this->selectQuery($query);
+    }
+
     public function insertIntoStudentTable($name, $gender, $cand_num)
     {
     	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";

@@ -70,6 +70,13 @@ Route::post('Policy/Sponsor/addsponsor', 'policycontroller@addsponsor')->name("a
 Route::post('Policy/Sponsor/delete', 'policycontroller@sponsor_delete')->name("sponsor_delete");
 Route::get('Policy/sponsor_edit/{id?}', 'policycontroller@sponsor_edit')->name("sponsor_edit");
 Route::post('Policy/sponsor_edit/success', 'policycontroller@sponsor_edited')->name("sponsor_edited");
+Route::get('Policy/Scholarship', 'policycontroller@Scholarship')->name("Scholarship"); 
+Route::get('Policy/Scholarship/addscholarship', 'policycontroller@newscholarship')->name("newscholarship"); 
+Route::post('Policy/Scholarship/addsponsor', 'policycontroller@addscholarship')->name("addscholarship"); 
+Route::post('Policy/Scholarship/delete', 'policycontroller@scholarship_delete')->name("scholarship_delete");
+Route::get('Policy/Scholarship/{id?}', 'policycontroller@scholarship_edit')->name("scholarship_edit");
+Route::post('Policy/Scholarship_edit/success', 'policycontroller@scholarship_edited')->name("scholarship_edited");
+
 
 
 

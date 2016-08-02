@@ -45,12 +45,21 @@
 	<header class="panel-heading font-bold"> New Programme </header> 
 	<div class="panel-body"> 
 		<form action="{{route('addprogramme')}}" method="POST" id="frmInstEdit" class="form-horizontal"> 
+		@if (count($errors) > 0)
+   		<div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </ul>
+   	 	</div>
+   		@endif
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme Code</label> 
-				<div class="col-sm-10"> <input type="text" name="pcode" class="form-control rounded" value=""> </div> 
+				<div class="col-sm-10"> <input type="text" name="programme_code" class="form-control rounded" value=""> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme ShortName</label> 
-					<div class="col-sm-10"> <input type="text" name="pname" class="form-control rounded" value=""> </div>
+					<div class="col-sm-10"> <input type="text" name="programme_short_name" class="form-control rounded" value=""> </div>
 	       		</div>
 	       	   	<div class="line line-dashed line-lg pull-in"></div>
 					

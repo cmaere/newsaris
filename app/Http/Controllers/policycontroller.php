@@ -46,15 +46,29 @@ class policycontroller extends Controller
 			
  	    }
 		 public function addinstitution(Request $request) {
-	    	$campus=$request['campus'];
-	    	$location=$request['paddress'];
+
+		 		$this->validate($request, [
+	    		'institution' => 'required',
+	    		'physical_address' => 'required',
+	    		'address' => 'required',
+	    		'telephone' => 'required',
+	    		'email' => 'required|email'
+	    	]);
+
+
+
+	    	$campus=$request['institution'];
+	    	$location=$request['physical_address'];
 	    	$address=$request['address'];
-	    	$tel=$request['tel'];
+	    	$tel=$request['telephone'];
 	    	$email=$request['email'];
 
 		//page initalization
 	    $model = new \App\policymodel();
     	$post = $model->addInstitution($campus,$location,$address,$tel,$email);
+
+
+		return redirect("Policy/Institution");	
 		
 	    }
 
@@ -113,6 +127,7 @@ class policycontroller extends Controller
 	    $model = new \App\policymodel();
     	$post = $model->editedcampus($campus,$location,$address,$tel,$email,$id);
 		
+		return redirect("Policy/Institution");	
 	    }
 
 	    public function institution_delete(Request $request) {
@@ -442,8 +457,14 @@ public function course_edited(Request $request) {
 			
 	    }
 	    public function addprogramme(Request $request) {
-	    	$pcode=$request['pcode'];
-	    	$pname=$request['pname'];
+
+	    		$this->validate($request, [
+	    		'programme_code' => 'required',
+	    		'programme_short_name' => 'required'
+	    	]);
+
+	    	$pcode=$request['programme_code'];
+	    	$pname=$request['programme_short_name'];
 	    	$ptitle=$request['ptitle'];
 	    	$pfaculty=$request['pfaculty'];
 	    
@@ -550,6 +571,13 @@ public function course_edited(Request $request) {
 	    }
 	    public function addfaculty(Request $request)
 	    {
+	    		$this->validate($request, [
+	    		'faculty' => 'required',
+	    		'address' => 'required',
+	    		'email' => 'required|email'
+	    	]);
+
+
 	    	$faculty = $request['faculty'];
 	    	$address = $request['address'];
 	    	$email = $request['email'];
@@ -664,9 +692,17 @@ public function course_edited(Request $request) {
 			
 	    }
 	     public function addsponsor(Request $request) {
-	    	$name=$request['name'];
+
+
+	     	$this->validate($request, [
+	    		'name_of_sponsor' => 'required',
+	    		'address' => 'required',
+	    		'telephone_No' => 'required'
+	    	]);
+
+	    	$name=$request['name_of_sponsor'];
 	    	$address=$request['address'];
-	    	$comment=$request['comment'];
+	    	$comment=$request['telephone_No'];
 	    
 
 		//page initalization
@@ -725,6 +761,112 @@ public function course_edited(Request $request) {
 	    		return redirect("Policy/Sponsor");
 	    	
 
+		
+	    }
+	    public function scholarship() {
+
+		//page initalization
+		$model = new \App\policymodel();
+    	$data = $model->scholarship();
+		$currentpage = "Scholarship";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+
+	    return view('scholarship', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'institution', 'scholarshipinfo' => $data,
+						   'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+
+	    public function newscholarship() {
+
+		$currentpage = "New Scholarship";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+
+	    return view('newscholarship', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						   'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function addscholarship(Request $request) {
+	    		$this->validate($request, [
+	    		'name_of_scholarship' => 'required',
+	    		'scholarship_period' => 'required'
+	    	]);
+
+	    	$name=$request['name_of_scholarship'];
+	    	$period=$request['scholarship_period'];
+	
+		//page initalization
+	    $model = new \App\policymodel();
+    	$post = $model->addscholarship($name,$period);
+    	return redirect("Policy/Scholarship");
+		
+	    }
+
+	    public function scholarship_delete(Request $request) {
+	    	$checkbox=$request['checkbox'];
+		
+	    	$model = new \App\policymodel();
+
+	   		if(!empty($checkbox)){
+	   			 foreach($checkbox as $check) {
+
+	   				$post = $model->delete_scholarship($check);
+	  			}
+    			
+    		}
+			 return redirect("Policy/Scholarship");	
+		
+	    }
+	    public function scholarship_edit($id) {	
+	    $model = new \App\policymodel();
+    	$data= $model->editscholarship($id);
+
+	
+
+		$currentpage = "Edit Scholarship";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		
+	    return view('scholarship_edit', 
+					array('page' => 'home',
+						  'chasections' => $this->main->data,
+						  'chasubsections' => $this->main->menulist,
+						  'x' => 0,
+						  'loginname' => $this->main->loginname,
+						  'faculty', 'scholarships' => $data,
+						  'parentpage' => $parentpage,
+						  'welcomemessage' => $welcomemessage,
+						  'currentpage' => $currentpage ));
+			
+	    }
+	    public function scholarship_edited(Request $request) {
+	    	$name=$request['name'];
+	    	$period=$request['period'];
+	    	$id=$request['id'];
+	    
+	    $model = new \App\policymodel();
+    	$post = $model->editedscholarship($name,$period,$id);
+    	
+	    return redirect("Policy/Scholarship");
+	    	
 		
 	    }
 

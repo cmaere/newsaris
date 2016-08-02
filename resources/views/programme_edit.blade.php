@@ -47,22 +47,22 @@
 		<form action="{{route('programme_edited')}}" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal"> 
 		 @foreach($programmeinfo as $list) 
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme Code</label> 
-				<div class="col-sm-10"> <input type="text" name="pcode" class="form-control rounded" value={{$list->ProgrammeCode}}> </div> 
+				<div class="col-sm-10"> <input type="text" name="pcode" class="form-control rounded" value="{{$list->ProgrammeCode}}"> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme ShortName</label> 
-				<div class="col-sm-10"> <input type="text" name="pname" class="form-control rounded" value={{$list->ProgrammeName}}> </div> 
+				<div class="col-sm-10"> <input type="text" name="pname" class="form-control rounded" value="{{$list->ProgrammeName}}"> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 			
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme Title</label> 
-				<div class="col-sm-10"> <input type="text" name="ptitle" class="form-control rounded" value={{$list->Title}}> </div> 
+				<div class="col-sm-10"> <input type="text" name="ptitle" class="form-control rounded" value="{{$list->Title}}"> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 			
 			<div class="form-group"> <label class="col-sm-2 control-label">Faculty</label> 
-				<div class="col-sm-10"> <input type="text" name="pfaculty" class="form-control rounded" value={{$list->Faculty}}>
+				<div class="col-sm-10"> <input type="text" name="pfaculty" class="form-control rounded" value="{{$list->Faculty}}">
 				<input type="hidden" name="id"  value={{$list->ProgrammeID}}>	 </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 

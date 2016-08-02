@@ -48,7 +48,7 @@
 		<form action="{{route('institution_edited')}}" method="POST" name="frmInstEdit" id="frmInstEdit" class="form-horizontal">
 		 @foreach($campusinfo as $list) 
 			<div class="form-group"> <label class="col-sm-2 control-label">Institution</label> 
-				<div class="col-sm-10"> <input type="text" name="campus" class="form-control rounded" value={{$list->campus}}> </div> 
+				<div class="col-sm-10"> <input type="text" name="campus" class="form-control rounded" value='{{$list->campus}}'> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div>
 
@@ -67,12 +67,12 @@
 			</div>
 			 <div class="line line-dashed line-lg pull-in"></div> 
  			<div class="form-group"> <label class="col-sm-2 control-label">Telephone</label> 
- 				<div class="col-sm-10"> <input type="text" name="tel" class="form-control rounded" value={{$list->tel}}></div> 
+ 				<div class="col-sm-10"> <input type="text" name="tel" class="form-control rounded" value="{{$list->tel}}"></div> 
  			</div>
 			<div class="line line-dashed line-lg pull-in"></div> 
 			
 			<div class="form-group"> <label class="col-sm-2 control-label">Email</label> 
-				<div class="col-sm-10"> <input type="text" name="email" class="form-control rounded" value={{$list->Email}}>
+				<div class="col-sm-10"> <input type="text" name="email" class="form-control rounded" value="{{$list->Email}}">
 				<input name="id" type="hidden" id="id" value="{{$list->CampusID}}">
 				</div> 
 			</div>

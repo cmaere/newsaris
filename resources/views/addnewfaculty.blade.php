@@ -44,6 +44,15 @@
 	<header class="panel-heading font-bold"> New Faculty </header> 
 	<div class="panel-body"> 
 		<form action="{{ route('addfaculty') }}" method="POST" name="frmInst" id="frmInst" class="form-horizontal"> 
+		@if (count($errors) > 0)
+   		<div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </ul>
+   	 	</div>
+   		@endif
 			<div class="form-group"> <label class="col-sm-2 control-label">Faculty</label> 
 				<div class="col-sm-10"> <input type="text" name="faculty" class="form-control rounded"> </div> 
 			</div> 

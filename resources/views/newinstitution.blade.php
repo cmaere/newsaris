@@ -40,14 +40,20 @@
 				</div> 
 			</div> 
 		</div> 
-		<!-- END heading-->
-
-		
-		
+		<!-- END heading-->	
 	
 		<form action="{{route('addinstitution')}}" method="POST" name="frmInst" id="frmInst" class="form-horizontal"> 
+		@if (count($errors) > 0)
+   		<div class="alert alert-danger">
+        	<ul>
+            	@foreach ($errors->all() as $error)
+               	 {{ $error }}<br>
+            	@endforeach
+        	</ul>
+   	 	</div>
+   		@endif
 			<div class="form-group"> <label class="col-sm-2 control-label">Institution</label> 
-				<div class="col-sm-8"> <input type="text" name="campus" class="form-control rounded"> </div> 
+				<div class="col-sm-8"> <input type="text" name="institution" class="form-control rounded"> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
 			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
@@ -56,12 +62,12 @@
 			 </div>
 	   	         <div class="line line-dashed line-lg pull-in"></div> 
 			 <div class="form-group"> <label class="col-sm-2 control-label">Physical Address</label> 
-			 <div class="col-sm-8"> <input type="text" name="paddress" class="form-control rounded"> </div> 
+			 <div class="col-sm-8"> <input type="text" name="physical_address" class="form-control rounded"> </div> 
 
 			 </div>
 			 <div class="line line-dashed line-lg pull-in"></div> 
  			<div class="form-group"> <label class="col-sm-2 control-label">Telephone</label> 
- 				<div class="col-sm-8"> <input type="text" name="tel" class="form-control rounded"> </div> 
+ 				<div class="col-sm-8"> <input type="text" name="telephone" class="form-control rounded"> </div> 
  			</div>
 			<div class="line line-dashed line-lg pull-in"></div> 
 			<div class="form-group"> <label class="col-sm-2 control-label">Email</label> 

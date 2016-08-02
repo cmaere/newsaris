@@ -22,11 +22,11 @@
 <div class="col-lg-8">	
 <section class="panel"> 
 	<!-- BEGIN heading-->
-	<header class="panel-heading">Sponsors Information</header> 
+	<header class="panel-heading">Scholarships Information</header> 
 	<div class="row text-sm wrapper"> 
 		<div class="col-sm-5 m-b-xs">
 			<a href={{route('newprogramme')}}>
-				<button class="btn btn-sm btn-white">Add New Sponsor</button>
+				<button class="btn btn-sm btn-white">Add New Scholarship</button>
 			</a> 
 		</div> 
 		<div class="col-sm-4 m-b-xs"> </div> 
@@ -42,9 +42,9 @@
 	<!-- END heading-->	
 
 	<section class="panel"> 
-	<header class="panel-heading font-bold"> New Sponsor </header> 
+	<header class="panel-heading font-bold"> New Scholarship</header> 
 	<div class="panel-body"> 
-		<form action="{{route('addsponsor')}}" method="POST" id="frmInstEdit" class="form-horizontal"> 
+		<form action="{{route('addscholarship')}}" method="POST" id="frmInstEdit" class="form-horizontal"> 
 		@if (count($errors) > 0)
    		<div class="alert alert-danger">
         <ul>
@@ -54,20 +54,14 @@
         </ul>
    	 	</div>
    		@endif
-			<div class="form-group"> <label class="col-sm-2 control-label">Name of Sponsor</label> 
-				<div class="col-sm-10"> <input type="text" name="name_of_sponsor" class="form-control rounded" value=""> </div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Name of Scholarship</label> 
+				<div class="col-sm-10"> <input type="text" name="name_of_scholarship" class="form-control rounded" value=""> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
-			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
-					<div class="col-sm-10"> <input type="text" name="address" class="form-control rounded" value=""> </div>
+			<div class="form-group"> <label class="col-sm-2 control-label">Scholarship Period</label> 
+					<div class="col-sm-10"> <input type="text" name="scholarship_period" class="form-control rounded" value=""> </div>
 	       		</div>
 	       	   	<div class="line line-dashed line-lg pull-in"></div>
-					
-			
-			<div class="form-group"> <label class="col-sm-2 control-label">Telephone No.</label> 
-					<div class="col-sm-10"> <input type="text" name="telephone_No" class="form-control rounded" value=""> </div> 
-				
-			 </div>
 	   	     
 			 <div class="line line-dashed line-lg pull-in"></div> 
 			

@@ -26,8 +26,8 @@
 		<header class="panel-heading">{{$currentpage}} Information</header> 
 		<div class="row text-sm wrapper"> 
 			<div class="col-sm-5 m-b-xs">
-				<a href={{route('newinstitution')}}>
-					<button class="btn btn-sm btn-white">Add New Institution</button>
+				<a href={{route('newscholarship')}}>
+					<button class="btn btn-sm btn-white">Add New Scholarship</button>
 				</a> 
 			</div> 
 			<div class="col-sm-4 m-b-xs"> </div> 
@@ -43,7 +43,7 @@
 		<!-- END heading-->
 		
 		
-		<form name="listform" id="listform" action="{{route('institution_delete')}}" method="POST">
+		<form name="listform"  id="listform" action="{{route('scholarship_delete')}}" method="POST">
 		<div class="table-responsive"> 
 			<table class="table table-striped b-t text-sm"> 
 				<thead> 
@@ -51,16 +51,10 @@
 					
 						<th width="20"><input type="checkbox"></th> 
 						<!-- BEGIN columns -->
-						<th {OPTIONS}>Campus
+						<th {OPTIONS}>Scholarship Name
 						</th> 
-						<th {OPTIONS}>Location
-						</th> 
-						<th {OPTIONS}>Address
-						</th> 
-						<th {OPTIONS}>Tel
-						</th> 
-						<th {OPTIONS}>Email
-						</th> 
+						<th {OPTIONS}>Scholarship Period
+						</th> 				
 						<!-- END columns -->
 					
 						<th>Edit</th> 
@@ -68,38 +62,21 @@
 				</thead> 
 				<tbody> 
 				
-				 @foreach($campusinfo as $list)
+				 @foreach($scholarshipinfo as $list)
 				 <tr>
 				 		<!-- BEGIN id -->
-						<td><input type='checkbox' value='{{$list->CampusID}}' name='checkbox[]'></td> 
+						<td><input type='checkbox' value='{{$list->s_id}}' name='checkbox[]'></td> 
 						<!-- END id --> 
-						<!-- BEGIN innercolumns -->
-						
-						
-					
-					
+						<!-- BEGIN innercolumns -->			
 							<td>
-								{{$list->campus}}
+								{{$list->s_name}}
 							</td>
 							<td>
-								{{$list->location}}
-							</td>
-							<td>
-								{{$list->address}}
-							</td>
-							<td>
-								{{$list->tel}}
-							</td>
-							<td>
-								{{$list->Email}}
-							</td>
-
-
-							
-								
+								{{$list->s_period}}
+							</td>		
 								<!-- BEGIN edit -->
 						<td> 
-						<a  class='active' href="{{ route('institution_edit', ['id'=>$list->CampusID])}}">
+						<a  class='active'  href="{{ route('scholarship_edit', ['id'=>$list->s_id])}}">
 							<i class='fa fa-pencil text-success text-active'></i>
 							</a> 
 						</td>							
