@@ -55,8 +55,9 @@
    	 	</div>
    		@endif
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme Code</label> 
-				<div class="col-sm-10"> <input type="text" name="programme_code" class="form-control rounded" value=""> </div> 
+				<div class="col-sm-10"> <input type="text" id="pcode" name="programme_code" class="form-control rounded" value=""> </div> 
 			</div> 
+			<span id="feedback"></span>
 			<div class="line line-dashed line-lg pull-in"></div> 
 			<div class="form-group"> <label class="col-sm-2 control-label">Programme ShortName</label> 
 					<div class="col-sm-10"> <input type="text" name="programme_short_name" class="form-control rounded" value=""> </div>
@@ -87,5 +88,28 @@
 
 </section>	
 </div>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+  <script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
+  <script type="text/javascript">
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }
+    });
+  </script>
+ <script type="text/javascript">
+    $('#pcode').blur(function(){
+      var reg = $(this).val();
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('checkprogramme') }}",
+        data: {id: reg, _token: '{{ csrf_token() }}'},
+        success: function(data){
+
+          $('#feedback').html(data).css('color', 'red');
+        }
+      });
+    });
+  </script>
 
 @endsection

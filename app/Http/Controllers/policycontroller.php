@@ -21,17 +21,26 @@ class policycontroller extends Controller
 		 
 	 }
 	
- 	public function institution() {
+ 	public function institution(Request $request) {
  		//page initalization
  		$model = new \App\policymodel();
  		
-     	$data = $this->model->getinstitution();
+
  		$currentpage = "Institution";
  		$parentpage ="Policy";
  		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 		
  		//var_dump($this->main->data);
- 		//call view
+ 		if($request['search'] && ($request['search'] != ''))
+	    	{
+	    		$this->validate($request,['searchkeyword' => 'required']);
+	    		$keyword = $request['searchkeyword'];
+	    		$table = 'campus';
+	    		$data = $this->model->searchitem($table, $keyword);
+	    	}else
+	    	{
+	    		$data = $this->model->getinstitution();
+	    	}
 
  	    return view('institution', 
  					array('page' => 'home',
