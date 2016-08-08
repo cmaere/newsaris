@@ -532,8 +532,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
     */
     public function verifyprogramme($programme)
     {
-        $query = "select count(ProgrammeID) as count, ProgrammeCode as code from programme where Title = '$programme'";
-        return $this->selectQuery($query);
+        // $query = "select count(ProgrammeID) as count, ProgrammeCode as code from programme where Title = '$programme'";
+        // return $this->selectQuery($query);
+        return DB::table('programme')->where('Title', $programme)->first();
     }
     /**
     * Returns student details by id
