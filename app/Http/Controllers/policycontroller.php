@@ -1002,7 +1002,12 @@ public function course_edited(Request $request) {
 	   	{
 	  		$file = $request->file('adm_file');
 	   		$files = fopen($file, 'r');
-
+	   		$allowed =  array('csv');
+			$filename = $_FILES['adm_file']['name'];
+			$ext = pathinfo($filename, PATHINFO_EXTENSION);
+			if(!in_array($ext,$allowed) ) {
+    			return redirect()->back()->with('filefeedback', 'Please upload a CSV file.');
+			}
 	   		$count = 1;
 	   		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
 	   		{
@@ -1023,14 +1028,19 @@ public function course_edited(Request $request) {
 	   			if($fileop[0] != "" && is_numeric($fileop[0]) && $fileop[1] != "")
 	   			{
 	   				if($regNum != ""){
-	   					echo $regNum.'/'.sprintf("%03d", ($count-2)).' '.$fileop[0].' '.$fileop[1].'<br>';
-	   					// $name = str_replace(' ', ', ', $fileop[1]);
-		    			// $last_space = strrpos($name, ' ');
-						// $last_word = substr($name, $last_space);
-						// $lastname = substr($name, 0, $last_space);
-						// $firstname = trim(strtolower($last_word));
-						// $firstname = ucfirst($firstname);
-						// $fullname = $lastname.' '.$firstname;
+	   					$registrationnumber = $regNum.'/'.sprintf("%03d", ($count-2));
+	   					$name = str_replace(' ', ', ', $fileop[1]);
+		    			$last_space = strrpos($name, ' ');
+						$last_word = substr($name, $last_space);
+						$lastname = substr($name, 0, $last_space);
+						$firstname = trim(strtolower($last_word));
+						$firstname = ucfirst($firstname);
+						$fullname = $lastname.' '.$firstname;
+						$gender = $fileop[2];
+						$cand_num = $fileop[3];
+						$prev_school = $fileop[4];
+
+						echo $fullname."\t<b>".$registrationnumber."</b>\t".$gender."\t".$cand_num."\t".$prev_school."<br>";
 
 	   					// $insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
 	   				}else{
