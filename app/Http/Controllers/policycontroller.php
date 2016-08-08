@@ -1012,68 +1012,41 @@ public function course_edited(Request $request) {
 	  		$file = $request->file('adm_file');
 	   		$files = fopen($file, 'r');
 
+	   		$count = 1;
 	   		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
 	   		{
-	   			if(($fileop[0] != "") && ($fileop[1] == ""))
-	    		{
-	    			$programme = ' ';
-	    			$programmecode = ' ';
-	    			$i = 0;
-	    			preg_match('#\((.*?)\)#', $fileop[0], $match);
-	    			$programme = preg_split('/\(.*?\)/',$fileop[0]);
-					// print @$match[1];
-					// echo "<br>";
-					// print_r($programme[0]);
-					$count = $this->model->verifyprogramme(strtolower($programme[0]));
+	   			if($fileop[0] != "" && $fileop[1] == "")
+	   			{
+	   				$field = preg_split('/\(.*?\)/', $fileop[0]);
+	   				$programme = $this->model->verifyprogramme(strtolower($field[0]));
+	   				
+	   				if(count($programme) > 0)
+	   				{
+	   					$regNum = 'Kcn/'.$programme->ProgrammeID;
+	   					$count = 1;
+	   				}else
+	   				{
+	   					$regNum = "";
+	   				}
+	   			}
+	   			if($fileop[0] != "" && is_numeric($fileop[0]) && $fileop[1] != "")
+	   			{
+	   				if($regNum != ""){
+	   					echo $regNum.'/'.sprintf("%03d", ($count-2)).' '.$fileop[0].' '.$fileop[1].'<br>';
+	   					// $name = str_replace(' ', ', ', $fileop[1]);
+		    			// $last_space = strrpos($name, ' ');
+						// $last_word = substr($name, $last_space);
+						// $lastname = substr($name, 0, $last_space);
+						// $firstname = trim(strtolower($last_word));
+						// $firstname = ucfirst($firstname);
+						// $fullname = $lastname.' '.$firstname;
 
-					foreach ($count as $value) {
-						$number = $value->count;
-						$code = $value->code;
-					}
-					echo($number);
-	    			if($number > 0)
-	    			{
-	    				$programme = $programme[0];
-	    				$programmecode = $code;
-	    				$college = 'Kcn';
-	    			}
-		    			
-
-	    			}
-	    			if($fileop[1] != "")
-	    			{
-	    				echo isset($programmecode) ? $college.'/'.$programmecode.'/'.$i.'<br>' : ' ';
-	    			}
-	    			$i = str_pad($i + 1, 3, 0, STR_PAD_LEFT);
-
-	    // 			$name = str_replace(' ', ', ', $fileop[1]);
-	    // 			$last_space = strrpos($name, ' ');
-					// $last_word = substr($name, $last_space);
-					// $lastname = substr($name, 0, $last_space);
-					// $firstname = trim(strtolower($last_word));
-					// $firstname = ucfirst($firstname);
-					// $fullname = $lastname.' '.$firstname;
-
-					// $pieces = explode(' ', $fileop[0]);
-					// $program = @$pieces[0].' '.@$pieces[2].' '.@$pieces[3];
-					
-					// if($program = 'BACHELOR OF SCIENCE')
-					// {
-					// 	echo $program;
-					// }
-					
-	    // 			// for($i = 0; $i < strlen($fileop[0]); $i++)
-	    // 			// {
-	    // 			// 	echo substr($fileop[0], $i, 1 ).'<br>';
-	    // 			// }
-	    // 			$name = $fileop[1];
-	    			// $gender = $fileop[2];
-	    			// $cand_num = $fileop[3];
-	    			// if(strlen(trim($fullname)) > 0)
-	    			// {
-	    			// 	$insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
-	    			// }
-	    			
+	   					// $insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
+	   				}else{
+	   					//Nothing
+	   				}
+	   			}
+	   			$count++;	
 	   		}
 	   	}
 	}
