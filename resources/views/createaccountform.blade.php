@@ -142,6 +142,7 @@
 </section>
 </section>  
 </div>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('scripts/verifypassword.js')}}"></script>

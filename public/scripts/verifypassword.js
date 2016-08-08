@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	$.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }
+    });
+
 	$('input').blur(function(){
 		var password = $('input[name=password]').val();
 		var confirmpassword = $('input[name=confirmpassword]').val();
@@ -32,8 +38,15 @@ $(document).ready(function(){
 			
 			var username = f.concat(lastname);
 
-			$('#username').val(username).css('background','#FBFCCA');
+			$.ajax({
+				type: "POST",
+				url: "/newsaris/public/Policy/CreateAccount",
+				data: {userID: username, _token: '{{ csrf_token() }}'},
+				success: function(data){
+					console.log(data);
+					$('#username').val(data).css('background','#FBFCCA');
+				}
+			});
 		}
 	});
-
 });

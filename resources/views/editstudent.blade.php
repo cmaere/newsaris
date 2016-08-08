@@ -21,7 +21,7 @@
 @section('content')
 <div class="col-lg-8">  
   <section class="panel"> 
-    <header class="panel-heading font-bold"> New Student </header> 
+    <header class="panel-heading font-bold"> Edit Student </header> 
     <div class="panel-body"> 
       <form class="form-horizontal" action="{{route('nextedit', ['id' => $student->Id])}}" method="POST">
         <fieldset>
@@ -148,3 +148,4 @@
 </section>
   </div>
 @endsection
+

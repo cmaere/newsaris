@@ -171,14 +171,18 @@
   <script type="text/javascript">
     $('#registrationnumber').blur(function(){
       var reg = $(this).val();
-      $.ajax({
-        type: 'POST',
-        url: "{{ route('checkregnumber') }}",
-        data: {id: reg, _token: '{{ csrf_token() }}'},
-        success: function(data){
-          $('#feedback').html(data).css('color', 'red');
-        }
-      });
+      if(reg != '')
+      {
+        $.ajax({
+          type: "POST",
+          url: "{{ route('checkregnumber') }}",
+          data: {id: reg, _token: '{{ csrf_token() }}'},
+          success: function(data){
+            $('#feedback').html(data).css('color', 'red');
+          }
+        });
+      }
+      
     });
   </script>
 @endsection

@@ -10,6 +10,9 @@ class policymodel extends Model
 	public function selectQuery($sql_stmt) {
         return DB::select($sql_stmt);
     }
+    /**
+    /* Returns the list of faculties
+    **/
    public function getFaculty($id = NULL)
     {
         if($id == NULL)
@@ -37,6 +40,9 @@ class policymodel extends Model
 
         return $this->selectQuery($query);
     }
+    /**
+    /* Inserts faculty into the db
+    **/
 	public function insertIntoFaculty($faculty,$address,$email,$tel,$location){
 		$query="insert into faculty (FacultyName, Address, Email, Tel, Location) values ('$faculty','$address','$email','$tel', '$location')";
 		return $this->selectQuery($query);
@@ -272,29 +278,41 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
 
         return $this->selectQuery($query);
     }
-
+    /**
+    * Insert into student table through excel sheet.
+    */
     public function insertIntoStudentTable($name, $gender, $cand_num)
     {
     	$query="insert into student (Name, Sex, IDProcess) values ('$name','$gender','$cand_num')";
 		return $this->selectQuery($query);
     }
-
+    /**
+    *Inserts student details into student db from admission form.
+    */
     public function enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$paddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted, $currentAddress, $bankbranch)
     {
-        $fullname = strtoupper(trim($lastname)).', '.trim($firstname);
-        $date = date("Y-m-d H:i:s");
-        $query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy, Faculty, Sponsor, ";
-        $query .= "GradYear, Status, YearofStudy, Nationality, District, ParentOccupation, Received, Religion, AdmissionNo, village, ";
-        $query .= "TradAuthority, kin,kin_phone, account_number, bank_name, bank_branch_name,form7name, form7no, paddress, studylevel, ";
-        $query .= "kin_relationship, Email, Phone, f7year, kin_address, disabilityCategory, currentaddress, kin_email) ";
-        $query .= "VALUES('$fullname','$regNumber','$sex','$dateOfBirth','$mannerOfEntry','$maritalStatus','$campus','$program',";
-        $query .= "'$faculty','$sponsor','$graddate','$studentStatus','$yearOfStudy','$nationality','$homeDistrict','$occupation', '$date', "; 
-        $query .= "'$religion', '$admissionNumber','$homeVillage', '$ta', '$parentName','$parentPhone','$bankAccount','$bankName', '$bankbranch',";
-        $query .= "'$schoolName', '$examNumber', '$paddress','$leveOfStudy','$relationship','$email','$phone','$yearCompleted', '$parentAddress',";
-        $query .= "'$disability', '$currentAddress', '$parentEmail')";
-        return $this->selectQuery($query);
+        if(count($this->verifyregnumber($regNumber)) > 0){
+            return false;
+        }else{
+            $fullname = strtoupper(trim($lastname)).', '.trim($firstname);
+            $date = date("Y-m-d H:i:s");
+            $query = "insert into student(Name, RegNo, Sex, DBirth, MannerofEntry, MaritalStatus, Campus, ProgrammeofStudy, Faculty, Sponsor, ";
+            $query .= "GradYear, Status, YearofStudy, Nationality, District, ParentOccupation, Received, Religion, AdmissionNo, village, ";
+            $query .= "TradAuthority, kin,kin_phone, account_number, bank_name, bank_branch_name,form7name, form7no, paddress, studylevel, ";
+            $query .= "kin_relationship, Email, Phone, f7year, kin_address, disabilityCategory, currentaddress, kin_email) ";
+            $query .= "VALUES('$fullname','$regNumber','$sex','$dateOfBirth','$mannerOfEntry','$maritalStatus','$campus','$program',";
+            $query .= "'$faculty','$sponsor','$graddate','$studentStatus','$yearOfStudy','$nationality','$homeDistrict','$occupation', '$date', "; 
+            $query .= "'$religion', '$admissionNumber','$homeVillage', '$ta', '$parentName','$parentPhone','$bankAccount','$bankName', '$bankbranch',";
+            $query .= "'$schoolName', '$examNumber', '$paddress','$leveOfStudy','$relationship','$email','$phone','$yearCompleted', '$parentAddress',";
+            $query .= "'$disability', '$currentAddress', '$parentEmail')";
+            $this->selectQuery($query);
+            return true;
+        }
+        
     }
-
+    /**
+    *Returns a list of campuses from db
+    */
     public function getCampus($id = NULL){
         if($id == NULL)
         {
@@ -305,7 +323,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         
         return $this->selectQuery($query);
     }
-    
+    /**
+    * Returns a list of sponsors from db.
+    */
     public function getSponsors($id = NULL){
         if($id == NULL)
         {
@@ -316,7 +336,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of entry manners from db.
+    */
     public function getMannerOfEntry($id = NULL){
         if($id == NULL)
         {
@@ -327,7 +349,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of programme levels from db.
+    */
     public function getProgrammeLevel($id = NULL)
     {
         if($id == NULL)
@@ -339,7 +363,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of gender from db.
+    */
     public function getSex($id = NULL){
         if($id == NULL)
         {
@@ -349,7 +375,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         }
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of student status from db.
+    */
     public function getStudentStatus($id = NULL){
         if($id == NULL)
         {
@@ -360,7 +388,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
 
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of disabilities from db.
+    */
     public function getDisability($id = NULL){
         if($id == NULL)
         {
@@ -370,7 +400,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         }
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of Religions from db.
+    */
     public function getReligion($id = NULL){
         if($id == NULL)
         {
@@ -381,7 +413,9 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of maritalstatus from db.
+    */
     public function getMaritalStatus($id = NULL){
         if($id == NULL)
         {
@@ -391,28 +425,36 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         }
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns a list of privileges from db.
+    */
     public function getPrivilege()
     {
         $query = "select * from privilege where privilegename = 'Student'";
         return $this->selectQuery($query);
     }
-    
+    /**
+    * Returns a value or null if the student exists with the param provided.
+    */
     public function verifyStudent($lastname,$firstname,$dateofbirth,$regNumber){
         $fullname = strtoupper($firstname).' '.$lastname;
         $name = str_replace(' ', ', ', $fullname);
         $query = "select count('id') as count from student where Name = '$name' and DBirth = '$dateofbirth' and RegNo = '$regNumber' limit 1";
         return $this->selectQuery($query);
     }
-
+    /**
+    * Create a student user
+    *Inserts its details into the db.
+    */
     public function createAccount($name, $dateofbirth, $regNumber, $position, $username, $password, $email)
     {
         $date = date("Y-m-d");
         $query = "insert into security (UserName, password, FullName, RegNo, Position, Email, Registered) values ('$username','$password','$name','$regNumber','$position', '$email','$date')";
         return $this->selectQuery($query);
     }
-
-    
+    /**
+    * Returns a list of courses using student's reg number.
+    */
     public function getCourses($regNumber)
     {
         $query = "SELECT * FROM course c INNER JOIN student s ON (s.ProgrammeofStudy = c.Programme) WHERE s.RegNo = '$regNumber' and s.yearOfStudy = c.StudyLevel;";
@@ -461,35 +503,57 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         $query = "select * from studentDetails";
         return $this->selectQuery($query);
     }
-
-    public function searchstudet($keyword)
-    {
-        $query = "SELECT * FROM student WHERE Name LIKE '%$keyword%' OR RegNo LIKE '%$keyword%'";
+    /**
+    *Search an item
+    /@param keyword
+    * Returns null or value
+    */
+    public function searchitem($table, $keyword)    {
+        $query = "SELECT * FROM $table WHERE ";
+        //$this->selectQuery($query);
+        $columns = $this->selectQuery("SHOW COLUMNS FROM $table");
+        $count = 1;
+        $i = count($columns);
+        foreach($columns as $column)
+        {
+            if($count == $i)
+            {
+                $query .= "".$column->Field." LIKE '%".$keyword."%' ";
+            }else{
+                $query .= "".$column->Field." LIKE '%".$keyword."%' OR ";
+            }
+            $count++;
+            
+        }
         return $this->selectQuery($query);
     }
-
+    /**
+    * Checks if a programme exists
+    */
     public function verifyprogramme($programme)
     {
         $query = "select count(ProgrammeID) as count, ProgrammeCode as code from programme where Title = '$programme'";
         return $this->selectQuery($query);
     }
-
+    /**
+    * Returns student details by id
+    */
     public function getStudentDetails($id)
     {
         return DB::table('studentDetails')->where('Id', $id)->first();
     }
-
-    public function updateStudentRecord()
-    {
-
-    }
-
+    /**
+    * Check if registration number already exists
+    * Prevents duplication or sql violation
+    */
     public function verifyregnumber($regNumber)
     {
         return DB::table('student')->where('RegNo', $regNumber)->get();
     }
-
-    public function updateStudentDetails($id,$firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,/**$address,*/$nationality,/** $region,*/ $homeDistrict,/**$country,*/ $occupation, /**date*/$religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail )
+    /**
+    * Updates student details
+    */
+    public function updateStudentDetails($id,$firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict, $occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail)
     {
         $name = strtoupper(trim($lastname)).', '.trim($firstname);
 
@@ -503,6 +567,22 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
         $query .= "Email = '$email',Phone = '$phone',f7year = '$yearCompleted',kin_address = '$parentAddress',disabilityCategory = '$disability',";
         $query .= "kin_email = '$parentEmail' ";
         $query .= "WHERE Id = '$id'";
+        return $this->selectQuery($query);
+    }
+    /**
+    * check if the user already exist
+    */
+    public function verifyuser($id)
+    {
+        $query = "select count(*) as count from security where UserName = '$id";
+        return $this->selectQuery($query);
+    }
+    /**
+    * Delete student
+    */
+    public function deletestudent($id)
+    {
+        $query = "DELETE FROM student WHERE Id = '$id'";
         return $this->selectQuery($query);
     }
 

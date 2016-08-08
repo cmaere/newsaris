@@ -879,148 +879,155 @@ public function course_edited(Request $request) {
 	    	
 		
 	    }
+	// Returns first admission form view.
+	public function admissionform()
+	{
+	    $currentpage = "Enroll student";
+		$parentpage ="Policy";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
+		$campus = $this->model->getCampus();
+		$programmes = $this->model->getProgrammes();
+		$faculties = $this->model->getFaculty();
+		$sponsors = $this->model->getSponsors();
+		$mannerofentry = $this->model->getMannerOfEntry();
 
+    	return view('admissionform', 
+				array('page' => 'home',
+					  'chasections' => $this->main->data,
+					  'chasubsections' => $this->main->menulist,
+					  'x' => 0,
+					  'loginname' => $this->main->loginname,
+					  'welcomemessage' => $welcomemessage,
+					  'currentpage' => $currentpage,
+					  'parentpage' => $parentpage,
+					  'campus' => $campus,
+					  'programmes' => $programmes,
+					  'faculties' => $faculties,
+					  'sponsors' => $sponsors,
+					  'entrymanners' => $mannerofentry,
+					  'levelofstudy' => $this->model->getProgrammeLevel()));
+    }
 
+    //Returns second admission form view
+    // Handles data for first form
+	public function admissionform2(Request $request)
+	{
+		// Page innitializations
+		$currentpage = "Enroll student";
+		$parentpage ="Admision";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 
-	    public function admissionform()
-	    {
-	    	$currentpage = "Enroll student";
-			$parentpage ="Policy";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-			$campus = $this->model->getCampus();
-			$programmes = $this->model->getProgrammes();
-			$faculties = $this->model->getFaculty();
-			$sponsors = $this->model->getSponsors();
-			$mannerofentry = $this->model->getMannerOfEntry();
-
-	    	return view('admissionform', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-						  'campus' => $campus,
-						  'programmes' => $programmes,
-						  'faculties' => $faculties,
-						  'sponsors' => $sponsors,
-						  'entrymanners' => $mannerofentry,
-						  'levelofstudy' => $this->model->getProgrammeLevel()));
-	    }
-	    public function admissionform2(Request $request)
-	    {
-	    	$this->validate($request, [
-	    		'admissionnumber' => 'required',
-	    		'graddate' => 'required|date_format:"Y-m-d"',
-	    		'program' => 'required'
+		// Form validation
+	   	$this->validate($request, [
+	   		'admissionnumber' => 'required',
+	   		'graddate' => 'required|date_format:"Y-m-d"',
+	   		'program' => 'required'
+	   	]);
+	   	// Store previous forms's data in a session
+	    session([
+	    		'yearOfStudy' => $request['yearofstudy'],
+	    		'admissionNumber' => $request['admissionnumber'],
+	    		'campus' => $request['campus'],
+	    		'regNumber' => $request['regno'],
+	    		'leveOfStudy' => $request['levelofstudy'],
+	    		'mannerOfEntry' => $request['mannerofentry'],
+	    		'sponsor' => $request['sponsor'],
+	    		'faculty' => $request['faculty'],
+	    		'graddate' => $request['graddate'],
+	    		'program' => $request['program']
 	    	]);
-	    	session([
-	    			'yearOfStudy' => $request['yearofstudy'],
-	    			'admissionNumber' => $request['admissionnumber'],
-	    			'campus' => $request['campus'],
-	    			'regNumber' => $request['regno'],
-	    			'leveOfStudy' => $request['levelofstudy'],
-	    			'mannerOfEntry' => $request['mannerofentry'],
-	    			'sponsor' => $request['sponsor'],
-	    			'faculty' => $request['faculty'],
-	    			'graddate' => $request['graddate'],
-	    			'program' => $request['program']
-	    		]);
-	    	$currentpage = "Enroll student";
-			$parentpage ="Admision";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 
-	    	return view('admissionform2', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage,
-						  'gender' => $this->model->getSex(),
-						  'studentstatus' => $this->model->getStudentStatus(),
-						  'disabilities' => $this->model->getDisability(),
-						  'religion' => $this->model->getReligion(),
-						  'maritalstatus' => $this->model->getMaritalStatus()));
-	    }
+	    return view('admissionform2', 
+				array('page' => 'home',
+					  'chasections' => $this->main->data,
+					  'chasubsections' => $this->main->menulist,
+					  'x' => 0,
+					  'loginname' => $this->main->loginname,
+					  'welcomemessage' => $welcomemessage,
+					  'currentpage' => $currentpage,
+					  'parentpage' => $parentpage,
+					  'gender' => $this->model->getSex(),
+					  'studentstatus' => $this->model->getStudentStatus(),
+					  'disabilities' => $this->model->getDisability(),
+					  'religion' => $this->model->getReligion(),
+					  'maritalstatus' => $this->model->getMaritalStatus()));
+	}
+	//Returns third admission form view
+    // Handles data for second form
+	public function admissionform3(Request $request)
+	{
+		//Page initializations
+		$currentpage = "Enroll student";
+		$parentpage ="Admision";
+		$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
 
-	    public function admissionform3(Request $request)
-	    {
-	    	$this->validate($request, [
-	    		'lastname' => 'required|alpha',
-	    		'middlename' => 'alpha',
-	    		'firstname' => 'required|alpha',
-	    		'sex' => 'required',
-	    		'dateofbirth' => 'required|date_format:"Y-m-d"',
-	    		'ta' => 'alpha',
-	    		'phone' => 'numeric',
-	    		'email' => 'email'
-	    	]);
-	    	session([
-	    			'lastname' => $request['lastname'],'middlename' => $request['middlename'],
-	    			'firstname' => $request['firstname'],'sex' => $request['sex'],
-	    			'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['homedistrict'],
-	    			'ta' => $request['ta'],'homeVillage' => $request['homevillage'],
-	    			'nationality' => $request['nationality'],'studentStatus' => $request['studentstatus'],
-	    			'religion' => $request['religion'],'maritalStatus' => $request['marital'],
-	    			'disability' => $request['disability'],'paddress' => $request['permanentaddress'], 
-	    			'curAddres' => $request['currentaddress'], 'bankbranchname' => $request['bankbranch'],
-	    			'phone' => $request['phone'],'email' => $request['email'],
-	    			'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
-	    		]);
-	    	$currentpage = "Enroll student";
-			$parentpage ="Admision";
-			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-			
+		//Form validation
+	   	$this->validate($request, [
+	    	'lastname' => 'required',
+	    	'firstname' => 'required',
+	    	'sex' => 'required',
+	    	'dateofbirth' => 'required|date_format:"Y-m-d"',
+	    	'ta' => 'alpha',
+	    	'phone' => 'numeric',
+	    	'email' => 'email'
+	    ]);
+	   	// Store previous forms's data in a session
+	    session([
+	    	'lastname' => $request['lastname'],'middlename' => $request['middlename'],
+	    	'firstname' => $request['firstname'],'sex' => $request['sex'],
+	    	'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['homedistrict'],
+	    	'ta' => $request['ta'],'homeVillage' => $request['homevillage'],
+	    	'nationality' => $request['nationality'],'studentStatus' => $request['studentstatus'],
+	    	'religion' => $request['religion'],'maritalStatus' => $request['marital'],
+	    	'disability' => $request['disability'],'paddress' => $request['permanentaddress'], 
+	    	'curAddres' => $request['currentaddress'], 'bankbranchname' => $request['bankbranch'],
+	    	'phone' => $request['phone'],'email' => $request['email'],
+	    	'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
+	    ]);
+	    	
+		return view('admissionform3', 
+				array('page' => 'home',
+					'chasections' => $this->main->data,
+					'chasubsections' => $this->main->menulist,
+					'x' => 0,
+					'loginname' => $this->main->loginname,
+					'welcomemessage' => $welcomemessage,
+					'currentpage' => $currentpage,
+					'parentpage' => $parentpage));
+	}
 
-	    	return view('admissionform3', 
-					array('page' => 'home',
-						  'chasections' => $this->main->data,
-						  'chasubsections' => $this->main->menulist,
-						  'x' => 0,
-						  'loginname' => $this->main->loginname,
-						  'welcomemessage' => $welcomemessage,
-						  'currentpage' => $currentpage,
-						  'parentpage' => $parentpage));
+	public function exportexcel(Request $request)
+	{
+	   	if($request->hasFile('adm_file'))
+	   	{
+	  		$file = $request->file('adm_file');
+	   		$files = fopen($file, 'r');
 
-	    }
-
-	    public function exportexcel(Request $request)
-	    {
-	    	if($request->hasFile('adm_file'))
-	    	{
-	    		$file = $request->file('adm_file');
-	    		$files = fopen($file, 'r');
-
-	    		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
+	   		while (($fileop = fgetcsv($files, 1000, ",")) !== FALSE) 
+	   		{
+	   			if(($fileop[0] != "") && ($fileop[1] == ""))
 	    		{
-	    			if(($fileop[0] != "") && ($fileop[1] == ""))
-		    		{
-		    			$programme = ' ';
-		    			$programmecode = ' ';
-		    			$i = 0;
-		    			preg_match('#\((.*?)\)#', $fileop[0], $match);
-		    			$programme = preg_split('/\(.*?\)/',$fileop[0]);
-						// print @$match[1];
-						// echo "<br>";
-						// print_r($programme[0]);
-						$count = $this->model->verifyprogramme(strtolower($programme[0]));
+	    			$programme = ' ';
+	    			$programmecode = ' ';
+	    			$i = 0;
+	    			preg_match('#\((.*?)\)#', $fileop[0], $match);
+	    			$programme = preg_split('/\(.*?\)/',$fileop[0]);
+					// print @$match[1];
+					// echo "<br>";
+					// print_r($programme[0]);
+					$count = $this->model->verifyprogramme(strtolower($programme[0]));
 
-						foreach ($count as $value) {
-							$number = $value->count;
-							$code = $value->code;
-						}
-						echo($number);
-		    			if($number > 0)
-		    			{
-		    				$programme = $programme[0];
-		    				$programmecode = $code;
-		    				$college = 'Kcn';
-		    			}
+					foreach ($count as $value) {
+						$number = $value->count;
+						$code = $value->code;
+					}
+					echo($number);
+	    			if($number > 0)
+	    			{
+	    				$programme = $programme[0];
+	    				$programmecode = $code;
+	    				$college = 'Kcn';
+	    			}
 		    			
 
 	    			}
@@ -1058,70 +1065,76 @@ public function course_edited(Request $request) {
 	    			// 	$insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
 	    			// }
 	    			
-	    		}
-	    	}
-	    }
+	   		}
+	   	}
+	}
 
-	    public function admitStudent(Request $request){
-	    	session([
-	    			'parentName' => $request['pname'],
-	    			'relationship' => $request['relationship'],
-	    			'occupation' => $request['occupation'],
-	    			'parentAddress' => $request['paddress'],
-	    			'parentEmail' => $request['pemail'],
-	    			'parentPhone' => $request['parphone'],
-	    			'schoolName' => $request['schname'],
-	    			'examNumber' => $request['examnum'],
-	    			'yearCompleted' => $request['yearcompleted']
-	    		]);
-	    	$yearOfStudy = session()->pull('yearOfStudy');
-	    	$admissionNumber = session()->pull('admissionNumber');
-	    	$campus = session()->pull('campus');
-	    	$regNumber = session()->pull('regNumber');
-	    	$leveOfStudy = session()->pull('leveOfStudy');
-	    	$mannerOfEntry = session()->pull('mannerOfEntry');
-	    	$sponsor = session()->pull('sponsor');
-	    	$faculty = session()->pull('faculty');
-	    	$graddate = session()->pull('graddate');
-	    	$program = session()->pull('program');
-	    	$lastname = session()->pull('lastname');
-	    	$middlename = session()->pull('middlename');
-	    	$firstname = session()->pull('firstname');
-	    	$sex = session()->pull('sex');
-	    	$dateOfBirth = session()->pull('dateOfBirth');
-	    	$homeDistrict = session()->pull('homeDistrict');
-	    	$ta = session()->pull('ta');
-	    	$homeVillage = session()->pull('homeVillage');
-	    	$nationality = session()->pull('nationality');
-	    	$studentStatus =session()->pull('studentStatus');
-	    	$religion =session()->pull('religion');
-	    	$maritalStatus = session()->pull('maritalStatus');
-	    	$disability =session()->pull('disability');
-	    	$paddress =session()->pull('paddress');
-	    	$phone =session()->pull('phone');
-	    	$email =session()->pull('email');
-	    	$bankName =session()->pull('bankName');
-	    	$bankAccount = session()->pull('bankAccount');
-	    	$parentName = session()->pull('parentName');
-	    	$relationship = session()->pull('relationship');
-	    	$occupation = session()->pull('occupation');
-	    	$parentAddress = session()->pull('parentAddress');
-	    	$parentEmail = session()->pull('parentEmail');
-	    	$parentPhone = session()->pull('parentPhone');
-	    	$schoolName = session()->pull('schoolName');
-	    	$examNumber = session()->pull('examNumber');
-	    	$yearCompleted = session()->pull('yearCompleted');
-	    	$currentaddress = session()->pull('curAddres');
-	    	$bankbranchname = session()->pull('bankbranchname');
-	    	
-	    	$this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$paddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted, $currentaddress, $bankbranchname);
+	public function admitStudent(Request $request)
+	{
+		// Store last forms's data in a session
+	    session([
+	    	'parentName' => $request['pname'],
+	    	'relationship' => $request['relationship'],
+	    	'occupation' => $request['occupation'],
+	    	'parentAddress' => $request['paddress'],
+	    	'parentEmail' => $request['pemail'],
+	    	'parentPhone' => $request['parphone'],
+	    	'schoolName' => $request['schname'],
+	    	'examNumber' => $request['examnum'],
+	    	'yearCompleted' => $request['yearcompleted']
+	   	]);
 
-	    	return redirect('/Policy/EnrollStudent')->with('feedback','Student enrolled successfully!');
-	    	
-	    	
-	    }
+	   	//Pull session values from all forms
+	   	$yearOfStudy = session()->pull('yearOfStudy');
+	   	$admissionNumber = session()->pull('admissionNumber');
+	   	$campus = session()->pull('campus');
+	   	$regNumber = session()->pull('regNumber');
+	   	$leveOfStudy = session()->pull('leveOfStudy');
+	   	$mannerOfEntry = session()->pull('mannerOfEntry');
+	   	$sponsor = session()->pull('sponsor');
+	   	$faculty = session()->pull('faculty');
+	   	$graddate = session()->pull('graddate');
+	   	$program = session()->pull('program');
+	   	$lastname = session()->pull('lastname');
+	   	$middlename = session()->pull('middlename');
+	   	$firstname = session()->pull('firstname');
+	   	$sex = session()->pull('sex');
+	   	$dateOfBirth = session()->pull('dateOfBirth');
+	   	$homeDistrict = session()->pull('homeDistrict');
+	   	$ta = session()->pull('ta');
+	   	$homeVillage = session()->pull('homeVillage');
+	   	$nationality = session()->pull('nationality');
+	   	$studentStatus =session()->pull('studentStatus');
+	   	$religion =session()->pull('religion');
+	   	$maritalStatus = session()->pull('maritalStatus');
+	   	$disability =session()->pull('disability');
+	   	$paddress =session()->pull('paddress');
+	   	$phone =session()->pull('phone');
+	   	$email =session()->pull('email');
+	   	$bankName =session()->pull('bankName');
+	   	$bankAccount = session()->pull('bankAccount');
+	   	$parentName = session()->pull('parentName');
+	   	$relationship = session()->pull('relationship');
+	   	$occupation = session()->pull('occupation');
+	   	$parentAddress = session()->pull('parentAddress');
+	   	$parentEmail = session()->pull('parentEmail');
+	   	$parentPhone = session()->pull('parentPhone');
+	   	$schoolName = session()->pull('schoolName');
+	   	$examNumber = session()->pull('examNumber');
+	   	$yearCompleted = session()->pull('yearCompleted');
+	   	$currentaddress = session()->pull('curAddres');
+	   	$bankbranchname = session()->pull('bankbranchname');
+	   	
+	   	if($this->model->enrollStudent($yearOfStudy,$admissionNumber,$campus,$regNumber,$leveOfStudy,$mannerOfEntry,$sponsor,$faculty,$graddate,$program,$lastname,$middlename,$firstname,$sex,$dateOfBirth,$homeDistrict,$ta,$homeVillage,$nationality,$studentStatus,$religion,$maritalStatus,$disability,$paddress,$phone,$email,$bankName,$bankAccount,$parentName,$relationship,$occupation,$parentAddress,$parentEmail,$parentPhone,$schoolName,$examNumber,$yearCompleted, $currentaddress, $bankbranchname))
+	    {
+	   		return redirect('/Policy/EnrollStudent')->with('feedback','Student enrolled successfully!');
+	   	}else
+	   	{
+	   		return redirect('/Policy/EnrollStudent')->with('feedback','Student could not be enrolled. '.$regNumber.' already exist.');
+	   	}
+	}
 	    
-	    public function createaccountform(){
+	public function createaccountform(){
 	    	$currentpage = "Create Account";
 			$parentpage ="Policy";
 			$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
@@ -1242,7 +1255,8 @@ public function course_edited(Request $request) {
 	    	{
 	    		$this->validate($request,['searchkeyword' => 'required']);
 	    		$keyword = $request['searchkeyword'];
-	    		$students = $this->model->searchstudet($keyword);
+	    		$table = ' studentDetails';
+	    		$students = $this->model->searchitem($table, $keyword);
 	    	}else
 	    	{
 	    		$students = $this->model->studentList();
@@ -1464,27 +1478,69 @@ public function course_edited(Request $request) {
 	    {
 	    	$regNumber = $request->id;
 	    	$checkregnumber = $this->model->verifyregnumber($regNumber);
-	    	if($checkregnumber){
+	    	if(count($checkregnumber) > 0){
 	    		echo 'Registration Number already exist!';
 	    	}
 	    }
 
 	    public function seachsuggesstions(Request $request)
 	    {
-	    	// if(searchstudet($request->key))
-	    	// {
-	    	// 	echo 'Something is here!';
-	    	// }else{
-	    		echo "No result found...";
-	    	// }
+	    	$table = 'studentDetails';
+	    	$results = $this->model->searchitem($table, $request->key);
+	    	if(count($results) > 0)
+	    	{
+	    		foreach ($results as $result) {
+	    			echo "<a  data-toggle='modal' data-target='#view-".$result->Id."' style='cursor:pointer'>".$result->Name."</a><br>";
+	    		}
+	    	}else{
+	    		echo "<span style='color:red,'>No results found...<span>";
+	    	}
 	    }
 
-	    public function formatName($firstname, $lastname)
+	    public function verifyuserID(Request $request)
 	    {
+	    	$id = $request->userID;
+	    	$count = $this->model->verifyuser($id);
+	    	foreach ($count as $value) {
+	    		$number = $value->count;
+	    	}
+	    	echo $number;
+	    }
 
-	    	$fullname = strtoupper($lastname).' '.$firstname;
-        	$fullname = str_replace(' ', ', ', $fullname);
-        	return $fullname;
+	    public function actionOnstudents(Request $request)
+	    {
+	    	$studentIDs = $request['studentIDs'];
+	    	$choice = $request['choice'];
+
+
+	    	switch($choice){
+	    		case 2:
+	    			$fieldsToExport = $request['export'];
+	    			$output = "";
+	     			foreach ($studentIDs as $studentID) 
+	    			{
+	    				$students = $this->model->getStudentDetails($studentID);
+		    			for($i = 0; $i < count($fieldsToExport);$i++)
+		    			{
+		    				$output .= $students->$fieldsToExport[$i]."\t";
+		    			}
+	    				$output .= "\n";
+	    			}
+	    			
+	     			header("Content-Type: application/xls");
+					header("Content-Disposition: attachment; filename = download.xls");
+	     			echo $output;
+	    			break;
+	    		case 1:
+	    			foreach ($studentIDs as $studentID) {
+			    		$this->model->deletestudent($studentID);
+			    	}
+			    	return redirect()->back();
+	    			break;
+	    		default:
+	    			return;
+	    	}
+	    	// 
 	    }
    
 }
