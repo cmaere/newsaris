@@ -49,7 +49,7 @@
 				<thead> 
 					<tr> 
 					
-			<!--			<th width="20"><input type="checkbox"></th>       -->
+						<th width="20"><input type="checkbox"></th>      
 						<!-- BEGIN columns -->
 						<th {OPTIONS}>Department</th> 
 						<th {OPTIONS}>Location</th> 
