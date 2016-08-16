@@ -49,7 +49,7 @@
       <div class="alert alert-success">
         {{ session('feedback') }}
       </div>
-  @endif
+    @endif
     <div class="form-group">
       <label for="select" class="col-lg-3 control-label">Year of Study</label>
       <div class="col-lg-8">

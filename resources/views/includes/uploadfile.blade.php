@@ -1,4 +1,10 @@
 <form action="{{ route('uploadfile')}}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+	@if (session('filefeedback'))
+      <div class="alert alert-warning">
+      	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ session('filefeedback') }}
+      </div>
+    @endif
 	<div class="form-group">
 		<label class="col-lg-3 control-label">Upload admission file</label>
 		<div class="col-lg-6">
