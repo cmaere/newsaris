@@ -19,14 +19,14 @@
 
 
 @section('content')
-	<div class="col-lg-8">	
+<div class="col-lg-8">	
 <section class="panel"> 
 	<!-- BEGIN heading-->
-	<header class="panel-heading">Programmes Information</header> 
+	<header class="panel-heading">Sponsors Information</header> 
 	<div class="row text-sm wrapper"> 
 		<div class="col-sm-5 m-b-xs">
 			<a href={{route('newprogramme')}}>
-				<button class="btn btn-sm btn-white">Add New Programmes</button>
+				<button class="btn btn-sm btn-white">Add New Sponsor</button>
 			</a> 
 		</div> 
 		<div class="col-sm-4 m-b-xs"> </div> 
@@ -42,9 +42,9 @@
 	<!-- END heading-->	
 
 	<section class="panel"> 
-	<header class="panel-heading font-bold"> New Programme </header> 
+	<header class="panel-heading font-bold"> New Sponsor </header> 
 	<div class="panel-body"> 
-		<form action="{{route('addprogramme')}}" method="POST" id="frmInstEdit" class="form-horizontal"> 
+		<form action="{{route('addsponsor')}}" method="POST" id="frmInstEdit" class="form-horizontal"> 
 		@if (count($errors) > 0)
    		<div class="alert alert-danger">
         <ul>
@@ -54,25 +54,21 @@
         </ul>
    	 	</div>
    		@endif
-			<div class="form-group"> <label class="col-sm-2 control-label">Programme Code</label> 
-				<div class="col-sm-10"> <input type="text" name="programme_code" class="form-control rounded" value=""> </div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Name of Sponsor</label> 
+				<div class="col-sm-10"> <input type="text" name="name_of_sponsor" class="form-control rounded" value=""> </div> 
 			</div> 
 			<div class="line line-dashed line-lg pull-in"></div> 
-			<div class="form-group"> <label class="col-sm-2 control-label">Programme ShortName</label> 
-					<div class="col-sm-10"> <input type="text" name="programme_short_name" class="form-control rounded" value=""> </div>
+			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
+					<div class="col-sm-10"> <input type="text" name="address" class="form-control rounded" value=""> </div>
 	       		</div>
 	       	   	<div class="line line-dashed line-lg pull-in"></div>
 					
 			
-			<div class="form-group"> <label class="col-sm-2 control-label">Programme Title</label> 
-					<div class="col-sm-10"> <input type="text" name="ptitle" class="form-control rounded" value=""> </div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">Telephone No.</label> 
+					<div class="col-sm-10"> <input type="text" name="telephone_No" class="form-control rounded" value=""> </div> 
 				
 			 </div>
-	   	         <div class="line line-dashed line-lg pull-in"></div> 
-			 <div class="form-group"> <label class="col-sm-2 control-label">Faculty</label> 
-					<div class="col-sm-10"> <input type="text" name="pfaculty" class="form-control rounded" value="">   </div> 
-					
-			 </div>
+	   	     
 			 <div class="line line-dashed line-lg pull-in"></div> 
 			
     		    	<div class="form-group"> <div class="col-sm-4 col-sm-offset-2">  

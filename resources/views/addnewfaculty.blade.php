@@ -54,9 +54,8 @@
    	 	</div>
    		@endif
 			<div class="form-group"> <label class="col-sm-2 control-label">Faculty</label> 
-				<div class="col-sm-10"> <input type="text" id="faculty" name="faculty" class="form-control rounded"> </div> 
+				<div class="col-sm-10"> <input type="text" name="faculty" class="form-control rounded"> </div> 
 			</div> 
-				 <span id="feedback"></span>
 			<div class="line line-dashed line-lg pull-in"></div> 
 			<div class="form-group"> <label class="col-sm-2 control-label">Address</label> 
 			 			
@@ -92,27 +91,4 @@
 </section>
 </section>	
 </div>
-<meta name="csrf-token" content="{{ csrf_token() }}">
-  <script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
-  <script type="text/javascript">
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-      }
-    });
-  </script>
- <script type="text/javascript">
-    $('#faculty').blur(function(){
-      var reg = $(this).val();
-      $.ajax({
-        type: 'POST',
-        url: "{{ route('checkfaculty') }}",
-        data: {id: reg, _token: '{{ csrf_token() }}'},
-        success: function(data){
-
-          $('#feedback').html(data).css('color', 'red');
-        }
-      });
-    });
-  </script>
 @endsection
