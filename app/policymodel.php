@@ -611,6 +611,10 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
     {
         return DB::table('programme')->where('ProgrammeID', $id)->first();
     }
+    public function getScholarshipDetails($id)
+    {
+        return DB::table('scholarship')->where('s_id', $id)->first();
+    }
 
 }
 

@@ -182,36 +182,32 @@
 			<!-- END EXPORT MODAL -->
 
 				<!-- BEGIN pagenumstat -->
-			 	<div class="col-sm-4 text-center"> 
-				 	<small class="text-muted inline m-t-sm m-b-sm">
-					 	{PAGENUMSTATUS}
-					 </small> 
-			 	</div> 
-				<!-- END pagenumstat -->
-			 	<div class="col-sm-4 text-right text-center-xs"> 
-					 <ul class="pagination pagination-sm m-t-none m-b-none"> 
-						<!-- BEGIN back -->
-						<li class='{CLASS}'><a href='{LINK}'><i class='fa fa-chevron-left'></i></a></li>
-						<!-- END back -->
+			 	
+		 	<div class="col-sm-4 text-center"> 
+			 	<small class="text-muted inline m-t-sm m-b-sm">
+				 	showing 1 - 4 of 4 items
+				 </small> 
+		 	</div> 
+			
+		 	<div class="col-sm-4 text-right text-center-xs"> 
+				 <ul class="pagination pagination-sm m-t-none m-b-none"> 
 					
-					       <!-- BEGIN pages -->				       	 
-					       <li><a href="{LINK}">{PAGES}</a></li>
-					       	<!-- END pages -->		
-						<!-- BEGIN active -->
-						<li class='active'><a href='#'>{ACTIVEPAGE}</a></li>	
-						<!-- END active -->
+					<li class='disabled'><a href='#'><i class='fa fa-chevron-left'></i></a></li>
 					
-						<!-- BEGIN pagesfront -->
-						<li><a href="{LINK}">{FRONTPAGES}</a></li>
 					
-						<!-- END pagesfront -->
-						<!-- BEGIN front -->
+				       		
 					
-						<li class='{CLASS}'><a href='{LINK}'><i class='fa fa-chevron-right'></i></a></li>
-					 	<!-- END front -->
+					<li class='active'><a href='#'>1</a></li>	
+					
+					
+					
+					
+					
+					<li class='disabled'><a href='#'><i class='fa fa-chevron-right'></i></a></li>
 				 	
-				 	</ul> 
-				 </div> 
+				 	
+			 	</ul> 
+			 </div>
 			 </div>
 			  </form>
 			  </footer>

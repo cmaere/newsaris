@@ -62,7 +62,7 @@ Route::post('Policy/Programme/addprogramme', 'policycontroller@addprogramme')->n
 Route::get('Policy/Programme/addprogramme', 'policycontroller@newprogramme')->name("newprogramme"); 
 Route::post('Policy/Programme/delete', 'policycontroller@programme_delete')->name("programme_delete");
 Route::get('Policy/programme_edit/{id?}', 'policycontroller@programme_edit')->name("programme_edit");
-Route::post('Policy/programme/{id?}', 'policycontroller@checkprogramme')->name("checkprogramme");
+//Route::post('Policy/programme/{id?}', 'policycontroller@checkprogramme')->name("checkprogramme");
 Route::post('Policy/programme/edited', 'policycontroller@programme_edited')->name("programme_edited");
 Route::post('Policy/Faculty/delete', 'policycontroller@faculty_delete')->name("faculty_delete");
 Route::get('Policy/Faculty/{id?}', 'policycontroller@faculty_edit')->name("faculty_edit");
