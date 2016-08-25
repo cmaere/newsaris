@@ -38,7 +38,7 @@ Route::post('/Policy/Students/Search', ['middleware' => 'auth', 'uses' => 'polic
 Route::get('Policy/EditStudent/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudentform', 'as' => 'editstudentpage']);
 Route::post('Policy/EditStudent/2/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudent', 'as' => 'nextedit']);
 Route::post('Policy/EditStudent/3/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@editstudent1', 'as' => 'nextedit1']);
-Route::post('/Policy/EnrollStudent', ['middleware' => 'auth', 'uses' => 'policycontroller@updateStudent', 'as' => 'updatestudent']);
+Route::post('/Policy/EnrollStudent/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@updateStudent', 'as' => 'updatestudent']);
 Route::post('Policy/EnrollStudentForm/{id?}', ['middleware' => 'auth', 'uses' => 'policycontroller@checkregnumber', 'as' => 'checkregnumber']);
 Route::post('Policy/SearchStudent/{key?}', ['middleware' =>'auth', 'uses' => 'policycontroller@seachsuggesstions', 'as' => 'searchsuggessions']);
 Route::post('Policy/CreateAccount/{userID?}', ['middleware' => 'auth', 'uses' => 'policycontroller@verifyuserID', 'as' => 'verifyusername']);

@@ -913,100 +913,13 @@ public function course_edited(Request $request) {
 					  'maritalstatus' => $this->model->getMaritalStatus()));
     }
 
-/** TO BE REMOVED */
-    //Returns second admission form view
-    // Handles data for first form
-	// public function admissionform2(Request $request)
-	// {
-	// 	// Page innitializations
-	// 	$currentpage = "Enroll student";
-	// 	$parentpage ="Admision";
-	// 	$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-
-	// 	// Form validation
-	//    	$this->validate($request, [
-	//    		'admissionnumber' => 'required',
-	//    		'graddate' => 'required|date_format:"Y-m-d"',
-	//    		'program' => 'required'
-	//    	]);
-	//    	// Store previous forms's data in a session
-	//     session([
-	//     		'yearOfStudy' => $request['yearofstudy'],
-	//     		'admissionNumber' => $request['admissionnumber'],
-	//     		'campus' => $request['campus'],
-	//     		'regNumber' => $request['regno'],
-	//     		'leveOfStudy' => $request['levelofstudy'],
-	//     		'mannerOfEntry' => $request['mannerofentry'],
-	//     		'sponsor' => $request['sponsor'],
-	//     		'faculty' => $request['faculty'],
-	//     		'graddate' => $request['graddate'],
-	//     		'program' => $request['program']
-	//     	]);
-
-	//     return view('admissionform2', 
-	// 			array('page' => 'home',
-	// 				  'chasections' => $this->main->data,
-	// 				  'chasubsections' => $this->main->menulist,
-	// 				  'x' => 0,
-	// 				  'loginname' => $this->main->loginname,
-	// 				  'welcomemessage' => $welcomemessage,
-	// 				  'currentpage' => $currentpage,
-	// 				  'parentpage' => $parentpage,
-	// 				  'gender' => $this->model->getSex(),
-	// 				  'studentstatus' => $this->model->getStudentStatus(),
-	// 				  'disabilities' => $this->model->getDisability(),
-	// 				  'religion' => $this->model->getReligion(),
-	// 				  'maritalstatus' => $this->model->getMaritalStatus()));
-	// }
-	// //Returns third admission form view
- //    // Handles data for second form
-	// public function admissionform3(Request $request)
-	// {
-	// 	//Page initializations
-	// 	$currentpage = "Enroll student";
-	// 	$parentpage ="Admision";
-	// 	$welcomemessage = "Welcome to ".$currentpage." Page for Student Academic Records Information System";
-
-	// 	//Form validation
-	//    	$this->validate($request, [
-	//     	'lastname' => 'required',
-	//     	'firstname' => 'required',
-	//     	'sex' => 'required',
-	//     	'dateofbirth' => 'required|date_format:"Y-m-d"',
-	//     	'ta' => 'alpha',
-	//     	'phone' => 'numeric',
-	//     	'email' => 'email'
-	//     ]);
-	//    	// Store previous forms's data in a session
-	//     session([
-	//     	'lastname' => $request['lastname'],'middlename' => $request['middlename'],
-	//     	'firstname' => $request['firstname'],'sex' => $request['sex'],
-	//     	'dateOfBirth' => $request['dateofbirth'],'homeDistrict' => $request['homedistrict'],
-	//     	'ta' => $request['ta'],'homeVillage' => $request['homevillage'],
-	//     	'nationality' => $request['nationality'],'studentStatus' => $request['studentstatus'],
-	//     	'religion' => $request['religion'],'maritalStatus' => $request['marital'],
-	//     	'disability' => $request['disability'],'paddress' => $request['permanentaddress'], 
-	//     	'curAddres' => $request['currentaddress'], 'bankbranchname' => $request['bankbranch'],
-	//     	'phone' => $request['phone'],'email' => $request['email'],
-	//     	'bankName' => $request['bankname'],'bankAccount' => $request['bankaccount']
-	//     ]);
-	    	
-	// 	return view('admissionform3', 
-	// 			array('page' => 'home',
-	// 				'chasections' => $this->main->data,
-	// 				'chasubsections' => $this->main->menulist,
-	// 				'x' => 0,
-	// 				'loginname' => $this->main->loginname,
-	// 				'welcomemessage' => $welcomemessage,
-	// 				'currentpage' => $currentpage,
-	// 				'parentpage' => $parentpage));
-	// }
-/** deletion ends here */
-
 	public function exportexcel(Request $request)
 	{
+		$this->validate($request, ['entryyear' => 'required']);
+		$year = substr($request['entryyear'], -2);
 	   	if($request->hasFile('adm_file'))
 	   	{
+
 	  		$file = $request->file('adm_file');
 	   		$files = fopen($file, 'r');
 	   		$allowed =  array('csv');
@@ -1026,7 +939,7 @@ public function course_edited(Request $request) {
 	   				
 	   				if(count($programme) > 0)
 	   				{
-	   					$regNum = 'Kcn/'.$programme->ProgrammeID;
+	   					$regNum = 'Kcn/'.$programme->ProgrammeID.'/'.$year;
 	   					$count = 1;
 	   				}else
 	   				{
@@ -1050,7 +963,7 @@ public function course_edited(Request $request) {
 
 						echo $fullname."\t<b>".$registrationnumber."</b>\t".$gender."\t".$cand_num."\t".$prev_school."<br>";
 
-	   					// $insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num);
+	   					// $insertStudentInfo = $this->model->insertIntoStudentTable($fullname, $gender, $cand_num, $registrationnumber,$prev_school);
 	   				}else{
 	   					//Nothing
 	   				}
@@ -1311,6 +1224,14 @@ public function course_edited(Request $request) {
 			$entry = $studentdetails->MannerofEntryID;
 			$level = $studentdetails->StudyLevelID;
 			$status = $studentdetails->StatusID;
+			$status = $studentdetails->StatusID;
+	    	$religion = $studentdetails->ReligionID;
+	    	$sex = $studentdetails->sexid;
+	    	$maritalstatus = $studentdetails->maritalStatusID;
+	    	$disability = $studentdetails->DisabilityCode;
+
+	    	//Split name
+	    	$name = explode(',', $studentdetails->Name);
 
 	    	return view('editstudent',
 	    		array('page' => 'home',
@@ -1322,12 +1243,19 @@ public function course_edited(Request $request) {
 						  'currentpage' => $currentpage,
 						  'parentpage' => $parentpage,
 						  'student' => $studentdetails,
+						  'firstname' => $name[1],
+						  'lastname' => $name[0],
 						  'campus' => $this->model->getCampus($campus),
 						  'faculties' => $this->model->getFaculty($faculty),
 						  'programmes' => $this->model->getProgrammes($programme),
 						  'sponsors' => $this->model->getSponsors($sponsor),
 						  'entrymanners' => $this->model->getMannerOfEntry($entry),
-						  'levelofstudy' => $this->model->getProgrammeLevel($level)));
+						  'levelofstudy' => $this->model->getProgrammeLevel($level),
+						  'status' => $this->model->getStudentStatus($status),
+						  'religions' => $this->model->getReligion($religion),
+						  'gender' => $this->model->getSex($sex),
+						  'maritalstatus' => $this->model->getMaritalStatus($maritalstatus),
+						  'disabilities' => $this->model->getDisability($disability)));
 	    }
 
 	    public function editstudent(Request $request, $id)
@@ -1433,9 +1361,30 @@ public function course_edited(Request $request) {
 	    / Function to send edited student data to the updatestudent model
 	    */
 
-	    public function updateStudent(Request $request)
+	    public function updateStudent(Request $request, $id)
 	    {
 	    	session([
+	    			'editid' => $id,
+	    			'edityearOfStudy' => $request['yearofstudy'],
+	    			'editadmissionNumber' => $request['admissionnumber'],
+	    			'editcampus' => $request['campus'],
+	    			'editregNumber' => $request['regno'],
+	    			'editleveOfStudy' => $request['levelofstudy'],
+	    			'editmannerOfEntry' => $request['mannerofentry'],
+	    			'editsponsor' => $request['sponsor'],
+	    			'editfaculty' => $request['faculty'],
+	    			'editgraddate' => $request['graddate'],
+	    			'editprogram' => $request['program'],
+	    			'editlastname' => $request['lastname'],'editmiddlename' => $request['middlename'],
+	    			'editfirstname' => $request['firstname'],'editsex' => $request['sex'],
+	    			'editdateOfBirth' => $request['dateofbirth'],'edithomeDistrict' => $request['homedistrict'],
+	    			'editta' => $request['ta'],'edithomeVillage' => $request['homevillage'],
+	    			'editnationality' => $request['nationality'],'editstudentStatus' => $request['studentstatus'],
+	    			'editreligion' => $request['religion'],'editmaritalStatus' => $request['marital'],
+	    			'editdisability' => $request['disability'],'editphysAddress' => $request['permanentaddress'], 
+	    			'editcurAddress' => $request['currentaddress'], 'editbankbranch' => $request['bankbranch'],
+	    			'editphone' => $request['phone'],'editemail' => $request['email'],
+	    			'editbankName' => $request['bankname'],'editbankAccount' => $request['bankaccount'],
 	    			'editparentName' => $request['pname'],
 	    			'editrelationship' => $request['relationship'],
 	    			'editoccupation' => $request['occupation'],
@@ -1489,13 +1438,13 @@ public function course_edited(Request $request) {
 
 	    	//$name = $this->formatName($firstname, $lastname);
 
-	    	$this->model->updateStudentDetails($id, $firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict,$occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail);
-
+	    	if($this->model->updateStudentDetails($id, $firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict,$occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail)){
 
 	    		$message = $regNumber.' has been updated!';
-	    		return redirect('/Policy/EnrollStudent')->with('editfeedback', $message);
-	    	
-	    	
+	    	}else{
+	    		$message = $regNumber.' could NOT be updated. Something went wrong.';
+	    	}
+ 			return redirect('/Policy/EnrollStudent')->with('editfeedback', $message);
 	    }
 
 	    public function checkregnumber(Request $request)

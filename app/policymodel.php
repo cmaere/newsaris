@@ -558,21 +558,28 @@ public function  editedcourse($CourseCode,$CourseName,$Department,$Units,$id){
     /**
     * Updates student details
     */
-    public function updateStudentDetails($id,$firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict, $occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $physAddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail)
+    public function updateStudentDetails($id,$firstname, $lastname, $regNumber, $sex, $dateOfBirth, $mannerOfEntry, $maritalStatus, $campus, $program, $faculty, $sponsor, $graddate, $studentStatus, $yearOfStudy,$nationality, $homeDistrict, $occupation, $religion, $admissionNumber, $homeVillage, $ta, $parentName, $parentPhone, $bankAccount, $bankName, $bankBranch, $schoolName, $examNumber, $paddress, $currentAddress, $leveOfStudy, $relationship, $email, $phone, $yearCompleted, $parentAddress, $disability, $parentEmail)
     {
         $name = strtoupper(trim($lastname)).', '.trim($firstname);
-
-        $query = "UPDATE student SET Name = '$name', RegNo = '$regNumber', Sex = '$sex',DBirth = '$dateOfBirth',MannerofEntry = '$mannerOfEntry',";
-        $query .= "MaritalStatus = '$maritalStatus',Campus = '$campus',ProgrammeofStudy = '$program',Faculty = '$faculty',Sponsor = '$sponsor',";
-        $query .= "GradYear = '$graddate',Status = '$studentStatus',YearofStudy = '$yearOfStudy',Nationality = '$nationality',";
-        $query .= "District = '$homeDistrict',ParentOccupation = '$occupation',Religion = '$religion',AdmissionNo = '$admissionNumber',";
-        $query .= "Village = '$homeVillage',TradAuthority = '$ta',kin = '$parentName',kin_phone = '$parentPhone',account_number = '$bankAccount',";
-        $query .= "bank_name = '$bankName',bank_branch_name = '$bankBranch',form7name = '$schoolName',form7no = '$examNumber',";
-        $query .= "paddress = '$physAddress',currentaddress = '$currentAddress',studylevel = '$leveOfStudy',kin_relationship = '$relationship',";
-        $query .= "Email = '$email',Phone = '$phone',f7year = '$yearCompleted',kin_address = '$parentAddress',disabilityCategory = '$disability',";
-        $query .= "kin_email = '$parentEmail' ";
-        $query .= "WHERE Id = '$id'";
-        return $this->selectQuery($query);
+        if(DB::table('student')
+            ->where('Id', $id)
+            ->update(
+                [
+                    'Name' => $name, 'RegNo' => $regNumber, 'Sex' => $sex, 'DBirth' => $dateOfBirth, 'MannerofEntry' => $mannerOfEntry,
+                    'MaritalStatus' => $maritalStatus, 'Campus' => $campus, 'ProgrammeofStudy' => $program, 'Faculty' => $faculty, 
+                    'Sponsor' => $sponsor, 'GradYear' => $graddate, 'Status' => $studentStatus, 'YearofStudy' => $yearOfStudy, 
+                    'Nationality' => $nationality, 'District' => $homeDistrict, 'ParentOccupation' => $occupation,
+                    'Religion' => $religion, 'AdmissionNo' => $admissionNumber, 'village' => $homeVillage, 'TradAuthority' => $ta, 
+                    'kin' => $parentName, 'kin_phone' => $parentPhone, 'account_number' => $bankAccount, 'bank_name' => $bankName,
+                    'bank_branch_name' => $bankBranch, 'form7name' => $schoolName, 'form7no' => $examNumber, 'paddress' => $paddress,
+                    'studylevel' => $leveOfStudy, 'kin_relationship' => $relationship, 'Email' => $email, 'Phone' => $phone, 
+                    'f7year' => $yearCompleted, 'kin_address' => $parentAddress, 'disabilityCategory' => $disability, 
+                    'currentaddress' => $currentAddress, 'kin_email' => $parentEmail
+                ])){
+            return true;
+        }else{
+            return false;
+        }
     }
     /**
     * check if the user already exist

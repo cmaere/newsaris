@@ -11,7 +11,9 @@
 
  <link rel="stylesheet" href="{{asset('css/app.css')}}" type="text/css">
  <link rel="stylesheet" href="{{asset('css/font.css')}}" type="text/css" cache="false">
+ <link rel="stylesheet" href="{{asset('css/forms.css')}}" type="text/css">
  <script src="{{asset('scripts/formcontrols.js')}}" type="text/javascript"></script>
+ <script type="text/javascript" src="{{asset('scripts/jquery-1.8.2.min.js')}}"></script>
  
   <!--[if lt IE 9]> <script src="js/ie/respond.min.js" cache="false"></script> <script src="js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
   <style type="text/css">
